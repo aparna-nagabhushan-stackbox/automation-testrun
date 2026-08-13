@@ -652,7 +652,7 @@
             <button class="range-pill" data-range="7D" onclick="setDashRange('7D')">7D</button>
             <button class="range-pill" data-range="24H" onclick="setDashRange('24H')">24H</button>
           </div>
-          <button class="btn-v3-primary" style="margin-left:auto" onclick="openCreateTcModal()">+ Create Test Case</button>
+          <button class="btn-v3-primary" style="margin-left:auto" onclick="openCreateTcModal(dashScope === 'AUTOMATION' ? 'automation' : dashScope === 'MANUAL' ? 'manual' : undefined)">+ Create Test Case</button>
         </div>
 
         <!-- Key Metrics -->
@@ -3785,7 +3785,7 @@
             <h3>Stored Test Cases</h3>
             <div style="display:flex;gap:8px">
               <button id="tc-delete-selected-btn" onclick="deleteSelectedTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="tc-selected-count">0</span>)</button>
-              <button onclick="openCreateTcModal()" class="btn-v3-primary">+ Create Test Case</button>
+              <button onclick="openCreateTcModal('manual')" class="btn-v3-primary">+ Create Test Case</button>
               <button onclick="exportTestCases()" title="Export Excel" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;background:#f7f8fa;border:1px solid #ececf2;border-radius:10px;cursor:pointer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.9A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.9"/><path d="M12 12v7"/><path d="M9 16l3 3 3-3"/></svg>
               </button>
@@ -3879,7 +3879,7 @@
           </div>
           <div style="display:flex;gap:8px">
             <button id="auto-tc-delete-selected-btn" onclick="deleteSelectedAutomationTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="auto-tc-selected-count">0</span>)</button>
-            <button class="btn-v3-primary" onclick="openCreateTcModal()">+ Create Test Case</button>
+            <button class="btn-v3-primary" onclick="openCreateTcModal('automation')">+ Create Test Case</button>
           </div>
         </div>
         <div class="table-card">
@@ -4554,7 +4554,7 @@
     <!-- Step 2: details, once a type is chosen -->
     <div id="create-tc-step2" style="display:none">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-        <button onclick="backToTcTypeChoice()" style="background:none;border:none;color:#0f3460;font-size:12px;cursor:pointer;font-weight:600;padding:0">← Back</button>
+        <button id="create-tc-back-btn" onclick="backToTcTypeChoice()" style="background:none;border:none;color:#0f3460;font-size:12px;cursor:pointer;font-weight:600;padding:0">← Back</button>
         <span class="app-tag" id="create-tc-type-badge" style="background:#e8f5e9;color:#2e7d32">📝 Manual</span>
       </div>
       <input type="hidden" id="tc-type" value="manual"/>
@@ -6844,11 +6844,19 @@
   }
 
   // ── Create Test Case modal: step 1 (pick a type) → step 2 (fill details) ──
-  function openCreateTcModal() {
+  // A fixedType ('manual' or 'automation') skips the picker entirely — used when
+  // the button already lives on a type-specific page (Test Cases / Automation Tests).
+  // Called with no args (Dashboard), it still asks the user to choose.
+  function openCreateTcModal(fixedType) {
     ['tc-id','tc-title','tc-module','tc-project','tc-expected','tc-steps'].forEach(fid => document.getElementById(fid).value = '');
-    document.getElementById('create-tc-step1').style.display = 'block';
-    document.getElementById('create-tc-step2').style.display = 'none';
     document.getElementById('create-tc-modal').style.display = 'flex';
+    document.getElementById('create-tc-back-btn').style.display = fixedType ? 'none' : '';
+    if (fixedType) {
+      chooseTcType(fixedType);
+    } else {
+      document.getElementById('create-tc-step1').style.display = 'block';
+      document.getElementById('create-tc-step2').style.display = 'none';
+    }
   }
   function chooseTcType(type) {
     document.getElementById('tc-type').value = type;
