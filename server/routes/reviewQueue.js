@@ -17,8 +17,11 @@ router.post('/:id/approve', requireAdmin, (req, res) => {
 });
 
 router.post('/:id/promote', requireAdmin, (req, res) => {
-  const { blockName } = req.body || {};
+  // Trimmed and length-capped to match createProject's handling — a block name
+  // is rendered into the block library for every user on the project.
+  const blockName = (req.body?.blockName || '').toString().trim();
   if (!blockName) return res.status(400).json({ error: 'blockName is required.' });
+  if (blockName.length > 60) return res.status(400).json({ error: 'Block name must be 60 characters or fewer.' });
 
   const entry = db.getReviewQueue().find((e) => e.id === Number(req.params.id));
   if (!entry) return res.status(404).json({ error: 'No review entry with that id.' });
@@ -26,7 +29,12 @@ router.post('/:id/promote', requireAdmin, (req, res) => {
   const generation = db.getGenerationByRecordingId(entry.recordingId);
   if (!generation) return res.status(404).json({ error: 'No generated code found for this entry.' });
 
-  const block = db.createBlock({ project: entry.project, name: blockName, code: generation.code, createdBy: req.user.email });
+  // The RAW recording, not Claude's cleaned code: block matching extracts an
+  // interaction sequence from raw recorder output, so a block whose code is
+  // the cleaned/role-rewritten version would never match a future recording.
+  // Older generation records predate `rawCode`, hence the fallback.
+  const code = generation.rawCode || generation.code;
+  const block = db.createBlock({ project: entry.project, name: blockName, code, createdBy: req.user.email });
   db.updateReviewEntryStatus(entry.id, 'promoted');
   res.json({ block });
 });

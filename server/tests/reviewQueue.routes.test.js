@@ -38,9 +38,15 @@ test('lists entries scoped to a project', async () => {
   }
 });
 
-test('promote requires admin and creates a locked block from the linked generation', async () => {
+test('promote requires admin and creates a locked block from the linked generation raw code', async () => {
   const { app, db } = freshApp('admin');
-  db.upsertGeneration({ recordingId: 'r1', code: 'await page.click("#x");' });
+  // Block matching runs over raw recorder output, so the block has to store the
+  // raw recording — not Claude's role-based rewrite, which would never match.
+  db.upsertGeneration({
+    recordingId: 'r1',
+    code: "await page.getByTestId('x').click();",
+    rawCode: 'await page.click("#x");',
+  });
   const entry = db.createReviewEntry({ project: 'Inbound', recordingId: 'r1', reason: 'weak locator', flaggedSteps: [1] });
   const { server, port } = await listen(app);
   try {
@@ -53,6 +59,43 @@ test('promote requires admin and creates a locked block from the linked generati
     assert.equal(body.block.name, 'Login');
     assert.equal(body.block.code, 'await page.click("#x");');
     assert.equal(db.getReviewQueue().find((e) => e.id === entry.id).status, 'promoted');
+  } finally {
+    server.close();
+  }
+});
+
+test('promote falls back to the cleaned code for a generation recorded before rawCode existed', async () => {
+  const { app, db } = freshApp('admin');
+  db.upsertGeneration({ recordingId: 'r1', code: 'await page.click("#legacy");' });
+  const entry = db.createReviewEntry({ project: 'Inbound', recordingId: 'r1', reason: 'weak locator', flaggedSteps: [1] });
+  const { server, port } = await listen(app);
+  try {
+    const res = await fetch(`http://localhost:${port}/api/review-queue/${entry.id}/promote`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ blockName: 'Login' }),
+    });
+    const body = await res.json();
+    assert.equal(res.status, 200);
+    assert.equal(body.block.code, 'await page.click("#legacy");');
+  } finally {
+    server.close();
+  }
+});
+
+test('promote trims the block name and rejects an over-long or blank one', async () => {
+  const { app, db } = freshApp('admin');
+  db.upsertGeneration({ recordingId: 'r1', code: 'x', rawCode: 'x' });
+  const entry = db.createReviewEntry({ project: 'Inbound', recordingId: 'r1', reason: 'weak locator', flaggedSteps: [1] });
+  const { server, port } = await listen(app);
+  const promote = (blockName) => fetch(`http://localhost:${port}/api/review-queue/${entry.id}/promote`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ blockName }),
+  });
+  try {
+    assert.equal((await promote('   ')).status, 400);
+    assert.equal((await promote('L'.repeat(61))).status, 400);
+    const ok = await promote('  Login flow  ');
+    assert.equal((await ok.json()).block.name, 'Login flow');
   } finally {
     server.close();
   }

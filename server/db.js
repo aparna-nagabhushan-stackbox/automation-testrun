@@ -171,6 +171,16 @@ function createReviewEntry({ project, recordingId, reason, flaggedSteps }) {
   saveReviewQueue(entries);
   return entry;
 }
+// Drops any still-pending entries for a recording, so re-generating that
+// recording supersedes its earlier review entry instead of stacking a second
+// one next to it. Entries already approved/promoted are history and stay put.
+function removePendingReviewEntries(recordingId) {
+  const entries = getReviewQueue();
+  const kept = entries.filter((e) => !(e.recordingId === recordingId && e.status === 'pending'));
+  if (kept.length === entries.length) return 0;
+  saveReviewQueue(kept);
+  return entries.length - kept.length;
+}
 function updateReviewEntryStatus(id, status) {
   const entries = getReviewQueue();
   const entry = entries.find((e) => e.id === id);
@@ -201,6 +211,6 @@ module.exports = {
   getInvites, saveInvites, findInviteByToken, createInvite, markInviteAccepted,
   getProjects, saveProjects, findProjectByName, createProject,
   getBlocks, saveBlocks, getBlocksByProject, createBlock,
-  getReviewQueue, saveReviewQueue, createReviewEntry, updateReviewEntryStatus,
+  getReviewQueue, saveReviewQueue, createReviewEntry, removePendingReviewEntries, updateReviewEntryStatus,
   getGenerations, saveGenerations, upsertGeneration, getGenerationByRecordingId,
 };

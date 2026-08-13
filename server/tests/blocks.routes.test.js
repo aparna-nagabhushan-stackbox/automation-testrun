@@ -39,6 +39,22 @@ test('admin can create a block, anyone can list it scoped to its project', async
   }
 });
 
+test('block names are trimmed and length-capped', async () => {
+  const { server, port } = await listen(freshApp('admin'));
+  const post = (name) => fetch(`http://localhost:${port}/api/blocks`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ project: 'Inbound', name, code: 'code' }),
+  });
+  try {
+    assert.equal((await post('   ')).status, 400);
+    assert.equal((await post('L'.repeat(61))).status, 400);
+    const ok = await post('  Login flow  ');
+    assert.equal((await ok.json()).block.name, 'Login flow');
+  } finally {
+    server.close();
+  }
+});
+
 test('non-admin cannot create a block', async () => {
   const { server, port } = await listen(freshApp('user'));
   try {

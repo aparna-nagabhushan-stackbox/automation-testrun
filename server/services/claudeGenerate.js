@@ -36,7 +36,10 @@ async function generateFromCode(client, { rawCode, matchedBlockNames }) {
 
   const response = await client.messages.create({
     model: 'claude-sonnet-5',
-    max_tokens: 4096,
+    // A recording is one step per click/keystroke, so 50+ interactions is
+    // ordinary — and the response has to carry a description per step PLUS the
+    // whole cleaned script. 4096 truncated real recordings mid-tool-call.
+    max_tokens: 16000,
     tools: [GENERATE_TOOL],
     tool_choice: { type: 'tool', name: 'generate_test' },
     messages: [{ role: 'user', content: prompt }],
@@ -48,6 +51,22 @@ async function generateFromCode(client, { rawCode, matchedBlockNames }) {
   }
 
   const result = toolUse.input;
+  // A truncated tool_use call still parses as an object, just with fields
+  // missing or half-built — which used to blow up as a bare `TypeError` from
+  // `result.steps.map` and surface to the user as an unexplained 500. Check the
+  // shape first and say what actually went wrong.
+  if (
+    response.stop_reason === 'max_tokens'
+    || !result
+    || typeof result.summary !== 'string'
+    || !Array.isArray(result.steps)
+    || typeof result.code !== 'string'
+    || typeof result.testData !== 'object'
+    || result.testData === null
+  ) {
+    throw new Error("Claude's response appears to be incomplete or malformed — try a shorter recording.");
+  }
+
   return {
     summary: result.summary,
     steps: result.steps.map((s, index) => ({ index, ...s })),

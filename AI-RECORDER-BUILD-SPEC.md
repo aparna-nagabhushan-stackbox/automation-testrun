@@ -96,11 +96,16 @@ This means a recording that reuses the first three steps of a Login block and th
 
 ### Selector Extraction
 
-The block matcher extracts selectors from Playwright code via regex: any call to `page.click()`, `page.fill()`, `page.goto()`, etc. (with other methods supported) has its first argument captured as a selector. The extracted sequence is then matched greedily against stored block sequences.
+The block matcher extracts a sequence of normalized "interaction keys" from Playwright code via regex, covering both recorders' output:
+
+- the legacy page-level API the in-tab bookmarklet emits — `page.click('#submit')`, `page.fill('#email', 'x')`, `page.goto(url)` — keyed by the first argument with its JS quotes stripped; and
+- the modern locator API Playwright's own codegen emits — `page.getByRole('button', { name: 'Submit' }).click()`, `page.getByTestId(…)`, `page.getByLabel(…)`, `page.getByPlaceholder(…)`, `page.getByText(…)`, `page.locator(…)` followed by an action — keyed by the locator call itself.
+
+The extracted sequence is then matched greedily against stored block sequences. Because matching compares raw recorder output, a block promoted from a generation stores that generation's **raw** recorded code (`generation.rawCode`), not Claude's cleaned/role-rewritten code — otherwise a block and a later recording would be two different representations of the same flow and could never match.
 
 ### Block Attribution per Step
 
-After Claude generates steps, each step is tagged with a block (if any) via `blockForSelector(segments, selector)`. This lookup is deterministic — Claude produces the step's natural-language description and confidence flag, but the server assigns the block without Claude needing to know the library exists.
+After Claude generates steps, each step is tagged with a block (if any) via `segmentForStepIndex(segments, step.index)` — attribution by POSITION in the recording, since segments are in recording order and Claude is asked for one step per meaningful interaction. This is deterministic: Claude produces the step's natural-language description and confidence flag, but the server assigns the block without Claude needing to know the library exists. (Attribution by selector string does not work — Claude returns a bare selector while extraction works from source text, and the modern locator API has no single selector string to compare.) A step index outside the extracted range is simply left untagged.
 
 ### API Surface
 

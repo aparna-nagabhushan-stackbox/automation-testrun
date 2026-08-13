@@ -13,8 +13,8 @@ const { requireAuth } = require('../auth');
 const Anthropic = require('@anthropic-ai/sdk');
 const db = require('../db');
 const { generateFromCode } = require('../services/claudeGenerate');
-const { maskSensitiveFields } = require('../services/dataMasking');
-const { segmentByBlocks, blockForSelector } = require('../services/blockMatcher');
+const { maskSensitiveFields, maskSensitiveValuesInCode } = require('../services/dataMasking');
+const { segmentByBlocks, segmentForStepIndex } = require('../services/blockMatcher');
 
 const RECORDINGS_DIR = path.join(__dirname, '..', 'recordings');
 fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
@@ -321,14 +321,23 @@ function buildBookmarklet(origin, sessionId) {
 
     const generated = await generateFromCode(claudeClient, { rawCode, matchedBlockNames });
     const testData = maskSensitiveFields(generated.testData);
+    // The cleaned code carries the typed-in values inline, so it has to be
+    // masked too — otherwise a password reaches disk in plaintext here and,
+    // on promote, inside a shared block.
+    const code = maskSensitiveValuesInCode(generated.code, generated.testData, testData);
 
-    // Block attribution is looked up per generated step by selector, not by
-    // index — Claude only owns the natural-language layer (description,
-    // confidence, cleaned code); which steps belong to a known block is
-    // computed deterministically from the same segments used for naming.
+    // Block attribution is looked up per generated step by POSITION, not by
+    // selector text — Claude only owns the natural-language layer
+    // (description, confidence, cleaned code); which steps belong to a known
+    // block is computed deterministically from the same segments used for
+    // naming. See segmentForStepIndex for why position rather than selector.
     const steps = generated.steps.map((s) => {
-      const match = blockForSelector(segments, s.selector);
-      return { ...s, blockId: match ? match.blockId : null, blockName: match ? match.blockName : null };
+      const segment = segmentForStepIndex(segments, s.index);
+      return {
+        ...s,
+        blockId: segment ? segment.blockId : null,
+        blockName: segment ? segment.blockName : null,
+      };
     });
 
     const lowConfidenceSteps = steps.filter((s) => s.confidence === 'low').map((s) => s.index);
@@ -343,10 +352,23 @@ function buildBookmarklet(origin, sessionId) {
 
     const result = {
       recordingId, project: project || '', flowName: flowName || '', testCaseName,
-      summary: generated.summary, steps, code: generated.code, testData,
+      summary: generated.summary, steps, code, testData,
       matchedBlockNames, needsReview,
     };
-    db.upsertGeneration(result);
+    // `rawCode` is kept alongside the cleaned code so that promoting this
+    // generation into a block stores the RAW recording. Block matching always
+    // runs extraction over raw recorder output, so a block's code has to be in
+    // that same representation to ever match — Claude's cleaned code prefers
+    // role-based locators and is a different shape. The response below still
+    // only exposes the masked `code` — rawCode is not surfaced to the client
+    // until (and unless) it is promoted into a block.
+    db.upsertGeneration({ ...result, rawCode });
+
+    // Re-generating the same recording replaces its generation (upsert), so it
+    // must replace its review entry too — otherwise clicking "Generate Code"
+    // twice leaves two pending entries for one recording. Done unconditionally
+    // so a re-generation that no longer needs review clears the stale entry.
+    db.removePendingReviewEntries(recordingId);
 
     if (needsReview) {
       db.createReviewEntry({

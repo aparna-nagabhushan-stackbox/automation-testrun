@@ -30,6 +30,22 @@ test('review queue: create and update status', () => {
   assert.equal(db.updateReviewEntryStatus(9999, 'approved'), null);
 });
 
+test('review queue: removing pending entries for a recording leaves other recordings and settled entries alone', () => {
+  const db = freshDb();
+  const stale = db.createReviewEntry({ project: 'Inbound', recordingId: 'r1', reason: 'weak locator', flaggedSteps: [1] });
+  const settled = db.createReviewEntry({ project: 'Inbound', recordingId: 'r1', reason: 'weak locator', flaggedSteps: [1] });
+  const other = db.createReviewEntry({ project: 'Inbound', recordingId: 'r2', reason: 'weak locator', flaggedSteps: [1] });
+  db.updateReviewEntryStatus(settled.id, 'promoted');
+
+  assert.equal(db.removePendingReviewEntries('r1'), 1);
+  const ids = db.getReviewQueue().map((e) => e.id).sort();
+  assert.deepEqual(ids, [settled.id, other.id].sort());
+  assert.ok(!ids.includes(stale.id));
+  // A recording with nothing pending is a no-op.
+  assert.equal(db.removePendingReviewEntries('r1'), 0);
+  assert.equal(db.removePendingReviewEntries('nope'), 0);
+});
+
 test('generations: upsert replaces the prior generation for the same recording', () => {
   const db = freshDb();
   db.upsertGeneration({ recordingId: 'r1', summary: 'first' });
