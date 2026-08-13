@@ -3894,15 +3894,15 @@
             <table>
               <thead>
                 <tr>
-                  <th>Bug No</th>
-                  <th>Module</th>
-                  <th>Feature</th>
-                  <th>Bug Description</th>
-                  <th>Expected Result</th>
-                  <th>Reported By</th>
-                  <th>Assigned To</th>
-                  <th>Status</th>
-                  <th>Attachment</th>
+                  <th style="position:relative">Bug No <span class="xf-btn" onclick="showXFilter(event,0,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Module <span class="xf-btn" onclick="showXFilter(event,1,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Feature <span class="xf-btn" onclick="showXFilter(event,2,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Bug Description <span class="xf-btn" onclick="showXFilter(event,3,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Expected Result <span class="xf-btn" onclick="showXFilter(event,4,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Reported By <span class="xf-btn" onclick="showXFilter(event,5,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Assigned To <span class="xf-btn" onclick="showXFilter(event,6,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Status <span class="xf-btn" onclick="showXFilter(event,7,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Attachment <span class="xf-btn" onclick="showXFilter(event,8,'bugs-tbody')">▼</span></th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -6465,6 +6465,17 @@
   // ── Manually-logged bugs (stored separately from automation run data) ──
   const BUG_STATUSES = ['Open', 'Reported', 'To Deploy', 'Re-opened', 'Not a Bug'];
   const BUG_OPEN_STATUSES = ['Open', 'Reported', 'Re-opened'];
+  const BUG_STATUS_COLORS = {
+    'Open':       { bg: '#ffebee', color: '#c62828' },
+    'Reported':   { bg: '#e3f2fd', color: '#1565c0' },
+    'To Deploy':  { bg: '#e8f5e9', color: '#2e7d32' },
+    'Re-opened':  { bg: '#fff3e0', color: '#e65100' },
+    'Not a Bug':  { bg: '#f5f5f5', color: '#757575' },
+  };
+  function bugStatusStyle(status) {
+    const c = BUG_STATUS_COLORS[status] || BUG_STATUS_COLORS['Open'];
+    return `padding:5px 8px;font-size:12px;width:auto;font-weight:600;border-radius:6px;background:${c.bg};color:${c.color};border:1.5px solid ${c.bg}`;
+  }
 
   function loadBugs() {
     return JSON.parse(localStorage.getItem('stacktest_bugs') || '[]');
@@ -6611,7 +6622,7 @@
         <td style="font-size:12px">${b.reportedBy || '—'}</td>
         <td style="font-size:12px">${b.assignedTo || '—'}</td>
         <td>
-          <select class="tc-input" style="padding:5px 8px;font-size:12px;width:auto" onchange="updateBugStatus(${i}, this.value)">
+          <select style="${bugStatusStyle(b.status)}" onchange="updateBugStatus(${i}, this.value)">
             ${BUG_STATUSES.map(s => `<option value="${s}" ${b.status === s ? 'selected' : ''}>${s}</option>`).join('')}
           </select>
         </td>
@@ -6621,6 +6632,7 @@
           { label: '🗑️ Delete', danger: true, onclick: `deleteBug(${i})` },
         ])}</td>
       </tr>`).join('');
+    xfApplySuite(); // keep any active column filter applied across re-renders (e.g. after an inline status change)
   }
 
   // ── Auto Test Suite from Results ──
@@ -6711,12 +6723,22 @@
 
   function xfKey() { return xfTbody + '_' + xfCol; }
 
+  // A cell's filterable value is its own text — EXCEPT when it holds a
+  // live control like the Bug Tracker's inline status <select>, whose
+  // .textContent is every <option> concatenated regardless of which one
+  // is selected. Read the control's current value in that case instead.
+  function xfCellValue(cell) {
+    const sel = cell.querySelector('select');
+    if (sel) return sel.value.trim();
+    return cell.textContent.trim();
+  }
+
   function xfGetAllValues() {
     const rows = document.querySelectorAll('#' + xfTbody + ' tr');
     const vals = [];
     rows.forEach(r => {
       const cell = r.querySelectorAll('td')[xfCol];
-      if (cell) vals.push(cell.textContent.trim());
+      if (cell) vals.push(xfCellValue(cell));
     });
     return [...new Set(vals)].sort();
   }
@@ -6779,7 +6801,7 @@
           if (!sel) return;
           const cell = cells[parseInt(col)];
           if (!cell) return;
-          if (!sel.has(cell.textContent.trim())) show = false;
+          if (!sel.has(xfCellValue(cell))) show = false;
         });
         row.style.display = show ? '' : 'none';
       });
@@ -6792,7 +6814,7 @@
       const key = m[2] + '_' + m[1];
       const sel = xfSelections[key];
       const all = [...new Set([...document.querySelectorAll('#' + m[2] + ' tr')]
-        .map(r => r.querySelectorAll('td')[parseInt(m[1])]?.textContent?.trim()||''))];
+        .map(r => { const c = r.querySelectorAll('td')[parseInt(m[1])]; return c ? xfCellValue(c) : ''; }))];
       btn.style.color = (sel && sel.size < all.length) ? '#e65100' : '';
     });
   }
