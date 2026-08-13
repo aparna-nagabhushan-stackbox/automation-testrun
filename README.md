@@ -44,6 +44,12 @@ npm test
 
 Spins up the backend on a throwaway port + temp data directory, bootstraps an admin, exercises the dashboard and Admin panel, and fails loudly on any JS error. Screenshots land in `tests/screenshots/`. Doesn't touch your real `server/data/`.
 
+## AI Recorder — Claude-backed insights
+
+Both AI Recorder modes (in-tab bookmarklet and Playwright-codegen "new window") now also ask Claude to turn the recording into plain-English steps with confidence flags, a plain-English summary, cleaned code, and masked test data. Flows that don't match an existing block, or that have a low-confidence locator, land in a pending review queue — an admin can approve them as one-off tests or promote them into a locked, reusable block. See [AI-RECORDER-BUILD-SPEC.md](AI-RECORDER-BUILD-SPEC.md) for the full design and `docs/superpowers/plans/2026-08-13-ai-recorder-enhancements.md` for the implementation plan.
+
+Requires `ANTHROPIC_API_KEY` in `.env` — get one from [console.anthropic.com](https://console.anthropic.com/).
+
 ## Structure
 
 - `index.html` — the entire frontend

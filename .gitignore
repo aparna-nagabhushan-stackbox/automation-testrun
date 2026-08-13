@@ -7,3 +7,5 @@ server/recordings/
 server/recorder-profile/
 tests/screenshots/
 dist/
+server.log
+.superpowers/
