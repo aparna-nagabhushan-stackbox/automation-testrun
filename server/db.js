@@ -9,6 +9,9 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const INVITES_FILE = path.join(DATA_DIR, 'invites.json');
 const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
+const BLOCKS_FILE = path.join(DATA_DIR, 'blocks.json');
+const REVIEW_QUEUE_FILE = path.join(DATA_DIR, 'reviewQueue.json');
+const GENERATIONS_FILE = path.join(DATA_DIR, 'generations.json');
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
@@ -130,8 +133,74 @@ function createProject({ name, createdBy }) {
   return project;
 }
 
+function getBlocks() {
+  return readJson(BLOCKS_FILE, []);
+}
+function saveBlocks(blocks) {
+  writeJson(BLOCKS_FILE, blocks);
+}
+function getBlocksByProject(project) {
+  return getBlocks().filter((b) => b.project === project);
+}
+function createBlock({ project, name, code, createdBy }) {
+  const blocks = getBlocks();
+  const block = {
+    id: blocks.length ? Math.max(...blocks.map((b) => b.id)) + 1 : 1,
+    project, name, code, locked: true, createdBy,
+    createdAt: new Date().toISOString(),
+  };
+  blocks.push(block);
+  saveBlocks(blocks);
+  return block;
+}
+
+function getReviewQueue() {
+  return readJson(REVIEW_QUEUE_FILE, []);
+}
+function saveReviewQueue(entries) {
+  writeJson(REVIEW_QUEUE_FILE, entries);
+}
+function createReviewEntry({ project, recordingId, reason, flaggedSteps }) {
+  const entries = getReviewQueue();
+  const entry = {
+    id: entries.length ? Math.max(...entries.map((e) => e.id)) + 1 : 1,
+    project, recordingId, reason, flaggedSteps, status: 'pending',
+    createdAt: new Date().toISOString(),
+  };
+  entries.push(entry);
+  saveReviewQueue(entries);
+  return entry;
+}
+function updateReviewEntryStatus(id, status) {
+  const entries = getReviewQueue();
+  const entry = entries.find((e) => e.id === id);
+  if (!entry) return null;
+  entry.status = status;
+  saveReviewQueue(entries);
+  return entry;
+}
+
+function getGenerations() {
+  return readJson(GENERATIONS_FILE, []);
+}
+function saveGenerations(generations) {
+  writeJson(GENERATIONS_FILE, generations);
+}
+function upsertGeneration(generation) {
+  const generations = getGenerations().filter((g) => g.recordingId !== generation.recordingId);
+  generations.push(generation);
+  saveGenerations(generations);
+  return generation;
+}
+function getGenerationByRecordingId(recordingId) {
+  return getGenerations().find((g) => g.recordingId === recordingId) || null;
+}
+
 module.exports = {
   getUsers, saveUsers, findUserByEmail, createUser, updateUserPassword, updateUserRole, deleteUser,
   getInvites, saveInvites, findInviteByToken, createInvite, markInviteAccepted,
   getProjects, saveProjects, findProjectByName, createProject,
+  getBlocks, saveBlocks, getBlocksByProject, createBlock,
+  getReviewQueue, saveReviewQueue, createReviewEntry, updateReviewEntryStatus,
+  getGenerations, saveGenerations, upsertGeneration, getGenerationByRecordingId,
 };
