@@ -7,6 +7,20 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { segmentByBlocks } = require('../services/blockMatcher');
 
+// Trimmed from a real recording this app produced (server/recordings/ is
+// gitignored, so this must be self-contained — a test reading that path
+// directly only passes on the machine that happened to record it, and fails
+// ENOENT on every fresh clone and in CI). Kept identical to blockMatcher.test.js's
+// CODEGEN_LOGIN_CODE, since both are standing in for the same real recording.
+const RAW_CODEGEN = `
+  await page.goto('http://localhost:3000/');
+  await page.getByRole('textbox', { name: 'Enter your email' }).click();
+  await page.getByRole('textbox', { name: 'Enter your email' }).fill('tanuja@stackbox.xyz');
+  await page.getByRole('textbox', { name: 'Enter password' }).click();
+  await page.getByRole('textbox', { name: 'Enter password' }).fill('123456789');
+  await page.getByRole('button', { name: 'Login' }).click();
+`;
+
 // Deviation from the brief's literal test text: unlike blocks.js/reviewQueue.js
 // (auth'd once at the index.js mount level, so a fake `req.user` middleware
 // upstream of the router is enough), recorder.js's existing routes each call
@@ -441,9 +455,7 @@ test('end-to-end: a recording is reviewed, promoted to a block, and a later reco
 
 test('end-to-end: a block promoted from a real codegen recording matches a later codegen recording', async () => {
   // The exact failure mode the old code had: both the block and the new
-  // recording come from Playwright's own codegen (modern locator API), read
-  // from a recording this app actually produced.
-  const RAW_CODEGEN = fs.readFileSync(path.join(__dirname, '..', 'recordings', 'cc2cd09e97fdc506.js'), 'utf8');
+  // recording come from Playwright's own codegen (modern locator API).
   const { server, port } = await listen(freshApp(null));
   try {
     const db = require('../db');
