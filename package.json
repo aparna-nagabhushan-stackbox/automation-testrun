@@ -1,0 +1,28 @@
+{
+  "name": "stacktest",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dashboard for tracking Playwright automation test results, with a small Node backend for real user accounts.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "tsx tests/verify-dashboard.ts",
+    "install-browser": "playwright install chromium"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cookie-parser": "^1.4.7",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}
