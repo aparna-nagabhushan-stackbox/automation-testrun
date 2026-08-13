@@ -4809,6 +4809,7 @@
   // ── Filter logic ──
   function applyFilter(app) {
     currentApp = app;
+    localStorage.setItem('stacktest_current_app', app);
     updateStats();
     filterTable();
     updateLastExecution();
@@ -4977,6 +4978,7 @@
 
   function setDashScope(scope) {
     dashScope = scope;
+    localStorage.setItem('stacktest_dash_scope', scope);
     document.querySelectorAll('#scope-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.scope === scope));
     document.querySelectorAll('.dash-scope-all-auto').forEach(el => el.style.display = (scope === 'MANUAL') ? 'none' : '');
     document.querySelectorAll('.dash-scope-all-manual').forEach(el => el.style.display = (scope === 'AUTOMATION') ? 'none' : '');
@@ -5657,7 +5659,13 @@
     document.getElementById('nav-admin-section').style.display = isAdmin ? 'block' : 'none';
     showAuthMessage('');
     await loadProjectsIntoFilter();
-    applyFilter('ALL');
+
+    // Restore the Project filter the user had selected instead of always
+    // resetting to "All Projects" on refresh.
+    const savedApp = localStorage.getItem('stacktest_current_app') || 'ALL';
+    const appFilterSel = document.getElementById('app-filter');
+    if ([...appFilterSel.options].some(o => o.value === savedApp)) appFilterSel.value = savedApp;
+    applyFilter(appFilterSel.value);
 
     // Restore whichever page the user was last looking at instead of
     // always dropping back to the Dashboard on refresh.
@@ -5665,6 +5673,10 @@
     if (lastPage === 'admin' && !isAdmin) lastPage = 'home';
     if (!document.getElementById('page-' + lastPage)) lastPage = 'home';
     showPage(lastPage);
+
+    // Restore the Dashboard's All/Manual/Automation scope tab too, so a
+    // refresh while on Manual doesn't silently drop back to All.
+    setDashScope(localStorage.getItem('stacktest_dash_scope') || 'ALL');
   }
 
   // Runs once on page load: decides whether to show an invite/reset form,
