@@ -74,7 +74,7 @@
     .login-logo .logo-icon { font-size:36px; }
     .login-logo h2 { font-size:22px; font-weight:700; color:#0f3460; margin-top:8px; }
     .login-logo p  { font-size:13px; color:#888; margin-top:4px; }
-    .login-form-wrap label { display:block; font-size:12px; font-weight:600; color:#555; margin-bottom:6px; }
+    .login-form-wrap label { display:block; font-size:12px; font-weight:600; color:var(--stx-text1); margin-bottom:6px; }
     .login-form-wrap input {
       width:100%; padding:10px 12px; border:1.5px solid #e0e0e0;
       border-radius:7px; font-size:13px; outline:none; transition:border-color .2s;
@@ -88,7 +88,7 @@
       cursor:pointer; margin-top:4px; transition:opacity .2s; letter-spacing:.3px;
     }
     .login-btn:hover { opacity:.9; }
-    .login-err { color:#c62828; font-size:12px; text-align:center; margin-top:10px; display:none; }
+    .login-err { color:var(--stx-red); font-size:12px; text-align:center; margin-top:10px; display:none; }
 
     /* ── APP SHELL ── */
     #app { display:none; height:100vh; }
@@ -346,7 +346,7 @@
     .bug-result-cell { display:flex; flex-direction:column; gap:2px; }
     .bug-result-label { font-size:12px; font-weight:700; white-space:nowrap; }
     .bug-result-date  { font-size:10px; color:#999; }
-    .bug-open-label   { color:#c62828; }
+    .bug-open-label   { color:var(--stx-red); }
     .bug-resolved-label { color:#2e7d32; }
     .bug-row-open   { border-left:3px solid #e53935; }
     .bug-row-resolved { border-left:3px solid #43a047; }
@@ -370,9 +370,9 @@
     .integ-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
     .integ-card { background:#fff; border:1px solid #eef0f4; border-radius:12px; padding:20px; display:flex; flex-direction:column; min-height:150px; }
     .integ-card-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px; }
-    .integ-title { font-size:15px; font-weight:700; color:#1a1a2e; }
+    .integ-title { font-size:15px; font-weight:700; color:var(--stx-text0); }
     .integ-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex:none; }
-    .integ-desc { font-size:12.5px; color:#666; line-height:1.6; flex:1; }
+    .integ-desc { font-size:12.5px; color:var(--stx-text2); line-height:1.6; flex:1; }
     .integ-card-bottom { display:flex; align-items:center; justify-content:space-between; margin-top:14px; }
     .integ-status { font-size:12px; font-weight:600; text-decoration:none; }
     .integ-status-soon { color:#9aa0ac; }
@@ -381,12 +381,12 @@
 
     /* Settings page */
     .settings-tabs { margin-bottom:22px; background:transparent; padding:0; border-radius:0; border-bottom:1px solid #eaecf0; gap:22px; }
-    .settings-tabs .seg-tab { background:none; border-radius:0; padding:8px 2px 12px; font-weight:600; color:#666; box-shadow:none; border-bottom:2px solid transparent; }
+    .settings-tabs .seg-tab { background:none; border-radius:0; padding:8px 2px 12px; font-weight:600; color:var(--stx-text2); box-shadow:none; border-bottom:2px solid transparent; }
     .settings-tabs .seg-tab.active { background:none; color:#5e35b1; border-bottom-color:#5e35b1; box-shadow:none; }
     .settings-panel { max-width:620px; }
     #settings-panel-project, #settings-panel-ai { margin:0 auto; }
     .settings-card { background:#fff; border:1px solid #eef0f4; border-radius:12px; padding:26px; margin-bottom:18px; }
-    .settings-card-title { font-size:17px; font-weight:700; color:#1a1a2e; margin-bottom:6px; }
+    .settings-card-title { font-size:17px; font-weight:700; color:var(--stx-text0); margin-bottom:6px; }
     .settings-card-sub { font-size:12.5px; color:#888; margin-bottom:16px; line-height:1.6; }
     .settings-field { margin-bottom:16px; }
     .settings-field label { display:block; font-size:12.5px; font-weight:600; color:#333; margin-bottom:6px; }
@@ -413,7 +413,7 @@
     .settings-switch input:checked + span:before { transform:translateX(16px); }
     .automation-config-layout { display:flex; gap:20px; align-items:flex-start; }
     .automation-config-nav { width:190px; flex:none; display:flex; flex-direction:column; gap:2px; }
-    .automation-config-nav-item { padding:10px 12px; border-radius:8px; font-size:13px; font-weight:600; color:#555; cursor:pointer; }
+    .automation-config-nav-item { padding:10px 12px; border-radius:8px; font-size:13px; font-weight:600; color:var(--stx-text1); cursor:pointer; }
     .automation-config-nav-item:hover { background:#f5f5f8; }
     .automation-config-nav-item.active { background:#f3ecfb; color:#5e35b1; }
     .env-var-row { display:grid; grid-template-columns:1fr 1fr auto auto; gap:10px; align-items:center; margin-bottom:10px; }
@@ -605,7 +605,7 @@
           <label>Password</label>
           <div style="position:relative">
             <input type="password" id="password" placeholder="Enter password" style="padding-right:44px" onkeydown="if(event.key==='Enter') handleAuthSubmit()"/>
-            <span onclick="togglePwd()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;color:#aaa;user-select:none" id="eye-icon">👁</span>
+            <span onclick="togglePwd()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;color:var(--stx-text2);user-select:none" id="eye-icon">👁</span>
           </div>
         </div>
         <div class="field" id="confirm-field" style="display:none">
@@ -620,10 +620,10 @@
         </div>
       </div>
       <div id="forgot-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;display:none;align-items:center;justify-content:center">
-        <div style="background:#fff;border-radius:12px;padding:32px;width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center">
+        <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center">
           <div style="font-size:36px;margin-bottom:12px">🔐</div>
-          <div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Forgot Password?</div>
-          <div style="font-size:13px;color:#666;line-height:1.6;margin-bottom:20px">Ask an admin on your team to generate a reset link for you from the Admin page.</div>
+          <div style="font-size:16px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Forgot Password?</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.6;margin-bottom:20px">Ask an admin on your team to generate a reset link for you from the Admin page.</div>
           <button onclick="document.getElementById('forgot-modal').style.display='none'" style="padding:9px 28px;background:#0f3460;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Close</button>
         </div>
       </div>
@@ -832,12 +832,12 @@
         <div class="table-card">
           <div class="table-card-header" style="flex-direction:column;align-items:stretch;gap:12px">
             <div style="display:flex;align-items:center;justify-content:space-between">
-              <h3>Execution Results <span style="font-size:11px;color:#9CA3AF;font-weight:400;text-transform:none;letter-spacing:0">(current run only)</span></h3>
+              <h3>Execution Results <span style="font-size:11px;color:var(--stx-text2);font-weight:400;text-transform:none;letter-spacing:0">(current run only)</span></h3>
               <div></div>
             </div>
             <div style="display:flex;gap:10px;align-items:center">
               <div style="position:relative;flex:1">
-                <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:12px;color:#9CA3AF;pointer-events:none">🔍</span>
+                <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--stx-text2);pointer-events:none">🔍</span>
                 <input id="tc-search" oninput="filterTable()" placeholder="Search by test case, status, result…" class="tc-input" style="padding-left:34px"/>
               </div>
               <select id="status-filter" class="app-filter" onchange="filterTable()" style="min-width:130px">
@@ -872,7 +872,7 @@
           <td class="col-dur">36.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 14:03</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC12</span></td>
@@ -885,7 +885,7 @@
           <td class="col-dur">18.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC13</span></td>
@@ -898,7 +898,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC14</span></td>
@@ -911,7 +911,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC15</span></td>
@@ -924,7 +924,7 @@
           <td class="col-dur">7.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC16</span></td>
@@ -937,7 +937,7 @@
           <td class="col-dur">7.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC17</span></td>
@@ -950,7 +950,7 @@
           <td class="col-dur">2.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC18</span></td>
@@ -963,7 +963,7 @@
           <td class="col-dur">7.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:54</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rf" data-app="YMSOUTBOUND" data-runid="26">
           <td><span class="tc-pill">TC19</span></td>
@@ -989,7 +989,7 @@
           <td class="col-dur">17.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC13</span></td>
@@ -1002,7 +1002,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC14</span></td>
@@ -1015,7 +1015,7 @@
           <td class="col-dur">4.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC15</span></td>
@@ -1028,7 +1028,7 @@
           <td class="col-dur">7.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC16</span></td>
@@ -1041,7 +1041,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC17</span></td>
@@ -1054,7 +1054,7 @@
           <td class="col-dur">2.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC18</span></td>
@@ -1067,7 +1067,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC19</span></td>
@@ -1080,7 +1080,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC20</span></td>
@@ -1093,7 +1093,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC21</span></td>
@@ -1106,7 +1106,7 @@
           <td class="col-dur">14.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC22</span></td>
@@ -1119,7 +1119,7 @@
           <td class="col-dur">6.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC23</span></td>
@@ -1132,7 +1132,7 @@
           <td class="col-dur">9.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="25">
           <td><span class="tc-pill">TC24</span></td>
@@ -1145,7 +1145,7 @@
           <td class="col-dur">1.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 13:02</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC12</span></td>
@@ -1158,7 +1158,7 @@
           <td class="col-dur">18.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC13</span></td>
@@ -1171,7 +1171,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC14</span></td>
@@ -1184,7 +1184,7 @@
           <td class="col-dur">4.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC15</span></td>
@@ -1197,7 +1197,7 @@
           <td class="col-dur">6.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC16</span></td>
@@ -1210,7 +1210,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC17</span></td>
@@ -1223,7 +1223,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC18</span></td>
@@ -1236,7 +1236,7 @@
           <td class="col-dur">6.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC19</span></td>
@@ -1249,7 +1249,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC20</span></td>
@@ -1262,7 +1262,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC21</span></td>
@@ -1275,7 +1275,7 @@
           <td class="col-dur">14.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC22</span></td>
@@ -1288,7 +1288,7 @@
           <td class="col-dur">6.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC23</span></td>
@@ -1301,7 +1301,7 @@
           <td class="col-dur">9.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="24">
           <td><span class="tc-pill">TC24</span></td>
@@ -1314,7 +1314,7 @@
           <td class="col-dur">1.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC12</span></td>
@@ -1327,7 +1327,7 @@
           <td class="col-dur">17.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC13</span></td>
@@ -1340,7 +1340,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC14</span></td>
@@ -1353,7 +1353,7 @@
           <td class="col-dur">4.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC15</span></td>
@@ -1366,7 +1366,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC16</span></td>
@@ -1379,7 +1379,7 @@
           <td class="col-dur">6.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC17</span></td>
@@ -1392,7 +1392,7 @@
           <td class="col-dur">2.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC18</span></td>
@@ -1405,7 +1405,7 @@
           <td class="col-dur">6.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC19</span></td>
@@ -1418,7 +1418,7 @@
           <td class="col-dur">5.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC20</span></td>
@@ -1431,7 +1431,7 @@
           <td class="col-dur">1.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC21</span></td>
@@ -1444,7 +1444,7 @@
           <td class="col-dur">14.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC22</span></td>
@@ -1457,7 +1457,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC23</span></td>
@@ -1470,7 +1470,7 @@
           <td class="col-dur">9.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="23">
           <td><span class="tc-pill">TC24</span></td>
@@ -1483,7 +1483,7 @@
           <td class="col-dur">1.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 12:46</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC12</span></td>
@@ -1496,7 +1496,7 @@
           <td class="col-dur">17.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC13</span></td>
@@ -1509,7 +1509,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC14</span></td>
@@ -1522,7 +1522,7 @@
           <td class="col-dur">4.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC15</span></td>
@@ -1535,7 +1535,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC16</span></td>
@@ -1548,7 +1548,7 @@
           <td class="col-dur">6.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC17</span></td>
@@ -1561,7 +1561,7 @@
           <td class="col-dur">2.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC18</span></td>
@@ -1574,7 +1574,7 @@
           <td class="col-dur">6.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC19</span></td>
@@ -1587,7 +1587,7 @@
           <td class="col-dur">5.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC20</span></td>
@@ -1600,7 +1600,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC21</span></td>
@@ -1613,7 +1613,7 @@
           <td class="col-dur">14.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC22</span></td>
@@ -1626,7 +1626,7 @@
           <td class="col-dur">6.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC23</span></td>
@@ -1639,7 +1639,7 @@
           <td class="col-dur">9.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="22">
           <td><span class="tc-pill">TC24</span></td>
@@ -1652,7 +1652,7 @@
           <td class="col-dur">1.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:51</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC12</span></td>
@@ -1665,7 +1665,7 @@
           <td class="col-dur">17.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC13</span></td>
@@ -1678,7 +1678,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC14</span></td>
@@ -1691,7 +1691,7 @@
           <td class="col-dur">4.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC15</span></td>
@@ -1704,7 +1704,7 @@
           <td class="col-dur">6.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC16</span></td>
@@ -1717,7 +1717,7 @@
           <td class="col-dur">6.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC17</span></td>
@@ -1730,7 +1730,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC18</span></td>
@@ -1743,7 +1743,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC19</span></td>
@@ -1756,7 +1756,7 @@
           <td class="col-dur">5.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC20</span></td>
@@ -1769,7 +1769,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC21</span></td>
@@ -1782,7 +1782,7 @@
           <td class="col-dur">14.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC22</span></td>
@@ -1795,7 +1795,7 @@
           <td class="col-dur">6.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rf" data-app="YMSOUTBOUND" data-runid="21">
           <td><span class="tc-pill">TC23</span></td>
@@ -1821,7 +1821,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC12</span></td>
@@ -1834,7 +1834,7 @@
           <td class="col-dur">17.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC13</span></td>
@@ -1847,7 +1847,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC14</span></td>
@@ -1860,7 +1860,7 @@
           <td class="col-dur">4.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC15</span></td>
@@ -1873,7 +1873,7 @@
           <td class="col-dur">6.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC16</span></td>
@@ -1886,7 +1886,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC17</span></td>
@@ -1899,7 +1899,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC18</span></td>
@@ -1912,7 +1912,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC19</span></td>
@@ -1925,7 +1925,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC20</span></td>
@@ -1938,7 +1938,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC21</span></td>
@@ -1951,7 +1951,7 @@
           <td class="col-dur">14.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rf" data-app="YMSOUTBOUND" data-runid="20">
           <td><span class="tc-pill">TC22</span></td>
@@ -1990,7 +1990,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:36</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC12</span></td>
@@ -2003,7 +2003,7 @@
           <td class="col-dur">16.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC13</span></td>
@@ -2016,7 +2016,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC14</span></td>
@@ -2029,7 +2029,7 @@
           <td class="col-dur">4.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC15</span></td>
@@ -2042,7 +2042,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC16</span></td>
@@ -2055,7 +2055,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC17</span></td>
@@ -2068,7 +2068,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC18</span></td>
@@ -2081,7 +2081,7 @@
           <td class="col-dur">6.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC19</span></td>
@@ -2094,7 +2094,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC20</span></td>
@@ -2107,7 +2107,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC21</span></td>
@@ -2120,7 +2120,7 @@
           <td class="col-dur">14.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC22</span></td>
@@ -2133,7 +2133,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC23</span></td>
@@ -2146,7 +2146,7 @@
           <td class="col-dur">9.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="19">
           <td><span class="tc-pill">TC24</span></td>
@@ -2159,7 +2159,7 @@
           <td class="col-dur">1.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:23</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC12</span></td>
@@ -2172,7 +2172,7 @@
           <td class="col-dur">18.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC13</span></td>
@@ -2185,7 +2185,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC14</span></td>
@@ -2198,7 +2198,7 @@
           <td class="col-dur">4.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC15</span></td>
@@ -2211,7 +2211,7 @@
           <td class="col-dur">6.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC16</span></td>
@@ -2224,7 +2224,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC17</span></td>
@@ -2237,7 +2237,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC18</span></td>
@@ -2250,7 +2250,7 @@
           <td class="col-dur">6.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC19</span></td>
@@ -2263,7 +2263,7 @@
           <td class="col-dur">5.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rf" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC20</span></td>
@@ -2289,7 +2289,7 @@
           <td class="col-dur">14.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC22</span></td>
@@ -2302,7 +2302,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC23</span></td>
@@ -2315,7 +2315,7 @@
           <td class="col-dur">9.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="18">
           <td><span class="tc-pill">TC24</span></td>
@@ -2328,7 +2328,7 @@
           <td class="col-dur">1.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">02 Jun 2026 00:18</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC12</span></td>
@@ -2341,7 +2341,7 @@
           <td class="col-dur">17.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC13</span></td>
@@ -2354,7 +2354,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC14</span></td>
@@ -2367,7 +2367,7 @@
           <td class="col-dur">4.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC15</span></td>
@@ -2380,7 +2380,7 @@
           <td class="col-dur">6.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC16</span></td>
@@ -2393,7 +2393,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC17</span></td>
@@ -2406,7 +2406,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC18</span></td>
@@ -2419,7 +2419,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC19</span></td>
@@ -2432,7 +2432,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rf" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC20</span></td>
@@ -2458,7 +2458,7 @@
           <td class="col-dur">14.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC22</span></td>
@@ -2471,7 +2471,7 @@
           <td class="col-dur">5.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC23</span></td>
@@ -2484,7 +2484,7 @@
           <td class="col-dur">9.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="16">
           <td><span class="tc-pill">TC24</span></td>
@@ -2497,7 +2497,7 @@
           <td class="col-dur">1.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:53</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC12</span></td>
@@ -2510,7 +2510,7 @@
           <td class="col-dur">16.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC13</span></td>
@@ -2523,7 +2523,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC14</span></td>
@@ -2536,7 +2536,7 @@
           <td class="col-dur">4.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC15</span></td>
@@ -2549,7 +2549,7 @@
           <td class="col-dur">6.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC16</span></td>
@@ -2562,7 +2562,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC17</span></td>
@@ -2575,7 +2575,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC18</span></td>
@@ -2588,7 +2588,7 @@
           <td class="col-dur">6.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC19</span></td>
@@ -2601,7 +2601,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC20</span></td>
@@ -2614,7 +2614,7 @@
           <td class="col-dur">17.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC21</span></td>
@@ -2627,7 +2627,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="15">
           <td><span class="tc-pill">TC22</span></td>
@@ -2640,7 +2640,7 @@
           <td class="col-dur">9.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:06</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2653,7 +2653,7 @@
           <td class="col-dur">17.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2666,7 +2666,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2679,7 +2679,7 @@
           <td class="col-dur">4.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2692,7 +2692,7 @@
           <td class="col-dur">6.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2705,7 +2705,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2718,7 +2718,7 @@
           <td class="col-dur">2.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2731,7 +2731,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="14">
           <td><span class="tc-pill">TC12</span></td>
@@ -2744,7 +2744,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 23:00</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC13</span></td>
@@ -2757,7 +2757,7 @@
           <td class="col-dur">17.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC14</span></td>
@@ -2770,7 +2770,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC15</span></td>
@@ -2783,7 +2783,7 @@
           <td class="col-dur">4.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC16</span></td>
@@ -2796,7 +2796,7 @@
           <td class="col-dur">6.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC17</span></td>
@@ -2809,7 +2809,7 @@
           <td class="col-dur">6.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC18</span></td>
@@ -2822,7 +2822,7 @@
           <td class="col-dur">2.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC19</span></td>
@@ -2835,7 +2835,7 @@
           <td class="col-dur">6.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="13">
           <td><span class="tc-pill">TC20</span></td>
@@ -2848,7 +2848,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:55</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC12</span></td>
@@ -2861,7 +2861,7 @@
           <td class="col-dur">4.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC13</span></td>
@@ -2874,7 +2874,7 @@
           <td class="col-dur">16.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC14</span></td>
@@ -2887,7 +2887,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC15</span></td>
@@ -2900,7 +2900,7 @@
           <td class="col-dur">4.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC16</span></td>
@@ -2913,7 +2913,7 @@
           <td class="col-dur">7.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC17</span></td>
@@ -2926,7 +2926,7 @@
           <td class="col-dur">6.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC18</span></td>
@@ -2939,7 +2939,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC19</span></td>
@@ -2952,7 +2952,7 @@
           <td class="col-dur">6.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMSOUTBOUND" data-runid="12">
           <td><span class="tc-pill">TC20</span></td>
@@ -2965,7 +2965,7 @@
           <td class="col-dur">5.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:43</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC1</span></td>
@@ -2978,7 +2978,7 @@
           <td class="col-dur">3.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC2</span></td>
@@ -2991,7 +2991,7 @@
           <td class="col-dur">10.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC3</span></td>
@@ -3004,7 +3004,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC4</span></td>
@@ -3017,7 +3017,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC5</span></td>
@@ -3030,7 +3030,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC6</span></td>
@@ -3043,7 +3043,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC7</span></td>
@@ -3056,7 +3056,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC8</span></td>
@@ -3069,7 +3069,7 @@
           <td class="col-dur">3.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC9</span></td>
@@ -3082,7 +3082,7 @@
           <td class="col-dur">2.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC10</span></td>
@@ -3095,7 +3095,7 @@
           <td class="col-dur">7.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="11">
           <td><span class="tc-pill">TC11</span></td>
@@ -3108,7 +3108,7 @@
           <td class="col-dur">3.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 22:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC1</span></td>
@@ -3121,7 +3121,7 @@
           <td class="col-dur">3.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC2</span></td>
@@ -3134,7 +3134,7 @@
           <td class="col-dur">10.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC3</span></td>
@@ -3147,7 +3147,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC4</span></td>
@@ -3160,7 +3160,7 @@
           <td class="col-dur">5.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC5</span></td>
@@ -3173,7 +3173,7 @@
           <td class="col-dur">5.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC6</span></td>
@@ -3186,7 +3186,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC7</span></td>
@@ -3199,7 +3199,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC8</span></td>
@@ -3212,7 +3212,7 @@
           <td class="col-dur">3.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC9</span></td>
@@ -3225,7 +3225,7 @@
           <td class="col-dur">2.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="10">
           <td><span class="tc-pill">TC10</span></td>
@@ -3238,7 +3238,7 @@
           <td class="col-dur">7.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:56</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC1</span></td>
@@ -3251,7 +3251,7 @@
           <td class="col-dur">4.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC2</span></td>
@@ -3264,7 +3264,7 @@
           <td class="col-dur">11.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC3</span></td>
@@ -3277,7 +3277,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC4</span></td>
@@ -3290,7 +3290,7 @@
           <td class="col-dur">5.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC5</span></td>
@@ -3303,7 +3303,7 @@
           <td class="col-dur">5.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC6</span></td>
@@ -3316,7 +3316,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC7</span></td>
@@ -3329,7 +3329,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC8</span></td>
@@ -3342,7 +3342,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC9</span></td>
@@ -3355,7 +3355,7 @@
           <td class="col-dur">2.7s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="9">
           <td><span class="tc-pill">TC10</span></td>
@@ -3368,7 +3368,7 @@
           <td class="col-dur">7.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 21:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC1</span></td>
@@ -3381,7 +3381,7 @@
           <td class="col-dur">5.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC2</span></td>
@@ -3394,7 +3394,7 @@
           <td class="col-dur">11.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC3</span></td>
@@ -3407,7 +3407,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC4</span></td>
@@ -3420,7 +3420,7 @@
           <td class="col-dur">5.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC5</span></td>
@@ -3433,7 +3433,7 @@
           <td class="col-dur">5.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC6</span></td>
@@ -3446,7 +3446,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC7</span></td>
@@ -3459,7 +3459,7 @@
           <td class="col-dur">2.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC8</span></td>
@@ -3472,7 +3472,7 @@
           <td class="col-dur">3.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC9</span></td>
@@ -3485,7 +3485,7 @@
           <td class="col-dur">2.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="8">
           <td><span class="tc-pill">TC10</span></td>
@@ -3498,7 +3498,7 @@
           <td class="col-dur">7.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:17</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC1</span></td>
@@ -3511,7 +3511,7 @@
           <td class="col-dur">4.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC2</span></td>
@@ -3524,7 +3524,7 @@
           <td class="col-dur">10.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC3</span></td>
@@ -3537,7 +3537,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC4</span></td>
@@ -3550,7 +3550,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC5</span></td>
@@ -3563,7 +3563,7 @@
           <td class="col-dur">4.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC6</span></td>
@@ -3576,7 +3576,7 @@
           <td class="col-dur">3.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC7</span></td>
@@ -3589,7 +3589,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC8</span></td>
@@ -3602,7 +3602,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC9</span></td>
@@ -3615,7 +3615,7 @@
           <td class="col-dur">2.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="7">
           <td><span class="tc-pill">TC10</span></td>
@@ -3628,7 +3628,7 @@
           <td class="col-dur">7.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:11</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC1</span></td>
@@ -3641,7 +3641,7 @@
           <td class="col-dur">4.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC2</span></td>
@@ -3654,7 +3654,7 @@
           <td class="col-dur">10.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC3</span></td>
@@ -3667,7 +3667,7 @@
           <td class="col-dur">2.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC4</span></td>
@@ -3680,7 +3680,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC5</span></td>
@@ -3693,7 +3693,7 @@
           <td class="col-dur">4.9s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC6</span></td>
@@ -3706,7 +3706,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC7</span></td>
@@ -3719,7 +3719,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC8</span></td>
@@ -3732,7 +3732,7 @@
           <td class="col-dur">3.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC9</span></td>
@@ -3745,7 +3745,7 @@
           <td class="col-dur">2.8s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="6">
           <td><span class="tc-pill">TC10</span></td>
@@ -3758,7 +3758,7 @@
           <td class="col-dur">7.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 19:01</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC1</span></td>
@@ -3771,7 +3771,7 @@
           <td class="col-dur">4.3s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC2</span></td>
@@ -3784,7 +3784,7 @@
           <td class="col-dur">10.6s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC3</span></td>
@@ -3797,7 +3797,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC4</span></td>
@@ -3810,7 +3810,7 @@
           <td class="col-dur">5.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC5</span></td>
@@ -3823,7 +3823,7 @@
           <td class="col-dur">5.0s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC6</span></td>
@@ -3836,7 +3836,7 @@
           <td class="col-dur">3.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC7</span></td>
@@ -3849,7 +3849,7 @@
           <td class="col-dur">2.4s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC8</span></td>
@@ -3862,7 +3862,7 @@
           <td class="col-dur">3.2s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC9</span></td>
@@ -3875,7 +3875,7 @@
           <td class="col-dur">2.5s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr>
         <tr class="rp" data-app="YMS" data-runid="5">
           <td><span class="tc-pill">TC10</span></td>
@@ -3888,7 +3888,7 @@
           <td class="col-dur">7.1s</td>
           <td class="col-dur" style="font-size:11px"></td>
           <td class="col-dur">01 Jun 2026 18:45</td>
-          <td class="col-screenshot"><span style="color:#aaa;font-size:12px;">—</span></td>
+          <td class="col-screenshot"><span style="color:var(--stx-text2);font-size:12px;">—</span></td>
         </tr></tbody>
             </table>
           </div>
@@ -3945,7 +3945,7 @@
           <div class="table-card-header">
             <h3>Stored Test Cases</h3>
             <div style="display:flex;gap:8px">
-              <button id="tc-delete-selected-btn" onclick="deleteSelectedTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="tc-selected-count">0</span>)</button>
+              <button id="tc-delete-selected-btn" onclick="deleteSelectedTc()" class="btn-v3-secondary" style="display:none;color:var(--stx-red);border-color:#4a2323">🗑 Delete Selected (<span id="tc-selected-count">0</span>)</button>
               <button onclick="openCreateTcModal()" class="btn-v3-primary">+ Create Test Case</button>
               <button onclick="exportTestCases()" class="btn-v3-ghost">Export Excel</button>
               <label class="btn-v3-secondary" style="cursor:pointer">
@@ -3966,8 +3966,8 @@
       <div class="page" id="page-export">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">📄</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Export Test Results</div>
-          <div style="font-size:13px;color:#666;margin-bottom:28px;line-height:1.7">
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Export Test Results</div>
+          <div style="font-size:13px;color:var(--stx-text2);margin-bottom:28px;line-height:1.7">
             Download all test execution results as an Excel file.<br/>Opens directly in Excel. Respects the current Project filter.
           </div>
           <button onclick="exportCSV()" class="btn-v3-primary" style="width:100%;padding:12px;font-size:14px">Download Excel (.xlsx)</button>
@@ -4016,15 +4016,15 @@
       <div class="page" id="page-testplans">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🗒️</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Plans</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — group test cases into a plan and track sign-off per release.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Test Plans</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — group test cases into a plan and track sign-off per release.</div>
         </div>
       </div>
       <div class="page" id="page-testruns">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">▶️</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Runs</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — kick off and track a manual test run cycle end to end.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Test Runs</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — kick off and track a manual test run cycle end to end.</div>
         </div>
       </div>
       <!-- AUTOMATION TESTS PAGE — automation-tagged test cases, including AI-Recorder output -->
@@ -4032,10 +4032,10 @@
         <div class="dash-header">
           <div class="home-welcome">
             <h2>🖥 Automation Tests</h2>
-            <div style="color:#666;font-size:13px;margin-top:2px">Automation-tagged test cases, including scripts captured with the AI Recorder.</div>
+            <div style="color:var(--stx-text2);font-size:13px;margin-top:2px">Automation-tagged test cases, including scripts captured with the AI Recorder.</div>
           </div>
           <div style="display:flex;gap:8px">
-            <button id="auto-tc-delete-selected-btn" onclick="deleteSelectedAutomationTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="auto-tc-selected-count">0</span>)</button>
+            <button id="auto-tc-delete-selected-btn" onclick="deleteSelectedAutomationTc()" class="btn-v3-secondary" style="display:none;color:var(--stx-red);border-color:#f5c6c6">🗑 Delete Selected (<span id="auto-tc-selected-count">0</span>)</button>
             <button class="btn-v3-primary" onclick="openCreateTcModal()">+ Create Test Case</button>
           </div>
         </div>
@@ -4054,7 +4054,7 @@
       <div id="view-script-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
         <div style="background:#fff;border-radius:12px;padding:28px;width:640px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <div style="font-size:16px;font-weight:700;color:#1a1a2e" id="view-script-title">Script</div>
+            <div style="font-size:16px;font-weight:700;color:var(--stx-text0)" id="view-script-title">Script</div>
             <button onclick="closeViewScriptModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
           <textarea id="view-script-code" class="tc-input" style="width:100%;min-height:260px;font-family:monospace;font-size:12.5px;white-space:pre" readonly></textarea>
@@ -4064,15 +4064,15 @@
       <div class="page" id="page-automation-suites">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🗂️</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Automation Suites</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — a dedicated view of your Playwright suites grouped by automation project.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Automation Suites</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — a dedicated view of your Playwright suites grouped by automation project.</div>
         </div>
       </div>
       <div class="page" id="page-automation-runs">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">▶️</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Automation Runs</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — history of automated executions, independent of manual test runs.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Automation Runs</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — history of automated executions, independent of manual test runs.</div>
         </div>
       </div>
 
@@ -4177,36 +4177,36 @@
       <div class="page" id="page-failed-tests">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">❌</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Failed Tests</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — a live list of currently-failing automated test cases.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Failed Tests</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — a live list of currently-failing automated test cases.</div>
         </div>
       </div>
       <div class="page" id="page-flaky-tests">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🌀</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Flaky Tests</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — test cases that flip between pass/fail across runs without a code change.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Flaky Tests</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — test cases that flip between pass/fail across runs without a code change.</div>
         </div>
       </div>
       <div class="page" id="page-execution-history">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🕓</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Execution History</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — full run-by-run history as its own page. In the meantime, see the Execution History card on the Dashboard.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Execution History</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — full run-by-run history as its own page. In the meantime, see the Execution History card on the Dashboard.</div>
         </div>
       </div>
       <div class="page" id="page-open-issues">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🔴</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Open Issues</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — Issues filtered to only the ones still open. In the meantime, see All Issues.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Open Issues</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — Issues filtered to only the ones still open. In the meantime, see All Issues.</div>
         </div>
       </div>
       <div class="page" id="page-blocked-tests">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🚫</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Blocked Tests</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — test cases that can't run yet because of an unresolved dependency or blocker.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">Blocked Tests</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — test cases that can't run yet because of an unresolved dependency or blocker.</div>
         </div>
       </div>
       <div class="page" id="page-integrations">
@@ -4288,15 +4288,15 @@
       <div class="page" id="page-ai-credits">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">✨</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">AI Credits</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — track AI-assisted test generation usage and remaining credits.</div>
+          <div style="font-size:17px;font-weight:700;color:var(--stx-text0);margin-bottom:8px">AI Credits</div>
+          <div style="font-size:13px;color:var(--stx-text2);line-height:1.7">Coming soon — track AI-assisted test generation usage and remaining credits.</div>
         </div>
       </div>
       <div class="page" id="page-team-members">
         <div class="dash-header">
           <div class="home-welcome">
             <h2>👥 <span id="team-title-project">Team Members</span></h2>
-            <div style="color:#666;font-size:13px;margin-top:2px">Manage team members and roles for this project</div>
+            <div style="color:var(--stx-text2);font-size:13px;margin-top:2px">Manage team members and roles for this project</div>
           </div>
           <div style="display:flex;gap:10px">
             <button class="btn-v3-secondary" onclick="loadTeamMembers()">🔄 Refresh</button>
@@ -4333,12 +4333,12 @@
 
       <!-- ADD MEMBER MODAL -->
       <div id="add-member-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-        <div style="background:#fff;border-radius:12px;padding:32px;width:440px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+        <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:440px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-            <div style="font-size:16px;font-weight:700;color:#1a1a2e">Invite User</div>
+            <div style="font-size:16px;font-weight:700;color:var(--stx-text0)">Invite User</div>
             <button onclick="closeAddMemberModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
-          <div style="font-size:13px;color:#666;margin-bottom:14px">They'll get a link to set their own password. Must be a @stackbox.xyz email.</div>
+          <div style="font-size:13px;color:var(--stx-text2);margin-bottom:14px">They'll get a link to set their own password. Must be a @stackbox.xyz email.</div>
           <input type="email" id="team-invite-email" placeholder="name@stackbox.xyz" class="tc-input" style="margin-bottom:14px"/>
           <div id="team-invite-result" style="display:none;margin-bottom:14px"></div>
           <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -4352,10 +4352,10 @@
       <div id="change-role-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
         <div style="background:#fff;border-radius:12px;padding:28px;width:380px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-            <div style="font-size:16px;font-weight:700;color:#1a1a2e">Change Role</div>
+            <div style="font-size:16px;font-weight:700;color:var(--stx-text0)">Change Role</div>
             <button onclick="closeChangeRoleModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
-          <div style="font-size:13px;color:#666;margin-bottom:14px" id="change-role-email"></div>
+          <div style="font-size:13px;color:var(--stx-text2);margin-bottom:14px" id="change-role-email"></div>
           <div id="change-role-options"></div>
         </div>
       </div>
@@ -4364,7 +4364,7 @@
       <div id="create-role-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
         <div style="background:#fff;border-radius:12px;padding:28px;width:420px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-            <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Role</div>
+            <div style="font-size:16px;font-weight:700;color:var(--stx-text0)">Create Role</div>
             <button onclick="closeCreateRoleModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
           <div style="font-size:12.5px;color:#888;margin-bottom:14px">Custom roles are a label only for now — they don't yet unlock or restrict anything in StackTest beyond the Admin/non-Admin split.</div>
@@ -4417,7 +4417,7 @@
             </div>
 
             <button class="btn-v3-primary" style="width:100%" onclick="saveSettingsProject()">Save Changes</button>
-            <div style="text-align:center;margin-top:14px"><a href="javascript:void(0)" style="color:#c62828;font-size:13px;font-weight:600" onclick="if(confirm('Leave this project?')) alert('Leaving a project isn\'t wired up yet — coming soon.')">Leave Project</a></div>
+            <div style="text-align:center;margin-top:14px"><a href="javascript:void(0)" style="color:var(--stx-red);font-size:13px;font-weight:600" onclick="if(confirm('Leave this project?')) alert('Leaving a project isn\'t wired up yet — coming soon.')">Leave Project</a></div>
           </div>
         </div>
 
@@ -4613,11 +4613,11 @@
 
 <!-- CREATE PROJECT MODAL -->
 <div id="create-project-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
-    <div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:6px">📁 New Project</div>
-    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.5">Give it a name. It shows up in the App filter for everyone, and you can tag manual test cases to it. It won't have any automated test results — those still come from YMS/YMSOUTBOUND.</div>
+  <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="font-size:16px;font-weight:700;color:var(--stx-text0);margin-bottom:6px">📁 New Project</div>
+    <div style="font-size:13px;color:var(--stx-text2);margin-bottom:16px;line-height:1.5">Give it a name. It shows up in the App filter for everyone, and you can tag manual test cases to it. It won't have any automated test results — those still come from YMS/YMSOUTBOUND.</div>
     <input id="new-project-name" placeholder="e.g. Checkout Revamp" class="tc-input" onkeydown="if(event.key==='Enter') submitCreateProject()"/>
-    <div id="create-project-err" style="display:none;color:#c62828;font-size:12px;margin-top:8px"></div>
+    <div id="create-project-err" style="display:none;color:var(--stx-red);font-size:12px;margin-top:8px"></div>
     <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end">
       <button onclick="closeCreateProjectModal()" class="btn-v3-secondary">Cancel</button>
       <button onclick="submitCreateProject()" class="btn-v3-primary">Create Project</button>
@@ -4627,15 +4627,15 @@
 
 <!-- CREATE TEST CASE MODAL -->
 <div id="create-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Test Case</div>
-      <button onclick="closeCreateTcModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
+      <div style="font-size:16px;font-weight:700;color:var(--stx-text0)">Create Test Case</div>
+      <button onclick="closeCreateTcModal()" style="background:none;border:none;cursor:pointer;color:var(--stx-text2);font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='var(--stx-bg2)'" onmouseout="this.style.background='none'">✕</button>
     </div>
 
     <!-- Step 1: pick a type -->
     <div id="create-tc-step1">
-      <div style="font-size:13px;color:#666;margin-bottom:16px">What kind of test case is this?</div>
+      <div style="font-size:13px;color:var(--stx-text2);margin-bottom:16px">What kind of test case is this?</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div class="quick-action" onclick="chooseTcType('manual')">
           <div class="qa-icon">📝</div>
@@ -4659,30 +4659,30 @@
       <input type="hidden" id="tc-type" value="manual"/>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
         <div>
-          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">TC ID</label>
+          <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">TC ID</label>
           <input id="tc-id" placeholder="e.g. TC001" class="tc-input"/>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Title</label>
+          <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">Title</label>
           <input id="tc-title" placeholder="Test case title" class="tc-input"/>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
         <div>
-          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+          <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">Module</label>
           <input id="tc-module" placeholder="e.g. Login" class="tc-input"/>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Project <span style="color:#aaa;font-weight:400">(optional)</span></label>
+          <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">Project <span style="color:var(--stx-text2);font-weight:400">(optional)</span></label>
           <input id="tc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
         </div>
       </div>
       <div style="margin-bottom:12px">
-        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Expected Result</label>
+        <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">Expected Result</label>
         <input id="tc-expected" placeholder="Expected outcome" class="tc-input"/>
       </div>
       <div style="margin-bottom:20px">
-        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Steps <span style="color:#aaa;font-weight:400">(one per line)</span></label>
+        <label style="font-size:11px;font-weight:600;color:var(--stx-text1);display:block;margin-bottom:4px">Steps <span style="color:var(--stx-text2);font-weight:400">(one per line)</span></label>
         <textarea id="tc-steps" placeholder="1. Navigate to login page&#10;2. Enter username&#10;3. Enter password&#10;4. Click Login" class="tc-input" rows="4" style="resize:vertical;line-height:1.5"></textarea>
       </div>
       <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -4695,14 +4695,14 @@
 
 <!-- EDIT TEST CASE MODAL -->
 <div id="edit-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:540px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:540px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f5">
-      <div style="font-size:14px;font-weight:700;color:#1a1a2e">Edit Test Case</div>
-      <button onclick="closeEditModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
+      <div style="font-size:14px;font-weight:700;color:var(--stx-text0)">Edit Test Case</div>
+      <button onclick="closeEditModal()" style="background:none;border:none;cursor:pointer;color:var(--stx-text2);font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='var(--stx-bg2)'" onmouseout="this.style.background='none'">✕</button>
     </div>
     <input type="hidden" id="edit-tc-idx"/>
     <div style="margin-bottom:14px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Type</label>
+      <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Type</label>
       <div class="seg-tabs" id="edit-tc-type-tabs">
         <button type="button" class="seg-tab active" data-type="manual" onclick="setEditTcTypeTab('manual')">📝 Manual</button>
         <button type="button" class="seg-tab" data-type="automation" onclick="setEditTcTypeTab('automation')">🖥 Automation</button>
@@ -4711,29 +4711,29 @@
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
       <div>
-        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">TC ID</label>
+        <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">TC ID</label>
         <input id="edit-tc-id" class="tc-input" placeholder="e.g. TC001"/>
       </div>
       <div>
-        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Title</label>
+        <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Title</label>
         <input id="edit-tc-title" class="tc-input" placeholder="Test case title"/>
       </div>
       <div>
-        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Module</label>
+        <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Module</label>
         <input id="edit-tc-module" class="tc-input" placeholder="e.g. Login"/>
       </div>
     </div>
     <div style="margin-bottom:14px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Project <span style="color:#D1D5DB;font-weight:400;text-transform:none">(optional)</span></label>
+      <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Project <span style="color:var(--stx-text2);font-weight:400;text-transform:none">(optional)</span></label>
       <input id="edit-tc-project" class="tc-input" placeholder="e.g. Checkout Revamp"/>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
       <div>
-        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Steps <span style="color:#D1D5DB;font-weight:400;text-transform:none">(one per line)</span></label>
+        <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Steps <span style="color:var(--stx-text2);font-weight:400;text-transform:none">(one per line)</span></label>
         <textarea id="edit-tc-steps" class="tc-input" rows="5" style="resize:vertical;line-height:1.5" placeholder="1. Navigate to page&#10;2. Enter data"></textarea>
       </div>
       <div>
-        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
+        <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
         <input id="edit-tc-expected" class="tc-input" placeholder="Expected outcome"/>
       </div>
     </div>
@@ -4746,10 +4746,10 @@
 
 <!-- EXCEL FILTER PANEL -->
 <div id="xf-panel" onclick="event.stopPropagation()" style="display:none;position:fixed;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);z-index:10000;min-width:230px;padding:12px 14px">
-  <input id="xf-search" placeholder="Search…" oninput="xfRenderOptions()" style="width:100%;padding:7px 10px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:12px;margin-bottom:8px;font-family:Inter,sans-serif;outline:none;background:#fafafa;color:#1a1a2e" onfocus="this.style.borderColor='#0f3460'" onblur="this.style.borderColor='#e0e0e0'"/>
+  <input id="xf-search" placeholder="Search…" oninput="xfRenderOptions()" style="width:100%;padding:7px 10px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:12px;margin-bottom:8px;font-family:Inter,sans-serif;outline:none;background:#fafafa;color:var(--stx-text0)" onfocus="this.style.borderColor='#0f3460'" onblur="this.style.borderColor='#e0e0e0'"/>
   <div style="display:flex;gap:6px;margin-bottom:8px">
     <button onclick="xfSelectAll()" style="flex:1;padding:5px;background:#e8eaf6;color:#3949ab;border:1px solid #c5cae9;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Select All</button>
-    <button onclick="xfClearAll()" style="flex:1;padding:5px;background:#fce4ec;color:#c62828;border:1px solid #f48fb1;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Clear</button>
+    <button onclick="xfClearAll()" style="flex:1;padding:5px;background:#fce4ec;color:var(--stx-red);border:1px solid #f48fb1;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Clear</button>
   </div>
   <div id="xf-options" style="max-height:200px;overflow-y:auto;border:1px solid #f0f0f5;border-radius:6px;padding:4px 6px"></div>
   <div style="display:flex;gap:6px;margin-top:10px">
@@ -4760,18 +4760,18 @@
 
 <!-- SUITE EDIT MODAL -->
 <div id="suite-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:520px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:var(--stx-bg1);border:1px solid var(--stx-border-strong);border-radius:12px;padding:32px;width:520px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f5">
-      <div style="font-size:14px;font-weight:700;color:#1a1a2e">Edit Test Case</div>
-      <button onclick="closeSuiteModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
+      <div style="font-size:14px;font-weight:700;color:var(--stx-text0)">Edit Test Case</div>
+      <button onclick="closeSuiteModal()" style="background:none;border:none;cursor:pointer;color:var(--stx-text2);font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='var(--stx-bg2)'" onmouseout="this.style.background='none'">✕</button>
     </div>
     <input type="hidden" id="suite-edit-key"/>
     <div style="margin-bottom:16px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Test Case Description</label>
+      <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Test Case Description</label>
       <input id="suite-edit-desc" class="tc-input" placeholder="Short description"/>
     </div>
     <div style="margin-bottom:24px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
+      <label style="font-size:10px;font-weight:700;color:var(--stx-text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
       <textarea id="suite-edit-expected" class="tc-input" rows="4" style="resize:vertical;line-height:1.5" placeholder="Expected outcome"></textarea>
     </div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -5207,14 +5207,14 @@
     document.getElementById('exec-summary-stats').innerHTML = `
       <div class="exec-stat"><div class="exec-stat-val">${total}</div><div class="exec-stat-lbl">Executions (${dashRange})</div></div>
       <div class="exec-stat"><div class="exec-stat-val" style="color:#2e7d32">${passed}</div><div class="exec-stat-lbl">Passed</div></div>
-      <div class="exec-stat"><div class="exec-stat-val" style="color:#c62828">${failed}</div><div class="exec-stat-lbl">Failed</div></div>
+      <div class="exec-stat"><div class="exec-stat-val" style="color:var(--stx-red)">${failed}</div><div class="exec-stat-lbl">Failed</div></div>
       <div class="exec-stat"><div class="exec-stat-val" style="color:#1565c0">0</div><div class="exec-stat-lbl">Running</div></div>
       <div class="exec-stat"><div class="exec-stat-val" style="color:#888">0</div><div class="exec-stat-lbl">Cancelled</div></div>
     `;
     const runIds = [...new Set(d.map(r => r.runId))].sort((a,b) => b-a).slice(0,6);
     const list = document.getElementById('exec-run-list');
     if (runIds.length === 0) {
-      list.innerHTML = '<div class="empty-state"><div style="font-weight:600;color:#555;font-size:13px">No executions in this period</div></div>';
+      list.innerHTML = '<div class="empty-state"><div style="font-weight:600;color:var(--stx-text1);font-size:13px">No executions in this period</div></div>';
       return;
     }
     list.innerHTML = runIds.map(rid => {
@@ -5225,7 +5225,7 @@
       const dt = parseAppDate(rows[0].executedDate);
       return `<div class="exec-run-item">
         <div>
-          <div style="font-weight:700;font-size:13px;color:#1a1a2e">${app} Run #${rid}</div>
+          <div style="font-weight:700;font-size:13px;color:var(--stx-text0)">${app} Run #${rid}</div>
           <div style="font-size:11px;color:#9aa0a6;margin-top:2px">🕐 ${timeAgo(dt)} &nbsp; ${formatDuration(dur)}</div>
         </div>
         <span class="status-pill ${failedRows>0?'sp-fail':'sp-pass'}">${failedRows>0?'❌ Failed':'✅ Passed'}</span>
@@ -5331,7 +5331,7 @@
         <div class="release-metric-box"><div class="release-score" style="font-size:20px">${blockers}</div><div class="ov-total-label">Blockers</div></div>
         <div class="release-metric-box"><div class="release-score" style="font-size:20px">${flakyCount}</div><div class="ov-total-label">Flaky Tests</div></div>
       </div>
-      <div style="font-size:11px;color:#9aa0a6;margin-top:12px">${runs} runs (${dashRange}) &nbsp; ${list.length} tests &nbsp; <span style="color:#2e7d32">${passed} passed</span> &nbsp; <span style="color:#c62828">${total-passed} failed</span></div>
+      <div style="font-size:11px;color:#9aa0a6;margin-top:12px">${runs} runs (${dashRange}) &nbsp; ${list.length} tests &nbsp; <span style="color:#2e7d32">${passed} passed</span> &nbsp; <span style="color:var(--stx-red)">${total-passed} failed</span></div>
     `;
 
     const sortedRunIds = [...new Set(d.map(r => r.runId))].sort((a,b) => a-b);
@@ -5354,8 +5354,8 @@
         </div>
       </div>
       <div class="release-metrics-grid">
-        <div class="release-metric-box"><div class="ov-total-val" style="font-size:17px">${earlierRows.length}</div><div class="ov-total-label">Earlier Tests</div><div style="font-size:11px;margin-top:4px"><span style="color:#2e7d32">${earlierRows.filter(r=>r.status==='PASS').length} pass</span> &nbsp; <span style="color:#c62828">${earlierRows.filter(r=>r.status==='FAIL').length} fail</span></div></div>
-        <div class="release-metric-box"><div class="ov-total-val" style="font-size:17px">${recentRows.length}</div><div class="ov-total-label">Recent Tests</div><div style="font-size:11px;margin-top:4px"><span style="color:#2e7d32">${recentRows.filter(r=>r.status==='PASS').length} pass</span> &nbsp; <span style="color:#c62828">${recentRows.filter(r=>r.status==='FAIL').length} fail</span></div></div>
+        <div class="release-metric-box"><div class="ov-total-val" style="font-size:17px">${earlierRows.length}</div><div class="ov-total-label">Earlier Tests</div><div style="font-size:11px;margin-top:4px"><span style="color:#2e7d32">${earlierRows.filter(r=>r.status==='PASS').length} pass</span> &nbsp; <span style="color:var(--stx-red)">${earlierRows.filter(r=>r.status==='FAIL').length} fail</span></div></div>
+        <div class="release-metric-box"><div class="ov-total-val" style="font-size:17px">${recentRows.length}</div><div class="ov-total-label">Recent Tests</div><div style="font-size:11px;margin-top:4px"><span style="color:#2e7d32">${recentRows.filter(r=>r.status==='PASS').length} pass</span> &nbsp; <span style="color:var(--stx-red)">${recentRows.filter(r=>r.status==='FAIL').length} fail</span></div></div>
       </div>
     `;
 
@@ -5379,12 +5379,12 @@
         </div>
       </div>
       <div class="issue-stats-row">
-        <div class="issue-stat-box" style="background:#fdecea"><div class="release-score" style="font-size:22px;color:#c62828">0</div><div class="ov-total-label">Open</div></div>
+        <div class="issue-stat-box" style="background:#fdecea"><div class="release-score" style="font-size:22px;color:var(--stx-red)">0</div><div class="ov-total-label">Open</div></div>
         <div class="issue-stat-box" style="background:#eef4ff"><div class="release-score" style="font-size:22px;color:#1565c0">0</div><div class="ov-total-label">In Progress</div></div>
         <div class="issue-stat-box" style="background:#eaf7ec"><div class="release-score" style="font-size:22px;color:#2e7d32">0</div><div class="ov-total-label">Resolved</div></div>
       </div>
       <div class="empty-state" style="padding:24px 10px">
-        <div style="font-weight:600;color:#555;font-size:13px">No issues tracked yet</div>
+        <div style="font-weight:600;color:var(--stx-text1);font-size:13px">No issues tracked yet</div>
         <div style="font-size:12px;color:#9aa0a6;margin-top:4px">Issue tracking isn't wired up here. See the <a href="#" onclick="showPage('bugs');return false;" style="color:#0f3460;font-weight:600">Bugs</a> page for failing test cases instead.</div>
       </div>
     `;
@@ -5609,13 +5609,13 @@
     try {
       const { link } = await api('/invites', { method: 'POST', body: JSON.stringify({ email, type }) });
       resultEl.style.display = 'block';
-      resultEl.innerHTML = `<div style="font-size:11px;color:#666;margin-bottom:6px">Share this link with them — it works once:</div>
+      resultEl.innerHTML = `<div style="font-size:11px;color:var(--stx-text2);margin-bottom:6px">Share this link with them — it works once:</div>
         <input readonly value="${link}" onclick="this.select()" class="tc-input" style="font-size:12px"/>`;
       emailInput.value = '';
       loadAdminInvites();
     } catch (e) {
       resultEl.style.display = 'block';
-      resultEl.innerHTML = `<div style="color:#c62828;font-size:12px">${e.message}</div>`;
+      resultEl.innerHTML = `<div style="color:var(--stx-red);font-size:12px">${e.message}</div>`;
     }
   }
 
@@ -5630,9 +5630,9 @@
           <td><span class="app-tag">${i.type}</span></td>
           <td><span class="status-pill ${i.status === 'accepted' ? 'sp-pass' : 'sp-fail'}">${i.status}</span></td>
           <td style="color:#888;font-size:12px">${new Date(i.createdAt).toLocaleString()}</td>
-        </tr>`).join('') : '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">No invites generated yet</td></tr>';
+        </tr>`).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--stx-text2);padding:20px">No invites generated yet</td></tr>';
     } catch (e) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#c62828;padding:20px">${e.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--stx-red);padding:20px">${e.message}</td></tr>`;
     }
   }
 
@@ -5728,7 +5728,7 @@
           <td style="display:flex;align-items:center;gap:10px">
             <div class="avatar" style="width:28px;height:28px;font-size:12px">${u.email[0].toUpperCase()}</div>
             <div>
-              <div style="font-weight:600;color:#1a1a2e">${u.email.split('@')[0]}</div>
+              <div style="font-weight:600;color:var(--stx-text0)">${u.email.split('@')[0]}</div>
               <div style="font-size:11px;color:#999">${u.email}</div>
             </div>
           </td>
@@ -5743,7 +5743,7 @@
         </tr>`;
       }).join('');
     } catch (e) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#c62828;padding:20px">${e.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--stx-red);padding:20px">${e.message}</td></tr>`;
     }
   }
 
@@ -5753,7 +5753,7 @@
   // 'tc-', 'auto-'). `items` is [{ label, onclick, danger }].
   function rowActionsMenu(menuId, items) {
     const rows = items.map(it =>
-      `<div class="user-menu-item"${it.danger ? ' style="color:#c62828"' : ''} onclick="closeAllRowActionsMenus();${it.onclick}">${it.label}</div>`
+      `<div class="user-menu-item"${it.danger ? ' style="color:var(--stx-red)"' : ''} onclick="closeAllRowActionsMenus();${it.onclick}">${it.label}</div>`
     ).join('');
     return `
     <div class="row-actions-wrap">
@@ -5840,11 +5840,11 @@
     try {
       const { link } = await api('/invites', { method: 'POST', body: JSON.stringify({ email, type: 'invite' }) });
       resultEl.style.display = 'block';
-      resultEl.innerHTML = `<div style="font-size:11px;color:#666;margin-bottom:6px">Share this link with them — it works once:</div>
+      resultEl.innerHTML = `<div style="font-size:11px;color:var(--stx-text2);margin-bottom:6px">Share this link with them — it works once:</div>
         <input readonly value="${link}" onclick="this.select()" class="tc-input" style="font-size:12px"/>`;
     } catch (e) {
       resultEl.style.display = 'block';
-      resultEl.innerHTML = `<div style="color:#c62828;font-size:12px">${e.message}</div>`;
+      resultEl.innerHTML = `<div style="color:var(--stx-red);font-size:12px">${e.message}</div>`;
     }
   }
 
@@ -5863,8 +5863,8 @@
         <div class="integ-card-top">
           <div>
             <span class="app-tag" style="background:${r.bg || '#f0f2f5'};color:${r.color || '#555'}">🛡️ ${r.label}</span>
-            <span class="app-tag" style="background:#f0f2f5;color:#666;margin-left:6px">🔒 ${tagType}</span>
-            ${r.tag ? `<span class="app-tag" style="background:#f0f2f5;color:#666;margin-left:6px">${r.tag}</span>` : ''}
+            <span class="app-tag" style="background:#f0f2f5;color:var(--stx-text2);margin-left:6px">🔒 ${tagType}</span>
+            ${r.tag ? `<span class="app-tag" style="background:#f0f2f5;color:var(--stx-text2);margin-left:6px">${r.tag}</span>` : ''}
           </div>
         </div>
         <div class="integ-desc">${r.desc || 'No description'}</div>
@@ -5972,7 +5972,7 @@
   async function aiRecorderRunGenerate(codegenSid, inpageSid, code) {
     const statusEl = document.getElementById(codegenSid ? 'recorder-status' : 'inpage-status');
     const priorHtml = statusEl.innerHTML;
-    statusEl.innerHTML = priorHtml + '<div style="color:#666;margin-top:6px">Generating steps, summary, and test data with Claude…</div>';
+    statusEl.innerHTML = priorHtml + '<div style="color:var(--stx-text2);margin-top:6px">Generating steps, summary, and test data with Claude…</div>';
     try {
       const path = codegenSid ? '/recorder/' + codegenSid + '/generate' : '/recorder/inpage/' + inpageSid + '/generate';
       const generation = await api(path, { method: 'POST', body: JSON.stringify({ project: selectedProjectName() || '', flowName: aiRecorderFlowName() }) });
@@ -5984,7 +5984,7 @@
       renderAiRecorderResultPanels();
       await loadAiRecorderReviewQueue();
     } catch (e) {
-      statusEl.innerHTML = priorHtml + `<div style="color:#c62828;margin-top:6px">AI generation failed: ${e.message}</div>`;
+      statusEl.innerHTML = priorHtml + `<div style="color:var(--stx-red);margin-top:6px">AI generation failed: ${e.message}</div>`;
     }
   }
 
@@ -6069,7 +6069,7 @@
     try {
       const { code, eventCount } = await api('/recorder/inpage/' + inpageSessionId + '/code');
       if (!eventCount) {
-        statusEl.innerHTML = '<span style="color:#c62828">No interactions captured yet — did you click the bookmarklet on the page you want to record?</span>';
+        statusEl.innerHTML = '<span style="color:var(--stx-red)">No interactions captured yet — did you click the bookmarklet on the page you want to record?</span>';
         return;
       }
       document.getElementById('recorder-code').value = code;
@@ -6077,7 +6077,7 @@
       statusEl.innerHTML = `<span style="color:#2e7d32">Captured ${eventCount} interaction(s) — code is ready below.</span>`;
       aiRecorderRunGenerate(null, inpageSessionId, code);
     } catch (e) {
-      statusEl.innerHTML = `<span style="color:#c62828">${e.message}</span>`;
+      statusEl.innerHTML = `<span style="color:var(--stx-red)">${e.message}</span>`;
     }
   }
 
@@ -6113,7 +6113,7 @@
     document.getElementById('recorder-result-card').style.display = 'none';
     const statusEl = document.getElementById('recorder-status');
     statusEl.style.display = 'block';
-    statusEl.innerHTML = '<span style="color:#666">Launching a browser on the server\'s machine…</span>';
+    statusEl.innerHTML = '<span style="color:var(--stx-text2)">Launching a browser on the server\'s machine…</span>';
     try {
       const { sessionId } = await api('/recorder', { method: 'POST', body: JSON.stringify({ url }) });
       recorderSessionId = sessionId;
@@ -6121,7 +6121,7 @@
       statusEl.innerHTML = '<span style="color:#2e7d32">⏺ Recording — interact with the browser window that just opened. Click "Stop Recording" here (or just close that window) when you\'re done.</span>';
       recorderPollTimer = setInterval(pollRecorderStatus, 2000);
     } catch (e) {
-      statusEl.innerHTML = `<span style="color:#c62828">${e.message}</span>`;
+      statusEl.innerHTML = `<span style="color:var(--stx-red)">${e.message}</span>`;
     }
   }
 
@@ -6138,7 +6138,7 @@
       aiRecorderRunGenerate(sid, null, result.code);
     } else {
       statusEl.style.display = 'block';
-      statusEl.innerHTML = `<span style="color:#c62828">${result.error || 'No code was recorded.'}</span>`;
+      statusEl.innerHTML = `<span style="color:var(--stx-red)">${result.error || 'No code was recorded.'}</span>`;
     }
   }
 
@@ -6156,7 +6156,7 @@
   async function stopRecording() {
     if (!recorderSessionId) return;
     const sid = recorderSessionId;
-    document.getElementById('recorder-status').innerHTML = '<span style="color:#666">Stopping…</span>';
+    document.getElementById('recorder-status').innerHTML = '<span style="color:var(--stx-text2)">Stopping…</span>';
     clearInterval(recorderPollTimer);
     recorderPollTimer = null;
     try { await api('/recorder/' + sid + '/cancel', { method: 'POST' }); } catch (e) {}
@@ -6401,7 +6401,7 @@
       <div class="settings-list-item">
         <span style="flex:1">${t}</span>
         <span style="cursor:pointer" onclick="deleteSettingsTag(${i})">🗑️</span>
-      </div>`).join('') : '<div style="color:#aaa;font-size:12.5px;padding:6px 0">No tags yet.</div>';
+      </div>`).join('') : '<div style="color:var(--stx-text2);font-size:12.5px;padding:6px 0">No tags yet.</div>';
   }
   function deleteSettingsTag(i) {
     const data = loadSettingsData();
@@ -6445,9 +6445,9 @@
       <div class="env-var-row">
         <input type="text" class="tc-input" placeholder="e.g. BASE_URL" value="${v.key}" onchange="updateEnvVar(${i},'key',this.value)"/>
         <input type="${v.secret ? 'password' : 'text'}" class="tc-input" placeholder="Value" value="${v.value}" onchange="updateEnvVar(${i},'value',this.value)"/>
-        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#666"><input type="checkbox" ${v.secret ? 'checked' : ''} onchange="updateEnvVar(${i},'secret',this.checked)"/> Secret</label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--stx-text2)"><input type="checkbox" ${v.secret ? 'checked' : ''} onchange="updateEnvVar(${i},'secret',this.checked)"/> Secret</label>
         <span style="cursor:pointer" onclick="deleteEnvVarRow(${i})">🗑️</span>
-      </div>`).join('') : '<div style="color:#aaa;font-size:12.5px;padding:6px 0">No environment variables yet.</div>';
+      </div>`).join('') : '<div style="color:var(--stx-text2);font-size:12.5px;padding:6px 0">No environment variables yet.</div>';
   }
   function addEnvVarRow() {
     const data = loadSettingsData();
@@ -6512,7 +6512,7 @@
       document.getElementById('bug-open-count').textContent = '0';
       document.getElementById('bug-resolved-count').textContent = '0';
       document.getElementById('bug-total-count').textContent = '0';
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:#aaa">🎉 No bugs found!</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--stx-text2)">🎉 No bugs found!</td></tr>';
       return;
     }
 
@@ -6583,7 +6583,7 @@
     const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
     s('suite-total', total); s('suite-pass', passing); s('suite-fail', failing); s('suite-rate', rate + '%');
     if (tcs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#aaa;padding:20px">No test results yet. Run your tests first.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--stx-text2);padding:20px">No test results yet. Run your tests first.</td></tr>';
       return;
     }
     const overrides = JSON.parse(localStorage.getItem('suite_overrides') || '{}');
@@ -6790,25 +6790,25 @@
       const msg = activeProject
         ? `No test cases tagged to "${activeProject}" yet. Add one above with that project name.`
         : 'No test cases yet. Add one above or import a CSV.';
-      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:var(--stx-text2);padding:20px">${msg}</td></tr>`;
       updateTcSelectionUi();
       return;
     }
     tbody.innerHTML = tcs.map((tc) => {
       const i = allTcs.indexOf(tc); // index into the unfiltered array, for edit/delete
-      const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:#555;font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
-      const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:#bbb">—</span>';
+      const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:var(--stx-text1);font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
+      const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:var(--stx-text2)">—</span>';
       const isAutomation = tc.type === 'automation';
       return `<tr>
         <td><input type="checkbox" class="tc-row-check" onchange="toggleTcSelect('${tc.id}', this.checked)" ${selectedTcIds.has(tc.id) ? 'checked' : ''}/></td>
         <td><span class="tc-pill">${tc.id}</span></td>
         <td style="font-weight:500">${tc.title}</td>
-        <td><span class="app-tag" style="background:${isAutomation ? '#ede7f6' : '#e8f5e9'};color:${isAutomation ? '#5e35b1' : '#2e7d32'}">${isAutomation ? '🖥 Automation' : '📝 Manual'}</span></td>
+        <td><span class="app-tag" style="background:${isAutomation ? '#241a3d' : 'var(--stx-green-dim)'};color:${isAutomation ? '#b39ddb' : 'var(--stx-green)'}">${isAutomation ? '🖥 Automation' : '📝 Manual'}</span></td>
         <td><span class="app-tag">${tc.module}</span></td>
-        <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
+        <td>${tc.project ? `<span class="app-tag" style="background:var(--stx-cyan-dim);color:var(--stx-cyan)">📁 ${tc.project}</span>` : '<span style="color:var(--stx-text2);font-size:12px">—</span>'}</td>
         <td style="max-width:220px">${stepsHtml}</td>
-        <td style="color:#1565c0;font-size:12px">${tc.expected}</td>
-        <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
+        <td style="color:var(--stx-cyan);font-size:12px">${tc.expected}</td>
+        <td style="color:var(--stx-text2);font-size:11px;white-space:nowrap">${tc.created}</td>
         <td>${rowActionsMenu('tc-' + i, [
           { label: '✏️ Edit', onclick: `editTC(${i})` },
           { label: '🗑️ Delete', danger: true, onclick: `deleteTC(${i})` },
@@ -6860,7 +6860,7 @@
       const msg = activeProject
         ? `No automation test cases tagged to "${activeProject}" yet.`
         : 'No automation test cases yet — create one, or record one with the AI Recorder.';
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--stx-text2);padding:20px">${msg}</td></tr>`;
       updateAutomationTcSelectionUi();
       return;
     }
@@ -6872,7 +6872,7 @@
         <td style="font-weight:500">${tc.title}</td>
         <td><span class="app-tag">${tc.module}</span></td>
         <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
-        <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
+        <td style="color:var(--stx-text2);font-size:11px;white-space:nowrap">${tc.created}</td>
         <td>${rowActionsMenu('auto-' + i, [
           { label: '👁️ View Script', onclick: `viewAutomationScript(${i})` },
           { label: '🗑️ Delete', danger: true, onclick: `deleteTC(${i});renderAutomationTestsPage()` },
@@ -7097,7 +7097,7 @@
       if (!prev) { cell.innerHTML = '<span style="color:#bbb">—</span>'; return; }
       const color = prev.status === 'PASS' ? '#2e7d32' : '#c62828';
       const icon  = prev.status === 'PASS' ? '✅' : '❌';
-      cell.innerHTML = `<span style="color:${color};font-weight:600;font-size:11px">${icon} ${prev.status}</span><br/><span style="color:#aaa;font-size:10px">${prev.executedDate}</span>`;
+      cell.innerHTML = `<span style="color:${color};font-weight:600;font-size:11px">${icon} ${prev.status}</span><br/><span style="color:var(--stx-text2);font-size:10px">${prev.executedDate}</span>`;
     });
   }
 
