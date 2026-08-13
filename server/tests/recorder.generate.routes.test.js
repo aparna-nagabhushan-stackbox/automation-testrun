@@ -119,6 +119,51 @@ test('inpage generate: a step matching an existing block is tagged with it and s
   }
 });
 
+test('inpage generate: a project with existing blocks but zero matches gets no naming suffix (distinct from an empty-library project reaching the same no-suffix outcome)', async () => {
+  const LOGIN_CODE = `await page.click('#submit');`;
+  const client = fakeClient({
+    summary: 'Fills a totally unrelated field.',
+    steps: [
+      { description: 'Fill unrelated field', selector: "'#other-field'", confidence: 'high' },
+    ],
+    code: `await page.fill('#other-field', 'x');`,
+    testData: {},
+  });
+  const { server, port } = await listen(freshApp(client));
+  try {
+    const base = `http://localhost:${port}/api/recorder`;
+    // Project already has a registered block ("Login"), but this recording's
+    // one selector never appears in it — segmentByBlocks yields a single
+    // all-new segment, so newSteps.length === steps.length (100% new)
+    // even though blocks.length > 0. This is the `noBlockMatched` path
+    // (steps.length matches but via "everything's new", not "library is
+    // empty") — the naming suffix must stay off here too, same as test 1,
+    // but for a different underlying reason (steps.length === newSteps.length
+    // here vs. blocks.length === 0 in test 1).
+    require('../db').createBlock({ project: 'Inbound', name: 'Login', code: LOGIN_CODE, createdBy: 'a@stackbox.xyz' });
+
+    const started = await fetch(base + '/inpage/start', { method: 'POST', headers: AUTH_HEADERS });
+    const { sessionId } = await started.json();
+    await fetch(base + `/inpage/${sessionId}/events`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ events: [
+        { type: 'fill', selector: '#other-field', value: 'x', url: 'http://x' },
+      ] }),
+    });
+
+    const res = await fetch(base + `/inpage/${sessionId}/generate`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...AUTH_HEADERS },
+      body: JSON.stringify({ project: 'Inbound', flowName: 'Operator login' }),
+    });
+    const body = await res.json();
+    assert.equal(body.steps[0].blockId, null);
+    assert.equal(body.needsReview, true);
+    assert.equal(body.testCaseName, 'inbound_operator_login');
+  } finally {
+    server.close();
+  }
+});
+
 test('generate 500s with a clear error when no Claude client is configured', async () => {
   const { server, port } = await listen(freshApp(null));
   try {

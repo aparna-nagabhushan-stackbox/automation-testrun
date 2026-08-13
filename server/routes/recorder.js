@@ -297,14 +297,17 @@ function buildBookmarklet(origin, sessionId) {
     return slugify(stripped.trim().split(/\s+/).slice(0, 2).join(' '));
   }
   // The distinguishing suffix (first new step's short label) is only useful
-  // once there's an actual known-block library to contrast against — with
-  // an empty library every step is trivially "new", so appending one of
-  // them wouldn't distinguish anything (same rationale as the
-  // `noBlockMatched` guard below: don't treat an empty library as meaningful
-  // signal).
-  function buildTestCaseName({ project, flowName, newSteps, hasBlocks }) {
+  // when the recording is a genuine PARTIAL match against the block
+  // library — some steps reused, some new — so the suffix highlights the
+  // part that's actually different. When newSteps.length === steps.length,
+  // either the whole flow is new because the library is empty (nothing to
+  // contrast against) or every known block failed to match (the same
+  // "nothing meaningfully matched" case `noBlockMatched` below already
+  // captures) — either way there's no partial-match story to tell, so no
+  // suffix is added.
+  function buildTestCaseName({ project, flowName, newSteps, totalSteps }) {
     const parts = [slugify(project), slugify(flowName)];
-    if (hasBlocks && newSteps.length) parts.push(shortLabel(newSteps[0].description));
+    if (newSteps.length && newSteps.length < totalSteps) parts.push(shortLabel(newSteps[0].description));
     return parts.filter(Boolean).join('_');
   }
 
@@ -336,7 +339,7 @@ function buildBookmarklet(origin, sessionId) {
     const noBlockMatched = blocks.length > 0 && newSteps.length === steps.length;
     const needsReview = lowConfidenceSteps.length > 0 || noBlockMatched;
 
-    const testCaseName = buildTestCaseName({ project, flowName, newSteps, hasBlocks: blocks.length > 0 });
+    const testCaseName = buildTestCaseName({ project, flowName, newSteps, totalSteps: steps.length });
 
     const result = {
       recordingId, project: project || '', flowName: flowName || '', testCaseName,
