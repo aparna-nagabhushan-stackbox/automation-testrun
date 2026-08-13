@@ -564,14 +564,8 @@
           <div class="nav-item" onclick="showPage('generate-testcase')" id="nav-generate-testcase">
             Generate Test Case
           </div>
-          <div class="nav-item" onclick="showPage('suite')" id="nav-suite">
-            Test Suites
-          </div>
           <div class="nav-item" onclick="showPage('testplans')" id="nav-testplans">
             Test Plan
-          </div>
-          <div class="nav-item" onclick="showPage('testruns')" id="nav-testruns">
-            Test Run
           </div>
         </div>
       </div>
@@ -3805,50 +3799,6 @@
         </div>
       </div>
 
-      <!-- TEST SUITE PAGE -->
-      <div class="page" id="page-suite">
-        <div class="stats-grid" style="margin-bottom:20px">
-          <div class="stat-card sc-total">
-            <div class="stat-icon">📋</div>
-            <div><div class="stat-val" id="suite-total">—</div><div class="stat-lbl">Total TCs</div></div>
-          </div>
-          <div class="stat-card sc-pass">
-            <div class="stat-icon">✅</div>
-            <div><div class="stat-val" id="suite-pass">—</div><div class="stat-lbl">Passing</div></div>
-          </div>
-          <div class="stat-card sc-fail">
-            <div class="stat-icon">❌</div>
-            <div><div class="stat-val" id="suite-fail">—</div><div class="stat-lbl">Failing</div></div>
-          </div>
-          <div class="stat-card sc-runs">
-            <div class="stat-icon">📈</div>
-            <div><div class="stat-val" id="suite-rate">—</div><div class="stat-lbl">Pass Rate</div></div>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-card-header" style="display:flex;align-items:center;justify-content:space-between">
-            <h3>Test Suite — Auto Generated from Results</h3>
-            <button onclick="exportSuite()" class="btn-v3-ghost">Export Excel</button>
-          </div>
-          <div class="tbl-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th style="position:relative">TC ID <span class="xf-btn" onclick="showXFilter(event,0,'suite-tbody')">▼</span></th>
-                  <th style="position:relative">Suite <span class="xf-btn" onclick="showXFilter(event,1,'suite-tbody')">▼</span></th>
-                  <th style="position:relative">Test Case <span class="xf-btn" onclick="showXFilter(event,2,'suite-tbody')">▼</span></th>
-                  <th style="position:relative">Expected Result <span class="xf-btn" onclick="showXFilter(event,3,'suite-tbody')">▼</span></th>
-                  <th>Steps</th>
-                  <th style="position:relative">Last Status <span class="xf-btn" onclick="showXFilter(event,5,'suite-tbody')">▼</span></th>
-                  <th>Last Run</th><th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="suite-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
       <!-- TEST CASES PAGE -->
       <div class="page" id="page-testcases">
         <div class="table-card">
@@ -3857,9 +3807,15 @@
             <div style="display:flex;gap:8px">
               <button id="tc-delete-selected-btn" onclick="deleteSelectedTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="tc-selected-count">0</span>)</button>
               <button onclick="openCreateTcModal()" class="btn-v3-primary">+ Create Test Case</button>
-              <button onclick="exportTestCases()" class="btn-v3-ghost">Export Excel</button>
-              <label class="btn-v3-secondary" style="cursor:pointer">
-                Import CSV <input type="file" accept=".csv,.json" onchange="importTestCases(this)" style="display:none"/>
+              <button onclick="exportTestCases()" title="Export Excel" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;background:#f7f8fa;border:1px solid #ececf2;border-radius:10px;cursor:pointer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.9A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.9"/><path d="M12 12v7"/><path d="M9 16l3 3 3-3"/></svg>
+              </button>
+              <button onclick="downloadSampleTestCases()" title="Download Sample" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;background:#f7f8fa;border:1px solid #ececf2;border-radius:10px;cursor:pointer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg>
+              </button>
+              <label title="Import CSV" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;background:#f7f8fa;border:1px solid #ececf2;border-radius:10px;cursor:pointer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f4511e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.9A5 5 0 0 1 15.9 8H16a4 4 0 0 1 1 7.9"/><path d="M12 19v-7"/><path d="M9 15l3-3 3 3"/></svg>
+                <input type="file" accept=".csv,.json" onchange="importTestCases(this)" style="display:none"/>
               </label>
             </div>
           </div>
@@ -3928,13 +3884,6 @@
           <div style="font-size:48px;margin-bottom:16px">🗒️</div>
           <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Plans</div>
           <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — group test cases into a plan and track sign-off per release.</div>
-        </div>
-      </div>
-      <div class="page" id="page-testruns">
-        <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
-          <div style="font-size:48px;margin-bottom:16px">▶️</div>
-          <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Runs</div>
-          <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — kick off and track a manual test run cycle end to end.</div>
         </div>
       </div>
       <!-- AUTOMATION TESTS PAGE — automation-tagged test cases, including AI-Recorder output -->
@@ -4643,29 +4592,6 @@
   <div style="display:flex;gap:6px;margin-top:10px">
     <button onclick="xfApply()" style="flex:1;padding:7px;background:#0f3460;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">OK</button>
     <button onclick="xfClose()" style="flex:1;padding:7px;background:#f5f5f5;color:#333;border:1px solid #ddd;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Cancel</button>
-  </div>
-</div>
-
-<!-- SUITE EDIT MODAL -->
-<div id="suite-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:520px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f5">
-      <div style="font-size:14px;font-weight:700;color:#1a1a2e">Edit Test Case</div>
-      <button onclick="closeSuiteModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
-    </div>
-    <input type="hidden" id="suite-edit-key"/>
-    <div style="margin-bottom:16px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Test Case Description</label>
-      <input id="suite-edit-desc" class="tc-input" placeholder="Short description"/>
-    </div>
-    <div style="margin-bottom:24px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
-      <textarea id="suite-edit-expected" class="tc-input" rows="4" style="resize:vertical;line-height:1.5" placeholder="Expected outcome"></textarea>
-    </div>
-    <div style="display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="closeSuiteModal()" class="btn-v3-secondary">Cancel</button>
-      <button onclick="saveSuiteTC()" class="btn-v3-primary">Save Changes</button>
-    </div>
   </div>
 </div>
 
@@ -5524,9 +5450,9 @@
     const navEl = document.getElementById('nav-' + name);
     if (navEl) navEl.classList.add('active');
     const titles = {
-      home:'Dashboard', results:'Latest Results', suite:'Test Suites', testcases:'Test Cases',
+      home:'Dashboard', results:'Latest Results', testcases:'Test Cases',
       export:'Reports', bugs:'All Issues', admin:'Admin',
-      testplans:'Test Plans', testruns:'Test Runs',
+      testplans:'Test Plans',
       'automation-tests':'Automation Tests', 'automation-suites':'Automation Suites', 'automation-runs':'Automation Runs', 'automation-builder':'AI Recorder',
       'failed-tests':'Failed Tests', 'flaky-tests':'Flaky Tests',
       'execution-history':'Execution History', 'open-issues':'Open Issues', 'blocked-tests':'Blocked Tests',
@@ -5534,7 +5460,6 @@
     };
     document.getElementById('page-title').textContent = titles[name] || name;
     if (name === 'home') renderDashboard();
-    if (name === 'suite') renderTestSuite();
     if (name === 'testcases') renderTestCases();
     if (name === 'bugs') renderBugs();
     if (name === 'admin') loadAdminInvites();
@@ -6287,73 +6212,6 @@
     tbody.innerHTML = rows.join('');
   }
 
-  // ── Auto Test Suite from Results ──
-  function renderTestSuite() {
-    const tbody = document.getElementById('suite-tbody');
-    if (!tbody) return;
-    const d = filteredData();
-    const unique = {};
-    d.forEach(r => {
-      const key = r.appName + '|' + r.name;
-      if (!unique[key] || r.runId > unique[key].runId) unique[key] = r;
-    });
-    const tcs = Object.values(unique).sort((a, b) => {
-      const na = parseInt((a.name.match(/d+/) || [0])[0]);
-      const nb = parseInt((b.name.match(/d+/) || [0])[0]);
-      return na - nb;
-    });
-    // Update stats
-    const total = tcs.length;
-    const passing = tcs.filter(r => r.status === 'PASS').length;
-    const failing = tcs.filter(r => r.status === 'FAIL').length;
-    const rate = total > 0 ? Math.round((passing / total) * 100) : 0;
-    const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-    s('suite-total', total); s('suite-pass', passing); s('suite-fail', failing); s('suite-rate', rate + '%');
-    if (tcs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#aaa;padding:20px">No test results yet. Run your tests first.</td></tr>';
-      return;
-    }
-    const overrides = JSON.parse(localStorage.getItem('suite_overrides') || '{}');
-    let suiteStepCounter = 1;
-    tbody.innerHTML = tcs.map(r => {
-      const key = r.appName + '|' + r.name;
-      const display = overrides[key] ? { ...r, ...overrides[key] } : r;
-      const isPass = r.status === 'PASS';
-      const stepsHtml = r.steps.length > 0
-        ? `<button class="steps-btn" onclick="toggleSteps('${key}')">▶ ${r.steps.length} steps</button>
-           <ul class="steps-ol" id="steps-${key}" style="display:none;list-style:none;padding-left:0">${
-             r.steps.map(s => {
-               const num = suiteStepCounter++;
-               return `<li class="${s.passed ? 'sp' : 'sf'}"><span style="color:#333;font-size:11px;margin-right:6px;font-weight:700">${num}.</span>${s.title}</li>`;
-             }).join('')
-           }</ul>`
-        : '<span class="na">—</span>';
-      return `<tr class="${isPass ? 'rp' : 'rf'}">
-        <td><span class="tc-pill">${r.name}</span></td>
-        <td><span class="app-tag">${r.appName}</span></td>
-        <td class="col-desc" style="max-width:200px">${display.description}</td>
-        <td class="col-exp" style="max-width:200px">${display.expectedResult}</td>
-        <td>${stepsHtml}</td>
-        <td><span class="status-pill ${isPass ? 'sp-pass' : 'sp-fail'}">${isPass ? '✅ PASS' : '❌ FAIL'}</span></td>
-        <td class="col-dur">${r.executedDate}</td>
-        <td><button onclick="editSuiteTC('${key}')" style="background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Edit</button></td>
-      </tr>`;
-    }).join('');
-  }
-
-  function editSuiteTC(key) {
-    const overrides = JSON.parse(localStorage.getItem('suite_overrides') || '{}');
-    const d = filteredData();
-    const unique = {};
-    d.forEach(r => { const k = r.appName + '|' + r.name; if (!unique[k] || r.runId > unique[k].runId) unique[k] = r; });
-    const base = unique[key] || {};
-    const ov = overrides[key] || {};
-    document.getElementById('suite-edit-key').value = key;
-    document.getElementById('suite-edit-desc').value = ov.description || base.description || '';
-    document.getElementById('suite-edit-expected').value = ov.expectedResult || base.expectedResult || '';
-    document.getElementById('suite-edit-modal').style.display = 'flex';
-  }
-
   // ── Excel-style column filter ──
   let xfCol = -1;
   let xfTbody = 'suite-tbody';
@@ -6462,43 +6320,6 @@
   }
 
   document.addEventListener('click', xfClose);
-  function saveSuiteTC() {
-    const key = document.getElementById('suite-edit-key').value;
-    const overrides = JSON.parse(localStorage.getItem('suite_overrides') || '{}');
-    overrides[key] = {
-      description: document.getElementById('suite-edit-desc').value.trim(),
-      expectedResult: document.getElementById('suite-edit-expected').value.trim(),
-    };
-    localStorage.setItem('suite_overrides', JSON.stringify(overrides));
-    closeSuiteModal();
-    renderTestSuite();
-  }
-  function closeSuiteModal() {
-    document.getElementById('suite-edit-modal').style.display = 'none';
-  }
-
-  function exportSuite() {
-    const d = filteredData();
-    const unique = {};
-    d.forEach(r => {
-      const key = r.appName + '|' + r.name;
-      if (!unique[key] || r.runId > unique[key].runId) unique[key] = r;
-    });
-    const tcs = Object.values(unique).sort((a, b) => {
-      const na = parseInt((a.name.match(/d+/) || [0])[0]);
-      const nb = parseInt((b.name.match(/d+/) || [0])[0]);
-      return na - nb;
-    });
-    const wsData = [
-      ['TC ID', 'Suite', 'Test Case', 'Expected Result', 'Steps Count', 'Last Status', 'Last Run'],
-      ...tcs.map(r => [r.name, r.appName, r.description, r.expectedResult, r.steps.length, r.status, r.executedDate])
-    ];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    ws['!cols'] = [8, 10, 30, 35, 10, 10, 18].map(w => ({wch: w}));
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Test Suite');
-    XLSX.writeFile(wb, 'test-suite.xlsx');
-  }
 
   // ── Test Cases (localStorage) ──
   function loadTestCases() {
@@ -6743,14 +6564,48 @@
   function exportTestCases() {
     const tcs = loadTestCases();
     const wsData = [
-      ['TC ID','Title','Type','Module','Project','Expected Result','Steps','Created'],
-      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.expected, t.steps||'', t.created])
+      ['TC ID','Title','Type','Module','Project','Steps','Expected Result','Created'],
+      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.steps||'', t.expected, t.created])
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
-    ws['!cols'] = [12,28,12,14,18,28,40,14].map(w => ({wch:w}));
+    ws['!cols'] = [12,28,12,14,18,40,28,14].map(w => ({wch:w}));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Test Cases');
     XLSX.writeFile(wb, 'test-cases.xlsx');
+  }
+  function downloadSampleTestCases() {
+    // No header row — importTestCases() detects a headerless file automatically.
+    const rows = [
+      ['TC_001','Verify login with valid credentials','Manual','Login','','Open login page | Enter valid email and password | Click Login','User is redirected to the dashboard','14 Aug 2026'],
+      ['TC_002','Verify login fails with wrong password','Manual','Login','','Open login page | Enter valid email and wrong password | Click Login','Error message "Invalid credentials" is shown','14 Aug 2026'],
+    ];
+    const escape = v => {
+      const s = String(v ?? '');
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+    };
+    const csv = rows.map(r => r.map(escape).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'sample-test-cases.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  function parseCsvLine(line) {
+    const out = [];
+    let cur = '', inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (inQuotes) {
+        if (ch === '"' && line[i+1] === '"') { cur += '"'; i++; }
+        else if (ch === '"') { inQuotes = false; }
+        else { cur += ch; }
+      } else if (ch === '"') { inQuotes = true; }
+      else if (ch === ',') { out.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    out.push(cur);
+    return out;
   }
   function importTestCases(input) {
     const file = input.files[0]; if (!file) return;
@@ -6759,21 +6614,27 @@
       try {
         const text = e.target.result;
         const lines = text.split('\n').filter(l => l.trim());
-        // skip header row
+        // Columns match the Stored Test Cases table / sample file:
+        // TC ID, Title, Type, Module, Project, Steps, Expected Result, Created
+        // Only skip the first line if it's actually a header (sample file ships without one).
+        const firstCol = (parseCsvLine(lines[0] || '')[0] || '').trim().toLowerCase();
+        const dataLines = firstCol === 'tc id' ? lines.slice(1) : lines;
         const existing = loadTestCases();
         let added = 0;
-        lines.slice(1).forEach(line => {
-          const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
-          const clean = c => (c||'').replace(/^"|"$/g,'').replace(/""/g,'"').trim();
+        dataLines.forEach(line => {
+          const cols = parseCsvLine(line);
+          const clean = c => (c||'').trim();
           const id = clean(cols[0]);
           const title = clean(cols[1]);
           if (!id || !title) return;
           existing.push({
             id, title,
-            module: clean(cols[2])||'General',
-            expected: clean(cols[3])||'—',
-            steps: clean(cols[4])||'',
-            created: clean(cols[5]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+            type: clean(cols[2]).toLowerCase() === 'automation' ? 'automation' : 'manual',
+            module: clean(cols[3])||'General',
+            project: clean(cols[4])||'',
+            steps: clean(cols[5])||'',
+            expected: clean(cols[6])||'—',
+            created: clean(cols[7]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
           });
           added++;
         });
