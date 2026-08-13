@@ -5895,26 +5895,30 @@
     const card = document.getElementById('ai-recorder-review-queue');
     if (!project) { card.style.display = 'none'; return; }
 
-    const { entries } = await api('/review-queue?project=' + encodeURIComponent(project));
-    const pending = entries.filter((e) => e.status === 'pending');
-    card.style.display = 'block';
-    const isAdmin = currentUser && currentUser.role === 'admin';
+    try {
+      const { entries } = await api('/review-queue?project=' + encodeURIComponent(project));
+      const pending = entries.filter((e) => e.status === 'pending');
+      card.style.display = 'block';
+      const isAdmin = currentUser && currentUser.role === 'admin';
 
-    if (!pending.length) {
-      card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div style="padding:16px;color:#999;font-size:13px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
-      return;
+      if (!pending.length) {
+        card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div style="padding:16px;color:#999;font-size:13px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
+        return;
+      }
+
+      card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div>' + pending.map((e) => `
+        <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:13px">${aiRecorderEscapeHtml(e.recordingId)} — ${aiRecorderEscapeHtml(e.reason)}${e.flaggedSteps.length ? ' on step ' + e.flaggedSteps.map((i) => i + 1).join(', ') : ''}</span>
+          ${isAdmin ? `
+            <span style="display:flex;gap:8px;align-items:center">
+              <button class="btn-v3-secondary" onclick="approveAiRecorderReview(${e.id})">Approve as one-off</button>
+              <input type="text" id="ai-recorder-block-name-${e.id}" class="tc-input" placeholder="Block name" style="width:140px"/>
+              <button class="btn-v3-primary" onclick="promoteAiRecorderReview(${e.id})">Promote to block</button>
+            </span>` : ''}
+        </div>`).join('');
+    } catch (e) {
+      card.textContent = 'Could not load review queue: ' + e.message;
     }
-
-    card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div>' + pending.map((e) => `
-      <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-        <span style="font-size:13px">${aiRecorderEscapeHtml(e.recordingId)} — ${aiRecorderEscapeHtml(e.reason)}${e.flaggedSteps.length ? ' on step ' + e.flaggedSteps.map((i) => i + 1).join(', ') : ''}</span>
-        ${isAdmin ? `
-          <span style="display:flex;gap:8px;align-items:center">
-            <button class="btn-v3-secondary" onclick="approveAiRecorderReview(${e.id})">Approve as one-off</button>
-            <input type="text" id="ai-recorder-block-name-${e.id}" class="tc-input" placeholder="Block name" style="width:140px"/>
-            <button class="btn-v3-primary" onclick="promoteAiRecorderReview(${e.id})">Promote to block</button>
-          </span>` : ''}
-      </div>`).join('');
   }
 
   async function approveAiRecorderReview(id) {
@@ -6027,7 +6031,6 @@
     setRecorderUiState('idle');
     const statusEl = document.getElementById('recorder-status');
     if (result.code) {
-      statusEl.style.display = 'none';
       document.getElementById('recorder-code').value = result.code;
       document.getElementById('recorder-result-card').style.display = 'block';
       aiRecorderRunGenerate(sid, null, result.code);
