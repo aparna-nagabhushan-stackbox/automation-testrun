@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+Thumbs.db
+.env
+server/data/
+server/recordings/
+server/recorder-profile/
+tests/screenshots/
+dist/

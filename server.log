@@ -1,0 +1,5 @@
+
+> stacktest@1.0.0 start
+> node server/index.js
+
+StackTest server running on http://localhost:3000
