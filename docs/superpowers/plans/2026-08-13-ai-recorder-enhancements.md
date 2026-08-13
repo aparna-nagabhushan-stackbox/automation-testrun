@@ -869,10 +869,28 @@ git commit -m "feat: add pending review queue with admin-gated approve/promote"
 
 **Interfaces:**
 - Consumes: `segmentByBlocks`, `blockForSelector` (Task 2), `generateFromCode` (Task 3), `maskSensitiveFields` (Task 1), `db.getBlocksByProject`/`upsertGeneration`/`createReviewEntry` (Task 4).
-- Produces: `module.exports = function createRecorderRouter({ claudeClient } = {})` — in production, called with no args (builds a real `@anthropic-ai/sdk` client from `ANTHROPIC_API_KEY`, or `null` if unset); tests call it with a fake `claudeClient`. Two new routes: `POST /:id/generate` (codegen "new window" session) and `POST /inpage/:sessionId/generate` (in-tab bookmarklet session), both accepting `{project, flowName}` in the body and both returning `{recordingId, project, flowName, testCaseName, summary, steps, code, testData, matchedBlockNames, needsReview}`. Each `step` is additionally tagged with `blockId`/`blockName` (`null` when the step is genuinely new). Task 8's frontend calls both.
+- Produces: `module.exports = function createRecorderRouter({ claudeClient } = {})` — in production, called with no args (builds a real `@anthropic-ai/sdk` client from `ANTHROPIC_API_KEY`, or `null` if unset); tests call it with a fake `claudeClient`. Two new routes: `POST /:id/generate` (codegen "new window" session) and `POST /inpage/:sessionId/generate` (in-tab bookmarklet session), both accepting `{project, flowName}` in the body and both returning `{recordingId, project, flowName, testCaseName, summary, steps, code, testData, matchedBlockNames, needsReview}`. Each `step` is additionally tagged with `blockId`/`blockName` (`null` when the step is genuinely new). Task 11's frontend calls both.
 - **No existing route's behavior changes** — this is a mechanical wrap (existing `sessions`/`inpageSessions` maps and all current handlers move inside the factory function body unchanged) plus two additions.
 
-- [ ] **Step 1: Write the failing test**
+> **Revised 2026-08-13 (pre-flight scan finding):** this task's code requires
+> `@anthropic-ai/sdk`, but that dependency was originally only added in
+> Task 8, which runs *after* this task — running the plan in numeric order
+> would crash the whole server on module load (`Cannot find module
+> '@anthropic-ai/sdk'`), not just the new tests. Fixed by moving the
+> dependency install here as Step 1; Task 8 no longer installs it, only
+> adds the `test:unit` script and `.env.example` docs.
+
+- [ ] **Step 1: Add and install the `@anthropic-ai/sdk` dependency**
+
+Modify `package.json` — add to `dependencies`:
+```json
+    "@anthropic-ai/sdk": "^0.32.0"
+```
+
+Run: `npm install`
+Expected: `@anthropic-ai/sdk` added to `node_modules` and `package-lock.json`. Do this before writing any code in this task — the factory function below requires it at module load time.
+
+- [ ] **Step 2: Write the failing test**
 
 `server/tests/recorder.generate.routes.test.js`:
 ```js
@@ -992,12 +1010,12 @@ test('generate 500s with a clear error when no Claude client is configured', asy
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Step 3: Run test to verify it fails**
 
 Run: `node --test server/tests/recorder.generate.routes.test.js`
 Expected: FAIL — `require('../routes/recorder')` returns an Express router (not callable) since the file isn't a factory yet.
 
-- [ ] **Step 3: Refactor `recorder.js` into a factory and add the generate endpoints**
+- [ ] **Step 4: Refactor `recorder.js` into a factory and add the generate endpoints**
 
 Modify `server/routes/recorder.js` — change the top of the file (after the existing requires) from:
 ```js
@@ -1135,7 +1153,7 @@ to:
 };
 ```
 
-- [ ] **Step 4: Modify `server/index.js` to call the recorder module as a factory**
+- [ ] **Step 5: Modify `server/index.js` to call the recorder module as a factory**
 
 Change:
 ```js
@@ -1154,34 +1172,40 @@ to:
 app.use('/api/recorder', createRecorderRouter());
 ```
 
-- [ ] **Step 5: Run the new test to verify it passes**
+- [ ] **Step 6: Run the new test to verify it passes**
 
 Run: `node --test server/tests/recorder.generate.routes.test.js`
 Expected: PASS (3 tests)
 
-- [ ] **Step 6: Run the full existing test suite to confirm the refactor didn't break the current recorder routes**
+- [ ] **Step 7: Run the full existing test suite to confirm the refactor didn't break the current recorder routes**
 
 Run: `npm test`
 Expected: PASS — the Playwright E2E script's existing flows (whatever it already exercises) still pass with the factory-based router mounted.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
-git add server/routes/recorder.js server/index.js server/tests/recorder.generate.routes.test.js
+git add package.json package-lock.json server/routes/recorder.js server/index.js server/tests/recorder.generate.routes.test.js
 git commit -m "feat: add Claude-backed /generate endpoints to both recorder modes"
 ```
 
 ---
 
-### Task 8: `package.json` + `.env.example` wiring
+### Task 8: `test:unit` script + `.env.example` wiring
+
+> **Revised 2026-08-13 (pre-flight scan finding):** the `@anthropic-ai/sdk`
+> dependency install moved to Task 7 Step 1 (this task ran after Task 7 in
+> the original numbering, which meant the dependency the plan's own Task 7
+> code needed wouldn't exist yet when Task 7 ran). This task now only adds
+> the `test:unit` script and documents the env var.
 
 **Files:**
 - Modify: `package.json`
 - Modify: `.env.example`
 
-**Interfaces:** None — dependency/script/docs wiring only.
+**Interfaces:** None — script/docs wiring only.
 
-- [ ] **Step 1: Add the new dependency and test script**
+- [ ] **Step 1: Add the `test:unit` script**
 
 Modify `package.json`:
 ```json
@@ -1192,22 +1216,9 @@ Modify `package.json`:
     "test:unit": "node --test server/tests",
     "install-browser": "playwright install chromium"
   },
-  "dependencies": {
-    "express": "^4.21.0",
-    "cookie-parser": "^1.4.7",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "dotenv": "^16.4.5",
-    "@anthropic-ai/sdk": "^0.32.0"
-  },
 ```
 
-- [ ] **Step 2: Install the new dependency**
-
-Run: `npm install`
-Expected: `@anthropic-ai/sdk` added to `node_modules` and `package-lock.json`.
-
-- [ ] **Step 3: Document the new env var**
+- [ ] **Step 2: Document the new env var**
 
 Modify `.env.example` — append:
 ```
@@ -1216,16 +1227,16 @@ Modify `.env.example` — append:
 ANTHROPIC_API_KEY=
 ```
 
-- [ ] **Step 4: Run the full unit test suite to confirm the new script works**
+- [ ] **Step 3: Run the full unit test suite to confirm the new script works**
 
 Run: `npm run test:unit`
-Expected: PASS — every `server/tests/*.test.js` file from Tasks 1–7 runs.
+Expected: PASS — every `server/tests/*.test.js` file from Tasks 1–7 runs (Task 7 already installed `@anthropic-ai/sdk`).
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
-git add package.json package-lock.json .env.example
-git commit -m "chore: add @anthropic-ai/sdk dependency and test:unit script"
+git add package.json .env.example
+git commit -m "chore: add test:unit script and document ANTHROPIC_API_KEY"
 ```
 
 ---
