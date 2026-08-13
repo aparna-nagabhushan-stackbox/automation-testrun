@@ -10,8 +10,11 @@ const fs = require('fs');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
 const { requireAuth } = require('../auth');
-
-const router = express.Router();
+const Anthropic = require('@anthropic-ai/sdk');
+const db = require('../db');
+const { generateFromCode } = require('../services/claudeGenerate');
+const { maskSensitiveFields } = require('../services/dataMasking');
+const { segmentByBlocks, blockForSelector } = require('../services/blockMatcher');
 
 const RECORDINGS_DIR = path.join(__dirname, '..', 'recordings');
 fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
@@ -25,7 +28,13 @@ fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
 // profile, but as of v1.62 it makes codegen emit broken code — a
 // `browser.newContext()` call followed by a reference to an undefined
 // `page` variable — so storage-state carryover is used instead.)
-const RECORDER_PROFILE_DIR = path.join(__dirname, '..', 'recorder-profile');
+module.exports = function createRecorderRouter(deps = {}) {
+  const claudeClient = deps.claudeClient !== undefined
+    ? deps.claudeClient
+    : (process.env.ANTHROPIC_API_KEY ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) : null);
+  const router = express.Router();
+
+  const RECORDER_PROFILE_DIR = path.join(__dirname, '..', 'recorder-profile');
 fs.mkdirSync(RECORDER_PROFILE_DIR, { recursive: true });
 const RECORDER_STORAGE_STATE = path.join(RECORDER_PROFILE_DIR, 'state.json');
 
@@ -275,4 +284,104 @@ function buildBookmarklet(origin, sessionId) {
   return 'javascript:' + encodeURIComponent(injected);
 }
 
-module.exports = router;
+  const LEADING_VERBS = /^(click|type|fill|select|check|uncheck|confirm|press|enter|choose|open)\s+/i;
+  function slugify(s) {
+    return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+  // "Click zone override dropdown" -> "zone_override" — strips the leading
+  // action verb and keeps the next couple of meaningful words, so the
+  // auto-generated name reads like the mockup's `..._zone_override` suffix
+  // instead of repeating the whole step description.
+  function shortLabel(description) {
+    const stripped = String(description || '').replace(LEADING_VERBS, '');
+    return slugify(stripped.trim().split(/\s+/).slice(0, 2).join(' '));
+  }
+  // The distinguishing suffix (first new step's short label) is only useful
+  // once there's an actual known-block library to contrast against — with
+  // an empty library every step is trivially "new", so appending one of
+  // them wouldn't distinguish anything (same rationale as the
+  // `noBlockMatched` guard below: don't treat an empty library as meaningful
+  // signal).
+  function buildTestCaseName({ project, flowName, newSteps, hasBlocks }) {
+    const parts = [slugify(project), slugify(flowName)];
+    if (hasBlocks && newSteps.length) parts.push(shortLabel(newSteps[0].description));
+    return parts.filter(Boolean).join('_');
+  }
+
+  async function runGenerate({ project, flowName, recordingId, rawCode }, res) {
+    if (!claudeClient) return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not set on the server — AI generation is unavailable.' });
+    if (!rawCode) return res.status(400).json({ error: 'No recorded code to generate from.' });
+
+    const blocks = project ? db.getBlocksByProject(project) : [];
+    const segments = segmentByBlocks(rawCode, blocks);
+    const matchedBlockNames = [...new Set(segments.filter((s) => s.blockId).map((s) => s.blockName))];
+
+    const generated = await generateFromCode(claudeClient, { rawCode, matchedBlockNames });
+    const testData = maskSensitiveFields(generated.testData);
+
+    // Block attribution is looked up per generated step by selector, not by
+    // index — Claude only owns the natural-language layer (description,
+    // confidence, cleaned code); which steps belong to a known block is
+    // computed deterministically from the same segments used for naming.
+    const steps = generated.steps.map((s) => {
+      const match = blockForSelector(segments, s.selector);
+      return { ...s, blockId: match ? match.blockId : null, blockName: match ? match.blockName : null };
+    });
+
+    const lowConfidenceSteps = steps.filter((s) => s.confidence === 'low').map((s) => s.index);
+    const newSteps = steps.filter((s) => !s.blockId);
+    // Only flag "no matching block" when there are blocks to match against
+    // and truly none of them matched — a project's very first recording
+    // shouldn't be forced into review just because its block library is empty.
+    const noBlockMatched = blocks.length > 0 && newSteps.length === steps.length;
+    const needsReview = lowConfidenceSteps.length > 0 || noBlockMatched;
+
+    const testCaseName = buildTestCaseName({ project, flowName, newSteps, hasBlocks: blocks.length > 0 });
+
+    const result = {
+      recordingId, project: project || '', flowName: flowName || '', testCaseName,
+      summary: generated.summary, steps, code: generated.code, testData,
+      matchedBlockNames, needsReview,
+    };
+    db.upsertGeneration(result);
+
+    if (needsReview) {
+      db.createReviewEntry({
+        project: project || '', recordingId,
+        reason: lowConfidenceSteps.length > 0 ? 'weak locator' : 'no matching block',
+        flaggedSteps: lowConfidenceSteps.length > 0 ? lowConfidenceSteps : newSteps.map((s) => s.index),
+      });
+    }
+
+    res.json(result);
+  }
+
+  router.post('/:id/generate', requireAuth, async (req, res) => {
+    const session = sessions.get(req.params.id);
+    if (!session) return res.status(404).json({ error: 'No recording session with that id.' });
+    if (!fs.existsSync(session.outFile)) return res.status(400).json({ error: 'No recorded code for this session yet.' });
+    try {
+      await runGenerate({
+        project: req.body?.project || '', flowName: req.body?.flowName || '',
+        recordingId: req.params.id, rawCode: fs.readFileSync(session.outFile, 'utf8'),
+      }, res);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  router.post('/inpage/:sessionId/generate', requireAuth, async (req, res) => {
+    const session = inpageSessions.get(req.params.sessionId);
+    if (!session) return res.status(404).json({ error: 'Unknown or expired recording session.' });
+    try {
+      await runGenerate({
+        project: req.body?.project || '', flowName: req.body?.flowName || '',
+        recordingId: req.params.sessionId, rawCode: eventsToPlaywrightCode(session.events),
+      }, res);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  return router;
+};
