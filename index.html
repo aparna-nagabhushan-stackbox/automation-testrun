@@ -5561,7 +5561,7 @@
     if (name === 'team-members') loadTeamMembers();
     if (name === 'settings') loadSettingsFromStorage();
     if (name === 'automation-tests') renderAutomationTestsPage();
-    if (name === 'automation-builder') loadAiRecorderBlocks();
+    if (name === 'automation-builder') { loadAiRecorderBlocks(); loadAiRecorderReviewQueue(); }
   }
 
   // ── Team Members ──
@@ -5874,6 +5874,66 @@
     }
   }
 
+  async function aiRecorderRunGenerate(codegenSid, inpageSid, code) {
+    const statusEl = document.getElementById(codegenSid ? 'recorder-status' : 'inpage-status');
+    const priorHtml = statusEl.innerHTML;
+    statusEl.innerHTML = priorHtml + '<div style="color:#666;margin-top:6px">Generating steps, summary, and test data with Claude…</div>';
+    try {
+      const path = codegenSid ? '/recorder/' + codegenSid + '/generate' : '/recorder/inpage/' + inpageSid + '/generate';
+      const generation = await api(path, { method: 'POST', body: JSON.stringify({ project: selectedProjectName() || '', flowName: aiRecorderFlowName() }) });
+      aiRecorderLastGeneration = generation;
+      statusEl.innerHTML = priorHtml;
+      renderAiRecorderResultPanels();
+      await loadAiRecorderReviewQueue();
+    } catch (e) {
+      statusEl.innerHTML = priorHtml + `<div style="color:#c62828;margin-top:6px">AI generation failed: ${e.message}</div>`;
+    }
+  }
+
+  async function loadAiRecorderReviewQueue() {
+    const project = selectedProjectName();
+    const card = document.getElementById('ai-recorder-review-queue');
+    if (!project) { card.style.display = 'none'; return; }
+
+    const { entries } = await api('/review-queue?project=' + encodeURIComponent(project));
+    const pending = entries.filter((e) => e.status === 'pending');
+    card.style.display = 'block';
+    const isAdmin = currentUser && currentUser.role === 'admin';
+
+    if (!pending.length) {
+      card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div style="padding:16px;color:#999;font-size:13px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
+      return;
+    }
+
+    card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div>' + pending.map((e) => `
+      <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:13px">${aiRecorderEscapeHtml(e.recordingId)} — ${aiRecorderEscapeHtml(e.reason)}${e.flaggedSteps.length ? ' on step ' + e.flaggedSteps.map((i) => i + 1).join(', ') : ''}</span>
+        ${isAdmin ? `
+          <span style="display:flex;gap:8px;align-items:center">
+            <button class="btn-v3-secondary" onclick="approveAiRecorderReview(${e.id})">Approve as one-off</button>
+            <input type="text" id="ai-recorder-block-name-${e.id}" class="tc-input" placeholder="Block name" style="width:140px"/>
+            <button class="btn-v3-primary" onclick="promoteAiRecorderReview(${e.id})">Promote to block</button>
+          </span>` : ''}
+      </div>`).join('');
+  }
+
+  async function approveAiRecorderReview(id) {
+    try { await api('/review-queue/' + id + '/approve', { method: 'POST' }); await loadAiRecorderReviewQueue(); } catch (e) { alert(e.message); }
+  }
+
+  async function promoteAiRecorderReview(id) {
+    const input = document.getElementById('ai-recorder-block-name-' + id);
+    const blockName = input.value.trim();
+    if (!blockName) { alert('Enter a block name first.'); return; }
+    try {
+      await api('/review-queue/' + id + '/promote', { method: 'POST', body: JSON.stringify({ blockName }) });
+      await loadAiRecorderReviewQueue();
+      await loadAiRecorderBlocks();
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
   function aiRecorderFlowName() {
     return document.getElementById('ai-recorder-flow-name').value.trim();
   }
@@ -5913,6 +5973,7 @@
       document.getElementById('recorder-code').value = code;
       document.getElementById('recorder-result-card').style.display = 'block';
       statusEl.innerHTML = `<span style="color:#2e7d32">Captured ${eventCount} interaction(s) — code is ready below.</span>`;
+      aiRecorderRunGenerate(null, inpageSessionId, code);
     } catch (e) {
       statusEl.innerHTML = `<span style="color:#c62828">${e.message}</span>`;
     }
@@ -5961,6 +6022,7 @@
   function finishRecording(result) {
     clearInterval(recorderPollTimer);
     recorderPollTimer = null;
+    const sid = recorderSessionId;
     recorderSessionId = null;
     setRecorderUiState('idle');
     const statusEl = document.getElementById('recorder-status');
@@ -5968,6 +6030,7 @@
       statusEl.style.display = 'none';
       document.getElementById('recorder-code').value = result.code;
       document.getElementById('recorder-result-card').style.display = 'block';
+      aiRecorderRunGenerate(sid, null, result.code);
     } else {
       statusEl.style.display = 'block';
       statusEl.innerHTML = `<span style="color:#c62828">${result.error || 'No code was recorded.'}</span>`;
