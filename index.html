@@ -480,6 +480,79 @@
     .blocker-check { width:44px; height:44px; border-radius:50%; background:#e8f5e9; color:#2e7d32; display:flex; align-items:center; justify-content:center; font-size:20px; margin:0 auto 12px; }
     .issue-stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:16px 0; }
     .issue-stat-box { border-radius:10px; padding:16px; text-align:center; }
+
+    /* ── AI Recorder — dark redesign, scoped to this one page.
+       Every class below is prefixed with #page-automation-builder so the
+       shared components it reuses (.table-card, .btn-v3-primary, .tc-input,
+       .seg-tabs, ...) keep their normal light styling everywhere else. ── */
+    #page-automation-builder {
+      --ar-bg0:#12151a; --ar-bg1:#181c23; --ar-bg2:#1f242c; --ar-bg3:#262c36;
+      --ar-border:#2b313c; --ar-border-strong:#3a4250;
+      --ar-text0:#eaedf1; --ar-text1:#a7afbd; --ar-text2:#6e7686;
+      --ar-amber:#e8a33d; --ar-amber-dim:#3a2e1a;
+      --ar-green:#3fbe8a; --ar-green-dim:#173226;
+      --ar-red:#e8615c; --ar-red-dim:#33191a;
+      --ar-cyan:#4fa8d8; --ar-cyan-dim:#182831;
+      margin:-28px -32px; padding:28px 32px; min-height:calc(100vh - 130px);
+      background:var(--ar-bg0); color:var(--ar-text0);
+    }
+    #page-automation-builder .home-welcome h2 { color:var(--ar-text0); }
+    #page-automation-builder .home-welcome > div { color:var(--ar-text2) !important; }
+    #page-automation-builder .table-card { background:var(--ar-bg1); border:1px solid var(--ar-border); box-shadow:none; color:var(--ar-text0); }
+    #page-automation-builder .table-card-header { border-bottom:1px solid var(--ar-border); }
+    #page-automation-builder .table-card-header h3 { color:var(--ar-text0); }
+    #page-automation-builder .settings-card-sub { color:var(--ar-text2) !important; }
+    #page-automation-builder .settings-field label { color:var(--ar-text1); }
+    #page-automation-builder .settings-field label span { color:var(--ar-text2) !important; }
+    #page-automation-builder .tc-input { background:var(--ar-bg0); border:1px solid var(--ar-border-strong); color:var(--ar-text0); }
+    #page-automation-builder .tc-input::placeholder { color:var(--ar-text2); }
+    #page-automation-builder .tc-input:focus { border-color:var(--ar-amber); background:var(--ar-bg0); }
+    #page-automation-builder .seg-tabs { background:var(--ar-bg2); }
+    #page-automation-builder .seg-tab { color:var(--ar-text1); }
+    #page-automation-builder .seg-tab:hover { color:var(--ar-amber); }
+    #page-automation-builder .seg-tab.active { background:var(--ar-bg1); color:var(--ar-amber); box-shadow:none; border:1px solid var(--ar-border-strong); }
+    #page-automation-builder .btn-v3-primary { background:var(--ar-amber); color:#241a0a; }
+    #page-automation-builder .btn-v3-primary:hover { background:#f0ae4c; opacity:1; }
+    #page-automation-builder .btn-v3-secondary { background:var(--ar-bg2); color:var(--ar-text0); border:1px solid var(--ar-border-strong); }
+    #page-automation-builder .btn-v3-secondary:hover { background:var(--ar-bg3); }
+    #page-automation-builder code { background:var(--ar-bg2); color:var(--ar-cyan); }
+    #page-automation-builder pre { background:var(--ar-bg0) !important; border:1px solid var(--ar-border) !important; color:var(--ar-text1) !important; }
+
+    .ar-page-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:22px; }
+    .ar-section-label {
+      font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ar-text2);
+      margin-bottom:10px;
+    }
+    .ar-toggle-wrap { display:flex; align-items:center; gap:9px; font-size:12px; color:var(--ar-text1); white-space:nowrap; padding-top:2px; cursor:pointer; user-select:none; }
+    .ar-toggle { position:relative; width:38px; height:20px; background:var(--ar-bg3); border-radius:20px; border:1px solid var(--ar-border-strong); flex-shrink:0; transition:background .15s,border-color .15s; }
+    .ar-toggle .knob { position:absolute; top:1px; left:1px; width:16px; height:16px; border-radius:50%; background:var(--ar-text1); transition:left .15s ease, background .15s; }
+    .ar-toggle.on { background:var(--ar-amber-dim); border-color:var(--ar-amber); }
+    .ar-toggle.on .knob { left:19px; background:var(--ar-amber); }
+
+    .ar-block-chip { display:inline-flex; align-items:center; gap:7px; background:var(--ar-bg2); border:1px solid var(--ar-border-strong); border-radius:8px; padding:7px 12px; font-size:12px; font-weight:500; color:var(--ar-text0); }
+    .ar-hint { font-size:12.5px; color:var(--ar-text2); }
+
+    .ar-step { display:flex; gap:11px; padding:9px 0; border-bottom:1px solid var(--ar-border); }
+    .ar-step:last-child { border-bottom:none; }
+    .ar-step-num {
+      width:20px; height:20px; border-radius:5px; background:var(--ar-bg3); color:var(--ar-text1);
+      display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600;
+      flex-shrink:0; margin-top:1px;
+    }
+    .ar-step-action { font-size:13px; color:var(--ar-text0); font-weight:500; }
+    .ar-step-target { font-size:11.5px; color:var(--ar-text2); margin-top:2px; }
+    .ar-confidence { font-size:10.5px; padding:1px 6px; border-radius:10px; margin-left:6px; }
+    .ar-confidence.high { background:var(--ar-green-dim); color:var(--ar-green); }
+    .ar-confidence.low { background:var(--ar-red-dim); color:var(--ar-red); }
+    .ar-reuse-note {
+      display:flex; align-items:center; gap:8px; margin-top:14px; padding:10px 12px;
+      background:var(--ar-cyan-dim); border:1px solid #1e4358; border-radius:8px;
+      font-size:11.8px; color:#8fc7e6;
+    }
+    .ar-naming-note { margin-top:14px; font-size:11.8px; color:var(--ar-text2); }
+
+    .ar-review-item { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-top:1px solid var(--ar-border); gap:10px; flex-wrap:wrap; }
+    .ar-review-item:first-child { border-top:none; }
   </style>
 </head>
 <body>
@@ -3988,17 +4061,23 @@
 
       <!-- BUILDER (AI Recorder) PAGE -->
       <div class="page" id="page-automation-builder">
-        <div class="dash-header">
+        <div class="ar-page-head">
           <div class="home-welcome">
             <h2>🧩 AI Recorder</h2>
-            <div style="color:#666;font-size:13px;margin-top:2px">Record clicks in a real browser and get back ready-to-run Playwright code.</div>
+            <div style="font-size:13px;margin-top:2px">Record a flow live in the app — get back a runnable script and reusable test data.</div>
           </div>
+          <label class="ar-toggle-wrap">
+            Advanced (code) view
+            <span class="ar-toggle" id="ai-recorder-advanced-toggle-visual"><span class="knob"></span></span>
+            <input type="checkbox" id="ai-recorder-advanced-toggle" style="display:none" onchange="aiRecorderAdvanced = this.checked; document.getElementById('ai-recorder-advanced-toggle-visual').classList.toggle('on', this.checked); renderAiRecorderResultPanels();"/>
+          </label>
         </div>
 
-        <div id="ai-recorder-block-lib-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+        <div class="ar-section-label">Block library — locked, reused automatically when a recording matches</div>
+        <div id="ai-recorder-block-lib-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"></div>
 
         <div class="settings-field" style="max-width:320px;margin-bottom:16px">
-          <label>Flow name <span style="color:#999;font-weight:400">— used to auto-name the generated test</span></label>
+          <label>Flow name <span style="font-weight:400">— used to auto-name the generated test</span></label>
           <input type="text" id="ai-recorder-flow-name" class="tc-input" placeholder="e.g. Operator login"/>
         </div>
 
@@ -4070,12 +4149,8 @@
         </div>
 
         <div class="table-card" id="ai-recorder-insights-card" style="max-width:900px;display:none">
-          <div class="table-card-header" style="display:flex;justify-content:space-between;align-items:center">
+          <div class="table-card-header">
             <h3>AI insights</h3>
-            <label style="font-size:12.5px;color:#666;display:flex;align-items:center;gap:6px;cursor:pointer">
-              <input type="checkbox" id="ai-recorder-advanced-toggle" onchange="aiRecorderAdvanced = this.checked; renderAiRecorderResultPanels();"/>
-              Advanced (code) view
-            </label>
           </div>
           <div id="ai-recorder-result-area" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px"></div>
         </div>
@@ -5816,13 +5891,13 @@
   async function loadAiRecorderBlocks() {
     const project = selectedProjectName();
     const row = document.getElementById('ai-recorder-block-lib-row');
-    if (!project) { aiRecorderBlocks = []; row.innerHTML = '<span style="font-size:12.5px;color:#999">Select a project above to see its block library.</span>'; return; }
+    if (!project) { aiRecorderBlocks = []; row.innerHTML = '<span class="ar-hint">Select a project above to see its block library.</span>'; return; }
     try {
       const { blocks } = await api('/blocks?project=' + encodeURIComponent(project));
       aiRecorderBlocks = blocks;
       row.innerHTML = blocks.length
-        ? blocks.map((b) => `<span style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:6px 12px;font-size:12px;color:#666">🔒 ${aiRecorderEscapeHtml(b.name)}</span>`).join('')
-        : '<span style="font-size:12.5px;color:#999">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
+        ? blocks.map((b) => `<span class="ar-block-chip">🔒 ${aiRecorderEscapeHtml(b.name)}</span>`).join('')
+        : '<span class="ar-hint">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
     } catch (e) {
       row.textContent = 'Could not load blocks: ' + e.message;
     }
@@ -5853,21 +5928,18 @@
         </div>`;
     } else {
       const stepsHtml = g.steps.map((s) => `
-        <div style="padding:8px 0;border-bottom:1px solid #eee;font-size:13px">
-          ${s.index + 1}. ${aiRecorderEscapeHtml(s.description)}
-          <span style="font-size:11px;border-radius:999px;padding:2px 8px;margin-left:6px;
-            background:${s.confidence === 'high' ? '#e8f5e9' : '#ffebee'};color:${s.confidence === 'high' ? '#2e7d32' : '#c62828'}">
-            ${s.confidence === 'high' ? 'stable locator' : 'weak locator — flagged'}
-          </span>
-          <div style="font-size:11.5px;color:#999;margin-top:2px">
-            ${s.blockName ? `Block: <code>${aiRecorderEscapeHtml(s.blockName)}</code>` : 'Not part of a block yet'}
+        <div class="ar-step">
+          <div class="ar-step-num">${s.index + 1}</div>
+          <div>
+            <div class="ar-step-action">${aiRecorderEscapeHtml(s.description)}
+              <span class="ar-confidence ${s.confidence === 'high' ? 'high' : 'low'}">${s.confidence === 'high' ? 'stable locator' : 'weak locator — flagged'}</span>
+            </div>
+            <div class="ar-step-target">${s.blockName ? `Block: <code>${aiRecorderEscapeHtml(s.blockName)}</code>` : 'Not part of a block yet'}</div>
           </div>
         </div>`).join('');
       const reusedCount = g.steps.filter((s) => s.blockName).length;
       const reuseNote = reusedCount > 0 && reusedCount < g.steps.length
-        ? `<div style="margin-top:12px;padding:10px 12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;font-size:11.8px;color:#1565c0">
-             ↻ ${reusedCount} of ${g.steps.length} step(s) reused an existing block — only the new step(s) needed fresh code.
-           </div>`
+        ? `<div class="ar-reuse-note">↻ ${reusedCount} of ${g.steps.length} step(s) reused an existing block — only the new step(s) needed fresh code.</div>`
         : '';
       area.innerHTML = `
         <div><h4 style="margin:0 0 8px;font-size:13px">Captured steps</h4>${stepsHtml}</div>
@@ -5875,9 +5947,7 @@
           <h4 style="margin:0 0 8px;font-size:13px">What this test does</h4>
           <div style="font-size:13px">${aiRecorderEscapeHtml(g.summary)}</div>
           ${reuseNote}
-          <div style="margin-top:14px;font-size:11.8px;color:#999">
-            Naming applied automatically: <code>${aiRecorderEscapeHtml(g.testCaseName)}</code>
-          </div>
+          <div class="ar-naming-note">Naming applied automatically: <code>${aiRecorderEscapeHtml(g.testCaseName)}</code></div>
         </div>`;
     }
   }
@@ -5913,12 +5983,12 @@
       const isAdmin = currentUser && currentUser.role === 'admin';
 
       if (!pending.length) {
-        card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div style="padding:16px;color:#999;font-size:13px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
+        card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div class="ar-hint" style="padding:16px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
         return;
       }
 
       card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div>' + pending.map((e) => `
-        <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="ar-review-item">
           <span style="font-size:13px">${aiRecorderEscapeHtml(e.recordingId)} — ${aiRecorderEscapeHtml(e.reason)}${e.flaggedSteps.length ? ' on step ' + e.flaggedSteps.map((i) => i + 1).join(', ') : ''}</span>
           ${isAdmin ? `
             <span style="display:flex;gap:8px;align-items:center">
