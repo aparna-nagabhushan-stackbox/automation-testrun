@@ -8,6 +8,8 @@ const inviteRoutes = require('./routes/invites');
 const projectRoutes = require('./routes/projects');
 const teamRoutes = require('./routes/team');
 const recorderRoutes = require('./routes/recorder');
+const blockRoutes = require('./routes/blocks');
+const { requireAuth } = require('./auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,6 +22,7 @@ app.use('/api/invites', inviteRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/team', teamRoutes);
 app.use('/api/recorder', recorderRoutes);
+app.use('/api/blocks', requireAuth, blockRoutes);
 
 // Serve the dashboard itself. Any path (including "/?invite=..." style
 // links) falls through to index.html since this is a single-page file.
