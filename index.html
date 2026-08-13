@@ -4706,6 +4706,14 @@
     updateLastExecution();
     renderDashboard();
     if (document.getElementById('page-testcases')?.classList.contains('active')) renderTestCases();
+    // The AI Recorder's block library and review queue are per-project, and
+    // the next /generate call will already use the newly selected project —
+    // so if that page is what's on screen, re-fetch both instead of leaving
+    // the previous project's chips and pending rows sitting there.
+    if (document.getElementById('page-automation-builder')?.classList.contains('active')) {
+      loadAiRecorderBlocks();
+      loadAiRecorderReviewQueue();
+    }
   }
 
   function filteredData() {
@@ -5813,7 +5821,7 @@
       const { blocks } = await api('/blocks?project=' + encodeURIComponent(project));
       aiRecorderBlocks = blocks;
       row.innerHTML = blocks.length
-        ? blocks.map((b) => `<span style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:6px 12px;font-size:12px;color:#666">🔒 ${b.name}</span>`).join('')
+        ? blocks.map((b) => `<span style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:6px 12px;font-size:12px;color:#666">🔒 ${aiRecorderEscapeHtml(b.name)}</span>`).join('')
         : '<span style="font-size:12.5px;color:#999">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
     } catch (e) {
       row.textContent = 'Could not load blocks: ' + e.message;
@@ -5882,7 +5890,10 @@
       const path = codegenSid ? '/recorder/' + codegenSid + '/generate' : '/recorder/inpage/' + inpageSid + '/generate';
       const generation = await api(path, { method: 'POST', body: JSON.stringify({ project: selectedProjectName() || '', flowName: aiRecorderFlowName() }) });
       aiRecorderLastGeneration = generation;
-      statusEl.innerHTML = priorHtml;
+      // Not `priorHtml` — that's the pre-generation status ("⏺ Recording —
+      // interact with the browser window…"), which reads as still-recording
+      // once the recording is over and the code has been generated.
+      statusEl.innerHTML = '<span style="color:#2e7d32">Recording complete — steps and summary are ready below.</span>';
       renderAiRecorderResultPanels();
       await loadAiRecorderReviewQueue();
     } catch (e) {
@@ -6002,6 +6013,10 @@
     document.getElementById('recorder-url').value = 'http://localhost:3000';
     document.getElementById('recorder-status').style.display = 'none';
     document.getElementById('recorder-result-card').style.display = 'none';
+    // The insights card belongs to the recording being cleared away, so it
+    // goes with it rather than lingering over the next one.
+    aiRecorderLastGeneration = null;
+    renderAiRecorderResultPanels();
     setRecorderUiState('idle');
   }
 
@@ -6072,6 +6087,10 @@
   function discardRecording() {
     document.getElementById('recorder-code').value = '';
     document.getElementById('recorder-result-card').style.display = 'none';
+    // Same as resetRecorderForm: don't leave the previous recording's AI
+    // insights card on screen after its code has been thrown away.
+    aiRecorderLastGeneration = null;
+    renderAiRecorderResultPanels();
   }
 
   async function saveRecordedCodeAsTestCase() {
@@ -6080,8 +6099,12 @@
     const tcs = loadTestCases();
     const now = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     const id = 'TC-REC-' + Date.now().toString().slice(-6);
+    // The insights card advertises "Naming applied automatically: <name>"
+    // right next to this button, so that name is what the test case gets.
+    const title = (aiRecorderLastGeneration && aiRecorderLastGeneration.testCaseName)
+      || ('Recorded script ' + now);
     tcs.push({
-      id, title: 'Recorded script ' + now, type: 'automation',
+      id, title, type: 'automation',
       module: 'Recorded', project: selectedProjectName() || '',
       expected: 'Recorded steps complete without error', steps: code, created: now,
     });
