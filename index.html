@@ -584,21 +584,6 @@
           <div class="nav-item" onclick="showPage('automation-builder')" id="nav-automation-builder">
             AI Recorder
           </div>
-          <div class="nav-item" onclick="showPage('automation-test-data')" id="nav-automation-test-data">
-            Test Data
-          </div>
-          <div class="nav-item" onclick="showPage('automation-local-agent')" id="nav-automation-local-agent">
-            Local Agent
-          </div>
-          <div class="nav-item" onclick="showPage('automation-runs')" id="nav-automation-runs">
-            Executions
-          </div>
-          <div class="nav-item" onclick="showPage('export')" id="nav-automation-reports">
-            Reports
-          </div>
-          <div class="nav-item" onclick="showPage('automation-cicd')" id="nav-automation-cicd">
-            CI/CD
-          </div>
         </div>
       </div>
 
@@ -615,12 +600,6 @@
     <div class="sidebar-footer-nav">
       <div class="nav-item nav-item-icon" onclick="showPage('integrations')" id="nav-integrations">
         <span class="footer-nav-icon" style="color:#4dd0c4">🔗</span> <span class="nav-label">Integration</span>
-      </div>
-      <div class="nav-item nav-item-icon" onclick="showPage('ai-credits')" id="nav-ai-credits">
-        <span class="footer-nav-icon" style="color:#ff8a65">✨</span> <span class="nav-label">AI Credits</span>
-      </div>
-      <div class="nav-item nav-item-icon" onclick="showPage('team-members')" id="nav-team-members">
-        <span class="footer-nav-icon" style="color:#64b5f6">👥</span> <span class="nav-label">Team Members</span>
       </div>
       <div class="nav-item nav-item-icon" onclick="showPage('settings')" id="nav-settings">
         <span class="footer-nav-icon" style="color:#b0a4e3">⚙️</span> <span class="nav-label">Project Settings</span>
@@ -3859,17 +3838,22 @@
         <div class="table-card">
           <div class="table-card-header">
             <h3>Bug Tracker</h3>
+            <button onclick="openAddBugModal()" class="btn-v3-primary">+ Add Bug</button>
           </div>
           <div class="tbl-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Bug No</th>
-                  <th>TC #</th>
-                  <th>Expected Result</th>
-                  <th>Actual Result</th>
-                  <th>Result</th>
-                  <th>Screenshot</th>
+                  <th style="position:relative">Bug No <span class="xf-btn" onclick="showXFilter(event,0,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Module <span class="xf-btn" onclick="showXFilter(event,1,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Feature <span class="xf-btn" onclick="showXFilter(event,2,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Bug Description <span class="xf-btn" onclick="showXFilter(event,3,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Expected Result <span class="xf-btn" onclick="showXFilter(event,4,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Reported By <span class="xf-btn" onclick="showXFilter(event,5,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Assigned To <span class="xf-btn" onclick="showXFilter(event,6,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Status <span class="xf-btn" onclick="showXFilter(event,7,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Attachment <span class="xf-btn" onclick="showXFilter(event,8,'bugs-tbody')">▼</span></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id="bugs-tbody"></tbody>
@@ -3920,6 +3904,66 @@
         </div>
       </div>
 
+      <!-- ADD/EDIT BUG MODAL -->
+      <div id="bug-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+        <div style="background:#fff;border-radius:12px;padding:32px;width:560px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div style="font-size:16px;font-weight:700;color:#1a1a2e" id="bug-modal-title">Add Bug</div>
+            <button onclick="closeBugModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
+          </div>
+          <input type="hidden" id="bug-edit-idx" value="-1"/>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+              <input id="bug-module" placeholder="e.g. Inbound" class="tc-input"/>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Feature</label>
+              <input id="bug-feature" placeholder="e.g. GRN creation" class="tc-input"/>
+            </div>
+          </div>
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Bug Description</label>
+            <textarea id="bug-description" placeholder="What went wrong" class="tc-input" rows="3" style="resize:vertical"></textarea>
+          </div>
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Expected Result</label>
+            <textarea id="bug-expected" placeholder="What should have happened instead" class="tc-input" rows="2" style="resize:vertical"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Reported By</label>
+              <input id="bug-reported-by" placeholder="e.g. you@stackbox.xyz" class="tc-input"/>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Assigned To</label>
+              <input id="bug-assigned-to" placeholder="e.g. dev@stackbox.xyz" class="tc-input"/>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
+              <select id="bug-status" class="tc-input">
+                <option>Open</option>
+                <option>Reported</option>
+                <option>To Deploy</option>
+                <option>Re-opened</option>
+                <option>Not a Bug</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Screen recording / Screenshot</label>
+              <input type="file" id="bug-attachment" accept="image/*,video/*" onchange="previewBugAttachment(this)" style="font-size:12px;width:100%"/>
+              <div id="bug-attachment-preview" style="margin-top:6px;font-size:11px;color:#888"></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px">
+            <button onclick="closeBugModal()" class="btn-v3-secondary">Cancel</button>
+            <button onclick="saveBug()" class="btn-v3-primary" id="bug-save-btn">+ Add Bug</button>
+          </div>
+        </div>
+      </div>
+
       <div class="page" id="page-automation-suites">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
           <div style="font-size:48px;margin-bottom:16px">🗂️</div>
@@ -3942,6 +3986,13 @@
             <h2>🧩 AI Recorder</h2>
             <div style="color:#666;font-size:13px;margin-top:2px">Record clicks in a real browser and get back ready-to-run Playwright code.</div>
           </div>
+        </div>
+
+        <div id="ai-recorder-block-lib-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+
+        <div class="settings-field" style="max-width:320px;margin-bottom:16px">
+          <label>Flow name <span style="color:#999;font-weight:400">— used to auto-name the generated test</span></label>
+          <input type="text" id="ai-recorder-flow-name" class="tc-input" placeholder="e.g. Operator login"/>
         </div>
 
         <div class="seg-tabs" id="recorder-mode-tabs" style="margin-bottom:16px">
@@ -4010,6 +4061,19 @@
             </div>
           </div>
         </div>
+
+        <div class="table-card" id="ai-recorder-insights-card" style="max-width:900px;display:none">
+          <div class="table-card-header" style="display:flex;justify-content:space-between;align-items:center">
+            <h3>AI insights</h3>
+            <label style="font-size:12.5px;color:#666;display:flex;align-items:center;gap:6px;cursor:pointer">
+              <input type="checkbox" id="ai-recorder-advanced-toggle" onchange="aiRecorderAdvanced = this.checked; renderAiRecorderResultPanels();"/>
+              Advanced (code) view
+            </label>
+          </div>
+          <div id="ai-recorder-result-area" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px"></div>
+        </div>
+
+        <div class="table-card" id="ai-recorder-review-queue" style="max-width:640px;display:none"></div>
       </div>
       <div class="page" id="page-failed-tests">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
@@ -4612,6 +4676,14 @@
     updateLastExecution();
     renderDashboard();
     if (document.getElementById('page-testcases')?.classList.contains('active')) renderTestCases();
+    // The AI Recorder's block library and review queue are per-project, and
+    // the next /generate call will already use the newly selected project —
+    // so if that page is what's on screen, re-fetch both instead of leaving
+    // the previous project's chips and pending rows sitting there.
+    if (document.getElementById('page-automation-builder')?.classList.contains('active')) {
+      loadAiRecorderBlocks();
+      loadAiRecorderReviewQueue();
+    }
   }
 
   function filteredData() {
@@ -5466,6 +5538,7 @@
     if (name === 'team-members') loadTeamMembers();
     if (name === 'settings') loadSettingsFromStorage();
     if (name === 'automation-tests') renderAutomationTestsPage();
+    if (name === 'automation-builder') { loadAiRecorderBlocks(); loadAiRecorderReviewQueue(); }
   }
 
   // ── Team Members ──
@@ -5706,6 +5779,149 @@
   let recorderSessionId = null;
   let recorderPollTimer = null;
 
+  // ── AI Recorder: block library, AI generation, review queue ──
+  let aiRecorderBlocks = [];
+
+  async function loadAiRecorderBlocks() {
+    const project = selectedProjectName();
+    const row = document.getElementById('ai-recorder-block-lib-row');
+    if (!project) { aiRecorderBlocks = []; row.innerHTML = '<span style="font-size:12.5px;color:#999">Select a project above to see its block library.</span>'; return; }
+    try {
+      const { blocks } = await api('/blocks?project=' + encodeURIComponent(project));
+      aiRecorderBlocks = blocks;
+      row.innerHTML = blocks.length
+        ? blocks.map((b) => `<span style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:6px 12px;font-size:12px;color:#666">🔒 ${aiRecorderEscapeHtml(b.name)}</span>`).join('')
+        : '<span style="font-size:12.5px;color:#999">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
+    } catch (e) {
+      row.textContent = 'Could not load blocks: ' + e.message;
+    }
+  }
+
+  let aiRecorderAdvanced = false;
+  let aiRecorderLastGeneration = null;
+
+  function aiRecorderEscapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function renderAiRecorderResultPanels() {
+    const card = document.getElementById('ai-recorder-insights-card');
+    const area = document.getElementById('ai-recorder-result-area');
+    if (!aiRecorderLastGeneration) { card.style.display = 'none'; return; }
+    card.style.display = 'block';
+    const g = aiRecorderLastGeneration;
+
+    if (aiRecorderAdvanced) {
+      area.innerHTML = `
+        <div><h4 style="margin:0 0 8px;font-size:13px">Code</h4>
+          <pre style="background:#fafafa;border:1px solid #eee;border-radius:6px;padding:12px;margin:0;font-family:monospace;font-size:12px;white-space:pre-wrap;max-height:320px;overflow:auto">${aiRecorderEscapeHtml(g.code)}</pre>
+          <button class="btn-v3-secondary" style="margin-top:8px" onclick="document.getElementById('recorder-code').value = aiRecorderLastGeneration.code;">Use this as the saved script</button>
+        </div>
+        <div><h4 style="margin:0 0 8px;font-size:13px">Test data</h4>
+          <pre style="background:#fafafa;border:1px solid #eee;border-radius:6px;padding:12px;margin:0;font-family:monospace;font-size:12px;white-space:pre-wrap">${aiRecorderEscapeHtml(JSON.stringify(g.testData, null, 2))}</pre>
+        </div>`;
+    } else {
+      const stepsHtml = g.steps.map((s) => `
+        <div style="padding:8px 0;border-bottom:1px solid #eee;font-size:13px">
+          ${s.index + 1}. ${aiRecorderEscapeHtml(s.description)}
+          <span style="font-size:11px;border-radius:999px;padding:2px 8px;margin-left:6px;
+            background:${s.confidence === 'high' ? '#e8f5e9' : '#ffebee'};color:${s.confidence === 'high' ? '#2e7d32' : '#c62828'}">
+            ${s.confidence === 'high' ? 'stable locator' : 'weak locator — flagged'}
+          </span>
+          <div style="font-size:11.5px;color:#999;margin-top:2px">
+            ${s.blockName ? `Block: <code>${aiRecorderEscapeHtml(s.blockName)}</code>` : 'Not part of a block yet'}
+          </div>
+        </div>`).join('');
+      const reusedCount = g.steps.filter((s) => s.blockName).length;
+      const reuseNote = reusedCount > 0 && reusedCount < g.steps.length
+        ? `<div style="margin-top:12px;padding:10px 12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;font-size:11.8px;color:#1565c0">
+             ↻ ${reusedCount} of ${g.steps.length} step(s) reused an existing block — only the new step(s) needed fresh code.
+           </div>`
+        : '';
+      area.innerHTML = `
+        <div><h4 style="margin:0 0 8px;font-size:13px">Captured steps</h4>${stepsHtml}</div>
+        <div>
+          <h4 style="margin:0 0 8px;font-size:13px">What this test does</h4>
+          <div style="font-size:13px">${aiRecorderEscapeHtml(g.summary)}</div>
+          ${reuseNote}
+          <div style="margin-top:14px;font-size:11.8px;color:#999">
+            Naming applied automatically: <code>${aiRecorderEscapeHtml(g.testCaseName)}</code>
+          </div>
+        </div>`;
+    }
+  }
+
+  async function aiRecorderRunGenerate(codegenSid, inpageSid, code) {
+    const statusEl = document.getElementById(codegenSid ? 'recorder-status' : 'inpage-status');
+    const priorHtml = statusEl.innerHTML;
+    statusEl.innerHTML = priorHtml + '<div style="color:#666;margin-top:6px">Generating steps, summary, and test data with Claude…</div>';
+    try {
+      const path = codegenSid ? '/recorder/' + codegenSid + '/generate' : '/recorder/inpage/' + inpageSid + '/generate';
+      const generation = await api(path, { method: 'POST', body: JSON.stringify({ project: selectedProjectName() || '', flowName: aiRecorderFlowName() }) });
+      aiRecorderLastGeneration = generation;
+      // Not `priorHtml` — that's the pre-generation status ("⏺ Recording —
+      // interact with the browser window…"), which reads as still-recording
+      // once the recording is over and the code has been generated.
+      statusEl.innerHTML = '<span style="color:#2e7d32">Recording complete — steps and summary are ready below.</span>';
+      renderAiRecorderResultPanels();
+      await loadAiRecorderReviewQueue();
+    } catch (e) {
+      statusEl.innerHTML = priorHtml + `<div style="color:#c62828;margin-top:6px">AI generation failed: ${e.message}</div>`;
+    }
+  }
+
+  async function loadAiRecorderReviewQueue() {
+    const project = selectedProjectName();
+    const card = document.getElementById('ai-recorder-review-queue');
+    if (!project) { card.style.display = 'none'; return; }
+
+    try {
+      const { entries } = await api('/review-queue?project=' + encodeURIComponent(project));
+      const pending = entries.filter((e) => e.status === 'pending');
+      card.style.display = 'block';
+      const isAdmin = currentUser && currentUser.role === 'admin';
+
+      if (!pending.length) {
+        card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div><div style="padding:16px;color:#999;font-size:13px">Nothing pending — every recent recording either matched a block or had high-confidence locators.</div>';
+        return;
+      }
+
+      card.innerHTML = '<div class="table-card-header"><h3>Pending review</h3></div>' + pending.map((e) => `
+        <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:13px">${aiRecorderEscapeHtml(e.recordingId)} — ${aiRecorderEscapeHtml(e.reason)}${e.flaggedSteps.length ? ' on step ' + e.flaggedSteps.map((i) => i + 1).join(', ') : ''}</span>
+          ${isAdmin ? `
+            <span style="display:flex;gap:8px;align-items:center">
+              <button class="btn-v3-secondary" onclick="approveAiRecorderReview(${e.id})">Approve as one-off</button>
+              <input type="text" id="ai-recorder-block-name-${e.id}" class="tc-input" placeholder="Block name" style="width:140px"/>
+              <button class="btn-v3-primary" onclick="promoteAiRecorderReview(${e.id})">Promote to block</button>
+            </span>` : ''}
+        </div>`).join('');
+    } catch (e) {
+      card.textContent = 'Could not load review queue: ' + e.message;
+    }
+  }
+
+  async function approveAiRecorderReview(id) {
+    try { await api('/review-queue/' + id + '/approve', { method: 'POST' }); await loadAiRecorderReviewQueue(); } catch (e) { alert(e.message); }
+  }
+
+  async function promoteAiRecorderReview(id) {
+    const input = document.getElementById('ai-recorder-block-name-' + id);
+    const blockName = input.value.trim();
+    if (!blockName) { alert('Enter a block name first.'); return; }
+    try {
+      await api('/review-queue/' + id + '/promote', { method: 'POST', body: JSON.stringify({ blockName }) });
+      await loadAiRecorderReviewQueue();
+      await loadAiRecorderBlocks();
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  function aiRecorderFlowName() {
+    return document.getElementById('ai-recorder-flow-name').value.trim();
+  }
+
   function setRecorderMode(mode) {
     document.querySelectorAll('#recorder-mode-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.recorderMode === mode));
     document.getElementById('recorder-mode-intab').style.display = mode === 'intab' ? 'block' : 'none';
@@ -5741,6 +5957,7 @@
       document.getElementById('recorder-code').value = code;
       document.getElementById('recorder-result-card').style.display = 'block';
       statusEl.innerHTML = `<span style="color:#2e7d32">Captured ${eventCount} interaction(s) — code is ready below.</span>`;
+      aiRecorderRunGenerate(null, inpageSessionId, code);
     } catch (e) {
       statusEl.innerHTML = `<span style="color:#c62828">${e.message}</span>`;
     }
@@ -5765,6 +5982,10 @@
     document.getElementById('recorder-url').value = 'http://localhost:3000';
     document.getElementById('recorder-status').style.display = 'none';
     document.getElementById('recorder-result-card').style.display = 'none';
+    // The insights card belongs to the recording being cleared away, so it
+    // goes with it rather than lingering over the next one.
+    aiRecorderLastGeneration = null;
+    renderAiRecorderResultPanels();
     setRecorderUiState('idle');
   }
 
@@ -5789,13 +6010,14 @@
   function finishRecording(result) {
     clearInterval(recorderPollTimer);
     recorderPollTimer = null;
+    const sid = recorderSessionId;
     recorderSessionId = null;
     setRecorderUiState('idle');
     const statusEl = document.getElementById('recorder-status');
     if (result.code) {
-      statusEl.style.display = 'none';
       document.getElementById('recorder-code').value = result.code;
       document.getElementById('recorder-result-card').style.display = 'block';
+      aiRecorderRunGenerate(sid, null, result.code);
     } else {
       statusEl.style.display = 'block';
       statusEl.innerHTML = `<span style="color:#c62828">${result.error || 'No code was recorded.'}</span>`;
@@ -5834,6 +6056,10 @@
   function discardRecording() {
     document.getElementById('recorder-code').value = '';
     document.getElementById('recorder-result-card').style.display = 'none';
+    // Same as resetRecorderForm: don't leave the previous recording's AI
+    // insights card on screen after its code has been thrown away.
+    aiRecorderLastGeneration = null;
+    renderAiRecorderResultPanels();
   }
 
   async function saveRecordedCodeAsTestCase() {
@@ -5842,8 +6068,12 @@
     const tcs = loadTestCases();
     const now = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     const id = 'TC-REC-' + Date.now().toString().slice(-6);
+    // The insights card advertises "Naming applied automatically: <name>"
+    // right next to this button, so that name is what the test case gets.
+    const title = (aiRecorderLastGeneration && aiRecorderLastGeneration.testCaseName)
+      || ('Recorded script ' + now);
     tcs.push({
-      id, title: 'Recorded script ' + now, type: 'automation',
+      id, title, type: 'automation',
       module: 'Recorded', project: selectedProjectName() || '',
       expected: 'Recorded steps complete without error', steps: code, created: now,
     });
@@ -6151,65 +6381,177 @@
   }
 
   // ── Bugs ──
+  // ── Manually-logged bugs (stored separately from automation run data) ──
+  const BUG_STATUSES = ['Open', 'Reported', 'To Deploy', 'Re-opened', 'Not a Bug'];
+  const BUG_OPEN_STATUSES = ['Open', 'Reported', 'Re-opened'];
+  const BUG_STATUS_COLORS = {
+    'Open':       { bg: '#ffebee', color: '#c62828' },
+    'Reported':   { bg: '#e3f2fd', color: '#1565c0' },
+    'To Deploy':  { bg: '#e8f5e9', color: '#2e7d32' },
+    'Re-opened':  { bg: '#fff3e0', color: '#e65100' },
+    'Not a Bug':  { bg: '#f5f5f5', color: '#757575' },
+  };
+  function bugStatusStyle(status) {
+    const c = BUG_STATUS_COLORS[status] || BUG_STATUS_COLORS['Open'];
+    return `padding:5px 8px;font-size:12px;width:auto;font-weight:600;border-radius:6px;background:${c.bg};color:${c.color};border:1.5px solid ${c.bg}`;
+  }
+
+  function loadBugs() {
+    return JSON.parse(localStorage.getItem('stacktest_bugs') || '[]');
+  }
+  function saveBugsList(bugs) {
+    localStorage.setItem('stacktest_bugs', JSON.stringify(bugs));
+  }
+
+  let bugAttachmentData = null; // staged { dataUrl, name, type } from the file input, applied on save
+  function previewBugAttachment(input) {
+    const file = input.files[0];
+    const preview = document.getElementById('bug-attachment-preview');
+    if (!file) { bugAttachmentData = null; preview.textContent = ''; return; }
+    if (file.size > 8 * 1024 * 1024) {
+      alert('Please attach a file under 8MB.');
+      input.value = '';
+      bugAttachmentData = null;
+      preview.textContent = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      bugAttachmentData = { dataUrl: reader.result, name: file.name, type: file.type };
+      preview.textContent = '📎 ' + file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function openAddBugModal() {
+    document.getElementById('bug-edit-idx').value = '-1';
+    document.getElementById('bug-modal-title').textContent = 'Add Bug';
+    document.getElementById('bug-save-btn').textContent = '+ Add Bug';
+    ['bug-module', 'bug-feature', 'bug-description', 'bug-expected', 'bug-assigned-to'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('bug-reported-by').value = (currentUser && currentUser.email) || '';
+    document.getElementById('bug-status').value = 'Open';
+    document.getElementById('bug-attachment').value = '';
+    document.getElementById('bug-attachment-preview').textContent = '';
+    bugAttachmentData = null;
+    document.getElementById('bug-modal').style.display = 'flex';
+  }
+  function closeBugModal() {
+    document.getElementById('bug-modal').style.display = 'none';
+  }
+  function saveBug() {
+    const module = document.getElementById('bug-module').value.trim();
+    const feature = document.getElementById('bug-feature').value.trim();
+    const description = document.getElementById('bug-description').value.trim();
+    if (!description) { alert('Bug Description is required'); return; }
+    const expectedResult = document.getElementById('bug-expected').value.trim();
+    const reportedBy = document.getElementById('bug-reported-by').value.trim();
+    const assignedTo = document.getElementById('bug-assigned-to').value.trim();
+    const status = document.getElementById('bug-status').value;
+    const idx = parseInt(document.getElementById('bug-edit-idx').value, 10);
+    const bugs = loadBugs();
+    const now = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+    if (idx === -1) {
+      const nextNum = bugs.reduce((max, b) => {
+        const m = /^BUG-(\d+)$/.exec(b.id);
+        return m ? Math.max(max, parseInt(m[1], 10)) : max;
+      }, 0) + 1;
+      bugs.push({
+        id: `BUG-${String(nextNum).padStart(3, '0')}`,
+        module: module || 'General', feature, description, expectedResult,
+        reportedBy, assignedTo, status,
+        attachment: bugAttachmentData,
+        created: now,
+      });
+    } else {
+      bugs[idx] = {
+        ...bugs[idx],
+        module: module || 'General', feature, description, expectedResult,
+        reportedBy, assignedTo, status,
+        attachment: bugAttachmentData || bugs[idx].attachment,
+      };
+    }
+    saveBugsList(bugs);
+    renderBugs();
+    closeBugModal();
+  }
+  function editBug(i) {
+    const bugs = loadBugs();
+    const b = bugs[i];
+    if (!b) return;
+    document.getElementById('bug-edit-idx').value = i;
+    document.getElementById('bug-modal-title').textContent = 'Edit Bug ' + b.id;
+    document.getElementById('bug-save-btn').textContent = 'Save Changes';
+    document.getElementById('bug-module').value = b.module || '';
+    document.getElementById('bug-feature').value = b.feature || '';
+    document.getElementById('bug-description').value = b.description || '';
+    document.getElementById('bug-expected').value = b.expectedResult || '';
+    document.getElementById('bug-reported-by').value = b.reportedBy || '';
+    document.getElementById('bug-assigned-to').value = b.assignedTo || '';
+    document.getElementById('bug-status').value = b.status || 'Open';
+    document.getElementById('bug-attachment').value = '';
+    document.getElementById('bug-attachment-preview').textContent = b.attachment ? '📎 ' + b.attachment.name + ' (current)' : '';
+    bugAttachmentData = null;
+    document.getElementById('bug-modal').style.display = 'flex';
+  }
+  function deleteBug(i) {
+    if (!confirm('Delete this bug?')) return;
+    const bugs = loadBugs();
+    bugs.splice(i, 1);
+    saveBugsList(bugs);
+    renderBugs();
+  }
+  function updateBugStatus(i, status) {
+    const bugs = loadBugs();
+    if (!bugs[i]) return;
+    bugs[i].status = status;
+    saveBugsList(bugs);
+    renderBugs();
+  }
+  function renderBugAttachment(att) {
+    if (!att) return '<span style="color:#bbb;font-size:12px">—</span>';
+    if (att.type && att.type.startsWith('video')) {
+      return `<a href="${att.dataUrl}" target="_blank" title="${att.name}">🎥 View</a>`;
+    }
+    return `<a href="${att.dataUrl}" target="_blank"><img src="${att.dataUrl}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #ddd;cursor:pointer;"/></a>`;
+  }
   function renderBugs() {
-    const d = filteredData();
-
-    // Find all unique TCs that have at least one FAIL
-    const failedTCs = [...new Set(d.filter(r => r.status === 'FAIL').map(r => r.name))].sort();
-
+    const bugs = loadBugs();
     const tbody = document.getElementById('bugs-tbody');
     if (!tbody) return;
 
-    if (failedTCs.length === 0) {
-      document.getElementById('bug-open-count').textContent = '0';
-      document.getElementById('bug-resolved-count').textContent = '0';
-      document.getElementById('bug-total-count').textContent = '0';
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:#aaa">🎉 No bugs found!</td></tr>';
+    const openCount = bugs.filter(b => BUG_OPEN_STATUSES.includes(b.status)).length;
+    const resolvedCount = bugs.length - openCount;
+    document.getElementById('bug-open-count').textContent = String(openCount);
+    document.getElementById('bug-resolved-count').textContent = String(resolvedCount);
+    document.getElementById('bug-total-count').textContent = String(bugs.length);
+
+    if (bugs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:#aaa">🎉 No bugs logged yet. Click "+ Add Bug" to log one.</td></tr>';
       return;
     }
 
-    let openCount = 0, resolvedCount = 0;
-    const rows = [];
-
-    failedTCs.forEach((tcName, idx) => {
-      const bugNo = `BUG-${String(idx + 1).padStart(3, '0')}`;
-      // All runs for this TC sorted by runId ascending
-      const tcRuns = d.filter(r => r.name === tcName).sort((a, b) => a.runId - b.runId);
-      // Take last 2 runs
-      const lastTwo = tcRuns.slice(-2);
-      // Overall status = latest run
-      const latestStatus = tcRuns[tcRuns.length - 1].status;
-      if (latestStatus === 'FAIL') openCount++; else resolvedCount++;
-
-      lastTwo.forEach((r, rowIdx) => {
-        const isIssue = r.status === 'FAIL';
-        const resultLabel = isIssue ? '❌ ISSUE' : '✅ RESOLVED';
-        const resultClass = isIssue ? 'bug-open-label' : 'bug-resolved-label';
-        const rowClass = isIssue ? 'bug-row-open' : 'bug-row-resolved';
-        const screenshot = r.screenshot
-          ? `<a href="${r.screenshot}" target="_blank"><img src="${r.screenshot}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #e74c3c;cursor:pointer;"/></a>`
-          : '<span style="color:#bbb;font-size:12px;">—</span>';
-
-        rows.push(`<tr class="${rowClass}">
-          <td><span class="tc-pill">${rowIdx === 0 ? bugNo : ''}</span></td>
-          <td><span class="tc-pill">${rowIdx === 0 ? tcName : ''}</span></td>
-          <td class="col-exp" style="font-size:12px">${r.expectedResult}</td>
-          <td class="${isIssue ? 'col-act fail-text' : 'col-act'}" style="font-size:12px">${r.actualResult}</td>
-          <td>
-            <div class="bug-result-cell">
-              <span class="bug-result-label ${resultClass}">${resultLabel}</span>
-              <span class="bug-result-date">${r.executedDate}</span>
-            </div>
-          </td>
-          <td class="col-screenshot">${screenshot}</td>
-        </tr>`);
-      });
-    });
-
-    document.getElementById('bug-open-count').textContent = String(openCount);
-    document.getElementById('bug-resolved-count').textContent = String(resolvedCount);
-    document.getElementById('bug-total-count').textContent = String(failedTCs.length);
-    tbody.innerHTML = rows.join('');
+    tbody.innerHTML = bugs.map((b, i) => `
+      <tr>
+        <td><span class="tc-pill">${b.id}</span></td>
+        <td><span class="app-tag">${b.module || '—'}</span></td>
+        <td>${b.feature || '—'}</td>
+        <td style="max-width:220px">${b.description}</td>
+        <td style="max-width:200px;color:#1565c0;font-size:12px">${b.expectedResult || '—'}</td>
+        <td style="font-size:12px">${b.reportedBy || '—'}</td>
+        <td style="font-size:12px">${b.assignedTo || '—'}</td>
+        <td>
+          <select style="${bugStatusStyle(b.status)}" onchange="updateBugStatus(${i}, this.value)">
+            ${BUG_STATUSES.map(s => `<option value="${s}" ${b.status === s ? 'selected' : ''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td class="col-screenshot">${renderBugAttachment(b.attachment)}</td>
+        <td>${rowActionsMenu('bug-' + i, [
+          { label: '✏️ Edit', onclick: `editBug(${i})` },
+          { label: '🗑️ Delete', danger: true, onclick: `deleteBug(${i})` },
+        ])}</td>
+      </tr>`).join('');
+    xfApplySuite(); // keep any active column filter applied across re-renders (e.g. after an inline status change)
   }
 
   // ── Excel-style column filter ──
@@ -6233,12 +6575,22 @@
 
   function xfKey() { return xfTbody + '_' + xfCol; }
 
+  // A cell's filterable value is its own text — EXCEPT when it holds a
+  // live control like the Bug Tracker's inline status <select>, whose
+  // .textContent is every <option> concatenated regardless of which one
+  // is selected. Read the control's current value in that case instead.
+  function xfCellValue(cell) {
+    const sel = cell.querySelector('select');
+    if (sel) return sel.value.trim();
+    return cell.textContent.trim();
+  }
+
   function xfGetAllValues() {
     const rows = document.querySelectorAll('#' + xfTbody + ' tr');
     const vals = [];
     rows.forEach(r => {
       const cell = r.querySelectorAll('td')[xfCol];
-      if (cell) vals.push(cell.textContent.trim());
+      if (cell) vals.push(xfCellValue(cell));
     });
     return [...new Set(vals)].sort();
   }
@@ -6301,7 +6653,7 @@
           if (!sel) return;
           const cell = cells[parseInt(col)];
           if (!cell) return;
-          if (!sel.has(cell.textContent.trim())) show = false;
+          if (!sel.has(xfCellValue(cell))) show = false;
         });
         row.style.display = show ? '' : 'none';
       });
@@ -6314,7 +6666,7 @@
       const key = m[2] + '_' + m[1];
       const sel = xfSelections[key];
       const all = [...new Set([...document.querySelectorAll('#' + m[2] + ' tr')]
-        .map(r => r.querySelectorAll('td')[parseInt(m[1])]?.textContent?.trim()||''))];
+        .map(r => { const c = r.querySelectorAll('td')[parseInt(m[1])]; return c ? xfCellValue(c) : ''; }))];
       btn.style.color = (sel && sel.size < all.length) ? '#e65100' : '';
     });
   }
