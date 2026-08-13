@@ -345,6 +345,10 @@
     .dash-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
     .dash-row-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:16px; }
     .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:16px; }
+    .exec-kpi-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-bottom:20px; }
+    .exec-banner { background:#16213e; color:#fff; font-weight:800; font-size:12.5px; letter-spacing:.5px; text-align:center; padding:11px 14px; }
+    .exec-banner-red { background:#7b1121; }
+    .exec-tbl-red thead th { background:#7b1121; color:#fff; }
     .kpi-tile { background:#fff; border-radius:12px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
     .kpi-val { font-size:23px; font-weight:800; color:#1a1a2e; line-height:1.1; }
     .kpi-lbl { font-size:11.5px; color:#777; margin-top:5px; }
@@ -687,6 +691,68 @@
             <div class="chart-card-title-lg">📁 Test Cases by Project</div>
             <div class="chart-card-sub">Manual test case count broken down by project</div>
             <div id="manual-project-breakdown-card"></div>
+          </div>
+        </div>
+
+        <!-- Test Execution Dashboard — Manual scope only. Styled to match the
+             spreadsheet-style banner/table look the user asked to replicate. -->
+        <div class="dash-scope-manual-only" style="display:none">
+          <div style="background:#16213e;color:#fff;font-weight:800;font-size:15px;letter-spacing:.5px;text-align:center;padding:14px 20px;border-radius:10px 10px 0 0;margin-top:8px">TEST EXECUTION DASHBOARD</div>
+          <div id="exec-kpi-row" class="exec-kpi-row" style="border-radius:0 0 10px 10px;padding:14px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:20px"></div>
+
+          <div class="dash-row-2">
+            <div class="table-card">
+              <div class="exec-banner">ENVIRONMENT STATUS BREAKDOWN</div>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Environment</th><th>Pass</th><th>Fail</th><th>Blocked</th><th>In Progress</th><th>Not Tested</th><th>Coverage %</th></tr></thead>
+                  <tbody id="exec-env-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="table-card">
+              <div class="exec-banner">PRIORITY BREAKDOWN</div>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Priority</th><th>Total</th><th>STG Pass</th><th>UAT Pass</th><th>Pre-Prod Pass</th><th>Overall Pass</th><th>% Done</th></tr></thead>
+                  <tbody id="exec-priority-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-row-2">
+            <div class="table-card">
+              <div class="exec-banner">MODULE BREAKDOWN</div>
+              <div class="tbl-wrap" style="max-height:340px;overflow-y:auto">
+                <table>
+                  <thead><tr><th>Module</th><th>Total</th><th>STG Pass</th><th>UAT Pass</th><th>Pre-Prod Pass</th><th>Overall Pass</th><th>Not Tested</th><th>% Done</th></tr></thead>
+                  <tbody id="exec-module-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Bug Summary paired here for Manual scope, matching the reference layout. -->
+            <div class="table-card">
+              <div class="exec-banner exec-banner-red">BUG SUMMARY</div>
+              <div class="tbl-wrap">
+                <table class="exec-tbl-red">
+                  <thead><tr><th>Status</th><th>Count</th><th>Severity</th><th>Count</th></tr></thead>
+                  <tbody id="exec-bug-summary-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Same Bug Summary, standalone, for All/Automation scopes (hidden
+             under Manual since the paired one above already covers it there). -->
+        <div class="table-card dash-scope-all-auto">
+          <div class="exec-banner exec-banner-red">BUG SUMMARY</div>
+          <div class="tbl-wrap">
+            <table class="exec-tbl-red">
+              <thead><tr><th>Status</th><th>Count</th><th>Severity</th><th>Count</th></tr></thead>
+              <tbody id="exec-bug-summary-tbody-alt"></tbody>
+            </table>
           </div>
         </div>
 
@@ -3852,7 +3918,8 @@
                   <th style="position:relative">Reported By <span class="xf-btn" onclick="showXFilter(event,5,'bugs-tbody')">▼</span></th>
                   <th style="position:relative">Assigned To <span class="xf-btn" onclick="showXFilter(event,6,'bugs-tbody')">▼</span></th>
                   <th style="position:relative">Status <span class="xf-btn" onclick="showXFilter(event,7,'bugs-tbody')">▼</span></th>
-                  <th style="position:relative">Attachment <span class="xf-btn" onclick="showXFilter(event,8,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Reported Via <span class="xf-btn" onclick="showXFilter(event,8,'bugs-tbody')">▼</span></th>
+                  <th style="position:relative">Attachment <span class="xf-btn" onclick="showXFilter(event,9,'bugs-tbody')">▼</span></th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -3940,7 +4007,7 @@
               <input id="bug-assigned-to" placeholder="e.g. dev@stackbox.xyz" class="tc-input"/>
             </div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
             <div>
               <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
               <select id="bug-status" class="tc-input">
@@ -3952,10 +4019,26 @@
               </select>
             </div>
             <div>
-              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Screen recording / Screenshot</label>
-              <input type="file" id="bug-attachment" accept="image/*,video/*" onchange="previewBugAttachment(this)" style="font-size:12px;width:100%"/>
-              <div id="bug-attachment-preview" style="margin-top:6px;font-size:11px;color:#888"></div>
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Severity</label>
+              <select id="bug-severity" class="tc-input">
+                <option>Critical</option>
+                <option>High</option>
+                <option selected>Medium</option>
+                <option>Low</option>
+              </select>
             </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Reported Via</label>
+            <select id="bug-reported-via" class="tc-input">
+              <option selected>Manual</option>
+              <option>Automation</option>
+            </select>
+          </div>
+          <div style="margin-bottom:20px">
+            <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Screen recording / Screenshot</label>
+            <input type="file" id="bug-attachment" accept="image/*,video/*" onchange="previewBugAttachment(this)" style="font-size:12px;width:100%"/>
+            <div id="bug-attachment-preview" style="margin-top:6px;font-size:11px;color:#888"></div>
           </div>
           <div style="display:flex;justify-content:flex-end;gap:10px">
             <button onclick="closeBugModal()" class="btn-v3-secondary">Cancel</button>
@@ -4579,6 +4662,15 @@
         </div>
       </div>
       <div style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Priority</label>
+        <select id="tc-priority" class="tc-input">
+          <option value="P0">P0 — Critical</option>
+          <option value="P1">P1 — High</option>
+          <option value="P2" selected>P2 — Medium</option>
+          <option value="P3">P3 — Low</option>
+        </select>
+      </div>
+      <div style="margin-bottom:12px">
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Expected Result</label>
         <input id="tc-expected" placeholder="Expected outcome" class="tc-input"/>
       </div>
@@ -4624,9 +4716,55 @@
         <input id="edit-tc-module" class="tc-input" placeholder="e.g. Login"/>
       </div>
     </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Project <span style="color:#D1D5DB;font-weight:400;text-transform:none">(optional)</span></label>
+        <input id="edit-tc-project" class="tc-input" placeholder="e.g. Checkout Revamp"/>
+      </div>
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Priority</label>
+        <select id="edit-tc-priority" class="tc-input">
+          <option value="P0">P0 — Critical</option>
+          <option value="P1">P1 — High</option>
+          <option value="P2">P2 — Medium</option>
+          <option value="P3">P3 — Low</option>
+        </select>
+      </div>
+    </div>
     <div style="margin-bottom:14px">
-      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Project <span style="color:#D1D5DB;font-weight:400;text-transform:none">(optional)</span></label>
-      <input id="edit-tc-project" class="tc-input" placeholder="e.g. Checkout Revamp"/>
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Execution Result by Environment</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div>
+          <label style="font-size:10px;color:#9CA3AF;display:block;margin-bottom:4px">Staging</label>
+          <select id="edit-tc-result-staging" class="tc-input">
+            <option value="NOT_TESTED">Not Tested</option>
+            <option value="PASS">Pass</option>
+            <option value="FAIL">Fail</option>
+            <option value="BLOCKED">Blocked</option>
+            <option value="IN_PROGRESS">In Progress</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px;color:#9CA3AF;display:block;margin-bottom:4px">UAT</label>
+          <select id="edit-tc-result-uat" class="tc-input">
+            <option value="NOT_TESTED">Not Tested</option>
+            <option value="PASS">Pass</option>
+            <option value="FAIL">Fail</option>
+            <option value="BLOCKED">Blocked</option>
+            <option value="IN_PROGRESS">In Progress</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px;color:#9CA3AF;display:block;margin-bottom:4px">Pre-Prod</label>
+          <select id="edit-tc-result-preprod" class="tc-input">
+            <option value="NOT_TESTED">Not Tested</option>
+            <option value="PASS">Pass</option>
+            <option value="FAIL">Fail</option>
+            <option value="BLOCKED">Blocked</option>
+            <option value="IN_PROGRESS">In Progress</option>
+          </select>
+        </div>
+      </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
       <div>
@@ -4842,6 +4980,7 @@
     document.querySelectorAll('#scope-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.scope === scope));
     document.querySelectorAll('.dash-scope-all-auto').forEach(el => el.style.display = (scope === 'MANUAL') ? 'none' : '');
     document.querySelectorAll('.dash-scope-all-manual').forEach(el => el.style.display = (scope === 'AUTOMATION') ? 'none' : '');
+    document.querySelectorAll('.dash-scope-manual-only').forEach(el => el.style.display = (scope === 'MANUAL') ? '' : 'none');
     renderDashboard();
   }
 
@@ -4910,6 +5049,144 @@
     renderManualKeyMetrics(manualTCs);
     renderManualModuleBreakdown(manualTCs);
     renderManualProjectBreakdown(manualTCs);
+    renderExecDashboard();
+    renderBugSummary();
+  }
+
+  // ── Test Execution Dashboard (Environment/Priority/Module/Bug breakdowns) ──
+  const EXEC_ENVIRONMENTS = ['Staging', 'UAT', 'PreProd'];
+  const EXEC_ENV_LABELS = { Staging: 'Staging', UAT: 'UAT', PreProd: 'Pre-Prod' };
+  const EXEC_PRIORITIES = ['P0', 'P1', 'P2', 'P3'];
+
+  function execTcResult(tc, env) {
+    return (tc.results && tc.results[env]) || 'NOT_TESTED';
+  }
+  // Worst-case wins across environments: a TC only counts as overall PASS
+  // once every environment it's tracked in has passed.
+  function execOverallStatus(tc) {
+    const statuses = EXEC_ENVIRONMENTS.map(env => execTcResult(tc, env));
+    if (statuses.includes('FAIL')) return 'FAIL';
+    if (statuses.includes('BLOCKED')) return 'BLOCKED';
+    if (statuses.includes('IN_PROGRESS')) return 'IN_PROGRESS';
+    if (statuses.every(s => s === 'PASS')) return 'PASS';
+    return 'NOT_TESTED';
+  }
+  function execKpiTile(label, val, bg) {
+    return `<div style="background:${bg};color:#fff;border-radius:8px;padding:14px 10px;text-align:center">
+      <div style="font-size:22px;font-weight:800;line-height:1.1">${val}</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-top:4px;opacity:.9">${label}</div>
+    </div>`;
+  }
+  function renderExecDashboard() {
+    const kpiRow = document.getElementById('exec-kpi-row');
+    if (!kpiRow) return;
+    const tcs = loadTestCases();
+
+    const counts = { PASS: 0, FAIL: 0, BLOCKED: 0, IN_PROGRESS: 0, NOT_TESTED: 0 };
+    tcs.forEach(tc => counts[execOverallStatus(tc)]++);
+
+    // This section only ever shows under the Manual scope tab, so its bug
+    // tiles count manually-reported bugs only — same filter Bug Summary
+    // below applies when the Manual tab is active.
+    const manualBugs = loadBugs().filter(b => (b.reportedVia || 'Manual') === 'Manual');
+    const openManualBugs = manualBugs.filter(b => BUG_OPEN_STATUSES.includes(b.status)).length;
+
+    kpiRow.innerHTML = [
+      execKpiTile('Total TCs', tcs.length, '#16213e'),
+      execKpiTile('Overall Pass', counts.PASS, '#2e7d32'),
+      execKpiTile('Overall Fail', counts.FAIL, '#c62828'),
+      execKpiTile('Blocked', counts.BLOCKED, '#ef6c00'),
+      execKpiTile('In Progress', counts.IN_PROGRESS, '#1565c0'),
+      execKpiTile('Not Tested', counts.NOT_TESTED, '#6b7280'),
+      execKpiTile('Total Bugs', manualBugs.length, '#7b1121'),
+      execKpiTile('Open Bugs', openManualBugs, '#ef6c00'),
+    ].join('');
+
+    const envTbody = document.getElementById('exec-env-tbody');
+    if (envTbody) {
+      envTbody.innerHTML = EXEC_ENVIRONMENTS.map((env, idx) => {
+        const c = { PASS: 0, FAIL: 0, BLOCKED: 0, IN_PROGRESS: 0, NOT_TESTED: 0 };
+        tcs.forEach(tc => c[execTcResult(tc, env)]++);
+        const tested = tcs.length - c.NOT_TESTED;
+        const coverage = tcs.length ? Math.round((tested / tcs.length) * 1000) / 10 : 0;
+        return `<tr style="background:${idx % 2 ? '#fff' : '#eef2f8'}">
+          <td style="font-weight:600">${EXEC_ENV_LABELS[env]}</td>
+          <td>${c.PASS}</td><td>${c.FAIL}</td><td>${c.BLOCKED}</td><td>${c.IN_PROGRESS}</td><td>${c.NOT_TESTED}</td>
+          <td style="background:#e8f9f0;color:#2e7d32;font-weight:700">${coverage}%</td>
+        </tr>`;
+      }).join('');
+    }
+
+    const prioTbody = document.getElementById('exec-priority-tbody');
+    if (prioTbody) {
+      prioTbody.innerHTML = EXEC_PRIORITIES.map((p, idx) => {
+        const group = tcs.filter(tc => (tc.priority || 'P2') === p);
+        const total = group.length;
+        const stgPass = group.filter(tc => execTcResult(tc, 'Staging') === 'PASS').length;
+        const uatPass = group.filter(tc => execTcResult(tc, 'UAT') === 'PASS').length;
+        const ppPass = group.filter(tc => execTcResult(tc, 'PreProd') === 'PASS').length;
+        const overallPass = group.filter(tc => execOverallStatus(tc) === 'PASS').length;
+        const pctDone = total ? Math.round((overallPass / total) * 10000) / 100 : 0;
+        return `<tr style="background:${idx % 2 ? '#fff' : '#eef2f8'}">
+          <td style="font-weight:600">${p}</td>
+          <td>${total}</td><td>${stgPass}</td><td>${uatPass}</td><td>${ppPass}</td><td>${overallPass}</td>
+          <td style="color:#2e7d32;font-weight:700">${pctDone}%</td>
+        </tr>`;
+      }).join('');
+    }
+
+    const modTbody = document.getElementById('exec-module-tbody');
+    if (modTbody) {
+      // Scoped to the active Project filter — same convention as the other
+      // Manual dashboard widgets (renderManualModuleBreakdown etc.).
+      const activeProject = selectedProjectName();
+      const projectTcs = activeProject ? tcs.filter(tc => tc.project === activeProject) : tcs;
+      const modules = [...new Set(projectTcs.map(tc => tc.module || 'General'))].sort();
+      modTbody.innerHTML = modules.length ? modules.map((m, idx) => {
+        const group = projectTcs.filter(tc => (tc.module || 'General') === m);
+        const total = group.length;
+        const stgPass = group.filter(tc => execTcResult(tc, 'Staging') === 'PASS').length;
+        const uatPass = group.filter(tc => execTcResult(tc, 'UAT') === 'PASS').length;
+        const ppPass = group.filter(tc => execTcResult(tc, 'PreProd') === 'PASS').length;
+        const overallPass = group.filter(tc => execOverallStatus(tc) === 'PASS').length;
+        const notTested = group.filter(tc => execOverallStatus(tc) === 'NOT_TESTED').length;
+        const pctDone = total ? Math.round((overallPass / total) * 10000) / 100 : 0;
+        return `<tr style="background:${idx % 2 ? '#fff' : '#eef2f8'}">
+          <td style="font-weight:600">${m}</td>
+          <td>${total}</td><td>${stgPass}</td><td>${uatPass}</td><td>${ppPass}</td><td>${overallPass}</td><td>${notTested}</td>
+          <td style="color:#2e7d32;font-weight:700">${pctDone}%</td>
+        </tr>`;
+      }).join('') : `<tr><td colspan="8" style="text-align:center;color:#aaa;padding:16px">No test cases yet</td></tr>`;
+    }
+
+  }
+
+  // Bug Summary — visible under All/Manual/Automation alike. "All" counts every
+  // bug together; Manual/Automation each filter to that bug's reportedVia.
+  function renderBugSummary() {
+    const tbody = document.getElementById('exec-bug-summary-tbody');
+    if (!tbody) return;
+    const allBugs = loadBugs();
+    const bugs = dashScope === 'ALL' ? allBugs : allBugs.filter(b => (b.reportedVia || 'Manual') === (dashScope === 'AUTOMATION' ? 'Automation' : 'Manual'));
+    const BUG_SEVERITY_COLORS = { Critical: '#c62828', High: '#ef6c00', Medium: '#1a1a2e', Low: '#1a1a2e' };
+
+    const rows = Math.max(BUG_STATUSES.length, BUG_SEVERITIES.length);
+    const rowsHtml = Array.from({ length: rows }, (_, idx) => {
+      const s = BUG_STATUSES[idx];
+      const sv = BUG_SEVERITIES[idx];
+      const statusCount = s ? bugs.filter(b => b.status === s).length : null;
+      const statusColor = s && BUG_OPEN_STATUSES.includes(s) && statusCount > 0 ? '#c62828' : '#1a1a2e';
+      const sevCount = sv ? bugs.filter(b => (b.severity || 'Medium') === sv).length : null;
+      const bg = idx % 2 ? '#fff' : '#fdecea';
+      return `<tr style="background:${bg}">
+        <td>${s || ''}</td><td style="font-weight:700;color:${statusColor}">${statusCount ?? ''}</td>
+        <td>${sv || ''}</td><td style="font-weight:700;color:${sv ? BUG_SEVERITY_COLORS[sv] : '#1a1a2e'}">${sevCount ?? ''}</td>
+      </tr>`;
+    }).join('');
+    tbody.innerHTML = rowsHtml;
+    // Same rows, shown standalone for All/Automation (paired copy above is Manual-only).
+    const altTbody = document.getElementById('exec-bug-summary-tbody-alt');
+    if (altTbody) altTbody.innerHTML = rowsHtml;
   }
 
   function renderManualKeyMetrics(manualTCs) {
@@ -6384,6 +6661,7 @@
   // ── Manually-logged bugs (stored separately from automation run data) ──
   const BUG_STATUSES = ['Open', 'Reported', 'To Deploy', 'Re-opened', 'Not a Bug'];
   const BUG_OPEN_STATUSES = ['Open', 'Reported', 'Re-opened'];
+  const BUG_SEVERITIES = ['Critical', 'High', 'Medium', 'Low'];
   const BUG_STATUS_COLORS = {
     'Open':       { bg: '#ffebee', color: '#c62828' },
     'Reported':   { bg: '#e3f2fd', color: '#1565c0' },
@@ -6430,6 +6708,8 @@
     ['bug-module', 'bug-feature', 'bug-description', 'bug-expected', 'bug-assigned-to'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('bug-reported-by').value = (currentUser && currentUser.email) || '';
     document.getElementById('bug-status').value = 'Open';
+    document.getElementById('bug-severity').value = 'Medium';
+    document.getElementById('bug-reported-via').value = 'Manual';
     document.getElementById('bug-attachment').value = '';
     document.getElementById('bug-attachment-preview').textContent = '';
     bugAttachmentData = null;
@@ -6447,6 +6727,8 @@
     const reportedBy = document.getElementById('bug-reported-by').value.trim();
     const assignedTo = document.getElementById('bug-assigned-to').value.trim();
     const status = document.getElementById('bug-status').value;
+    const severity = document.getElementById('bug-severity').value;
+    const reportedVia = document.getElementById('bug-reported-via').value;
     const idx = parseInt(document.getElementById('bug-edit-idx').value, 10);
     const bugs = loadBugs();
     const now = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -6459,7 +6741,7 @@
       bugs.push({
         id: `BUG-${String(nextNum).padStart(3, '0')}`,
         module: module || 'General', feature, description, expectedResult,
-        reportedBy, assignedTo, status,
+        reportedBy, assignedTo, status, severity, reportedVia,
         attachment: bugAttachmentData,
         created: now,
       });
@@ -6467,12 +6749,13 @@
       bugs[idx] = {
         ...bugs[idx],
         module: module || 'General', feature, description, expectedResult,
-        reportedBy, assignedTo, status,
+        reportedBy, assignedTo, status, severity, reportedVia,
         attachment: bugAttachmentData || bugs[idx].attachment,
       };
     }
     saveBugsList(bugs);
     renderBugs();
+    renderDashboard();
     closeBugModal();
   }
   function editBug(i) {
@@ -6489,6 +6772,8 @@
     document.getElementById('bug-reported-by').value = b.reportedBy || '';
     document.getElementById('bug-assigned-to').value = b.assignedTo || '';
     document.getElementById('bug-status').value = b.status || 'Open';
+    document.getElementById('bug-severity').value = b.severity || 'Medium';
+    document.getElementById('bug-reported-via').value = b.reportedVia || 'Manual';
     document.getElementById('bug-attachment').value = '';
     document.getElementById('bug-attachment-preview').textContent = b.attachment ? '📎 ' + b.attachment.name + ' (current)' : '';
     bugAttachmentData = null;
@@ -6500,6 +6785,7 @@
     bugs.splice(i, 1);
     saveBugsList(bugs);
     renderBugs();
+    renderDashboard();
   }
   function updateBugStatus(i, status) {
     const bugs = loadBugs();
@@ -6507,6 +6793,7 @@
     bugs[i].status = status;
     saveBugsList(bugs);
     renderBugs();
+    renderDashboard();
   }
   function renderBugAttachment(att) {
     if (!att) return '<span style="color:#bbb;font-size:12px">—</span>';
@@ -6527,7 +6814,7 @@
     document.getElementById('bug-total-count').textContent = String(bugs.length);
 
     if (bugs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:#aaa">🎉 No bugs logged yet. Click "+ Add Bug" to log one.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:32px;color:#aaa">🎉 No bugs logged yet. Click "+ Add Bug" to log one.</td></tr>';
       return;
     }
 
@@ -6545,6 +6832,7 @@
             ${BUG_STATUSES.map(s => `<option value="${s}" ${b.status === s ? 'selected' : ''}>${s}</option>`).join('')}
           </select>
         </td>
+        <td><span class="app-tag" style="${(b.reportedVia || 'Manual') === 'Automation' ? 'background:#ede7f6;color:#5e35b1' : 'background:#e8f5e9;color:#2e7d32'}">${(b.reportedVia || 'Manual') === 'Automation' ? '🖥 Automation' : '📝 Manual'}</span></td>
         <td class="col-screenshot">${renderBugAttachment(b.attachment)}</td>
         <td>${rowActionsMenu('bug-' + i, [
           { label: '✏️ Edit', onclick: `editBug(${i})` },
@@ -6830,13 +7118,17 @@
     const title = document.getElementById('tc-title').value.trim();
     const mod   = document.getElementById('tc-module').value.trim();
     const proj  = document.getElementById('tc-project').value.trim() || selectedProjectName() || '';
+    const priority = document.getElementById('tc-priority').value;
     const exp   = document.getElementById('tc-expected').value.trim();
     const steps = document.getElementById('tc-steps').value.trim();
     if (!id || !title) { alert('TC ID and Title are required'); return; }
     const type = document.getElementById('tc-type').value;
     const tcs = loadTestCases();
     const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-    tcs.push({ id, title, type, module: mod||'General', project: proj, expected: exp||'—', steps, created: now });
+    tcs.push({
+      id, title, type, module: mod||'General', project: proj, priority, expected: exp||'—', steps, created: now,
+      results: { Staging: 'NOT_TESTED', UAT: 'NOT_TESTED', PreProd: 'NOT_TESTED' },
+    });
     saveTestCases(tcs);
     renderTestCases();
     renderDashboard();
@@ -6892,8 +7184,13 @@
     setEditTcTypeTab(tc.type === 'automation' ? 'automation' : 'manual');
     document.getElementById('edit-tc-module').value = tc.module;
     document.getElementById('edit-tc-project').value = tc.project || '';
+    document.getElementById('edit-tc-priority').value = tc.priority || 'P2';
     document.getElementById('edit-tc-steps').value = tc.steps || '';
     document.getElementById('edit-tc-expected').value = tc.expected === '—' ? '' : tc.expected;
+    const results = tc.results || {};
+    document.getElementById('edit-tc-result-staging').value = results.Staging || 'NOT_TESTED';
+    document.getElementById('edit-tc-result-uat').value = results.UAT || 'NOT_TESTED';
+    document.getElementById('edit-tc-result-preprod').value = results.PreProd || 'NOT_TESTED';
     const modal = document.getElementById('edit-tc-modal');
     modal.style.display = 'flex';
   }
@@ -6914,11 +7211,18 @@
       type:     document.getElementById('edit-tc-type').value,
       module:   document.getElementById('edit-tc-module').value.trim() || 'General',
       project:  document.getElementById('edit-tc-project').value.trim(),
+      priority: document.getElementById('edit-tc-priority').value,
       steps:    document.getElementById('edit-tc-steps').value.trim(),
       expected: document.getElementById('edit-tc-expected').value.trim() || '—',
+      results: {
+        Staging: document.getElementById('edit-tc-result-staging').value,
+        UAT: document.getElementById('edit-tc-result-uat').value,
+        PreProd: document.getElementById('edit-tc-result-preprod').value,
+      },
     };
     saveTestCases(tcs);
     renderTestCases();
+    renderDashboard();
     closeEditModal();
   }
   function exportTestCases() {
