@@ -4068,6 +4068,19 @@
             </div>
           </div>
         </div>
+
+        <div class="table-card" id="ai-recorder-insights-card" style="max-width:900px;display:none">
+          <div class="table-card-header" style="display:flex;justify-content:space-between;align-items:center">
+            <h3>AI insights</h3>
+            <label style="font-size:12.5px;color:#666;display:flex;align-items:center;gap:6px;cursor:pointer">
+              <input type="checkbox" id="ai-recorder-advanced-toggle" onchange="aiRecorderAdvanced = this.checked; renderAiRecorderResultPanels();"/>
+              Advanced (code) view
+            </label>
+          </div>
+          <div id="ai-recorder-result-area" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px"></div>
+        </div>
+
+        <div class="table-card" id="ai-recorder-review-queue" style="max-width:640px;display:none"></div>
       </div>
       <div class="page" id="page-failed-tests">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
@@ -5804,6 +5817,60 @@
         : '<span style="font-size:12.5px;color:#999">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
     } catch (e) {
       row.textContent = 'Could not load blocks: ' + e.message;
+    }
+  }
+
+  let aiRecorderAdvanced = false;
+  let aiRecorderLastGeneration = null;
+
+  function aiRecorderEscapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function renderAiRecorderResultPanels() {
+    const card = document.getElementById('ai-recorder-insights-card');
+    const area = document.getElementById('ai-recorder-result-area');
+    if (!aiRecorderLastGeneration) { card.style.display = 'none'; return; }
+    card.style.display = 'block';
+    const g = aiRecorderLastGeneration;
+
+    if (aiRecorderAdvanced) {
+      area.innerHTML = `
+        <div><h4 style="margin:0 0 8px;font-size:13px">Code</h4>
+          <pre style="background:#fafafa;border:1px solid #eee;border-radius:6px;padding:12px;margin:0;font-family:monospace;font-size:12px;white-space:pre-wrap;max-height:320px;overflow:auto">${aiRecorderEscapeHtml(g.code)}</pre>
+          <button class="btn-v3-secondary" style="margin-top:8px" onclick="document.getElementById('recorder-code').value = aiRecorderLastGeneration.code;">Use this as the saved script</button>
+        </div>
+        <div><h4 style="margin:0 0 8px;font-size:13px">Test data</h4>
+          <pre style="background:#fafafa;border:1px solid #eee;border-radius:6px;padding:12px;margin:0;font-family:monospace;font-size:12px;white-space:pre-wrap">${aiRecorderEscapeHtml(JSON.stringify(g.testData, null, 2))}</pre>
+        </div>`;
+    } else {
+      const stepsHtml = g.steps.map((s) => `
+        <div style="padding:8px 0;border-bottom:1px solid #eee;font-size:13px">
+          ${s.index + 1}. ${aiRecorderEscapeHtml(s.description)}
+          <span style="font-size:11px;border-radius:999px;padding:2px 8px;margin-left:6px;
+            background:${s.confidence === 'high' ? '#e8f5e9' : '#ffebee'};color:${s.confidence === 'high' ? '#2e7d32' : '#c62828'}">
+            ${s.confidence === 'high' ? 'stable locator' : 'weak locator — flagged'}
+          </span>
+          <div style="font-size:11.5px;color:#999;margin-top:2px">
+            ${s.blockName ? `Block: <code>${aiRecorderEscapeHtml(s.blockName)}</code>` : 'Not part of a block yet'}
+          </div>
+        </div>`).join('');
+      const reusedCount = g.steps.filter((s) => s.blockName).length;
+      const reuseNote = reusedCount > 0 && reusedCount < g.steps.length
+        ? `<div style="margin-top:12px;padding:10px 12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;font-size:11.8px;color:#1565c0">
+             ↻ ${reusedCount} of ${g.steps.length} step(s) reused an existing block — only the new step(s) needed fresh code.
+           </div>`
+        : '';
+      area.innerHTML = `
+        <div><h4 style="margin:0 0 8px;font-size:13px">Captured steps</h4>${stepsHtml}</div>
+        <div>
+          <h4 style="margin:0 0 8px;font-size:13px">What this test does</h4>
+          <div style="font-size:13px">${aiRecorderEscapeHtml(g.summary)}</div>
+          ${reuseNote}
+          <div style="margin-top:14px;font-size:11.8px;color:#999">
+            Naming applied automatically: <code>${aiRecorderEscapeHtml(g.testCaseName)}</code>
+          </div>
+        </div>`;
     }
   }
 
