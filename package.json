@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node server/index.js",
-    "test": "tsx tests/verify-dashboard.ts",
+    "test": "npm run test:unit && tsx tests/verify-dashboard.ts",
+    "test:unit": "node --test \"server/tests/*.test.js\"",
     "install-browser": "playwright install chromium"
   },
   "dependencies": {
