@@ -652,7 +652,7 @@
             <button class="range-pill" data-range="7D" onclick="setDashRange('7D')">7D</button>
             <button class="range-pill" data-range="24H" onclick="setDashRange('24H')">24H</button>
           </div>
-          <button class="btn-v3-primary" style="margin-left:auto" onclick="openCreateTcModal()">+ Create Test Case</button>
+          <button class="btn-v3-primary" style="margin-left:auto" onclick="openCreateTcModal(dashScope === 'AUTOMATION' ? 'automation' : dashScope === 'MANUAL' ? 'manual' : undefined)">+ Create Test Case</button>
         </div>
 
         <!-- Key Metrics -->
