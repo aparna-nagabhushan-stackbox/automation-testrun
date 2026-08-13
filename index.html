@@ -3995,6 +3995,13 @@
           </div>
         </div>
 
+        <div id="ai-recorder-block-lib-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+
+        <div class="settings-field" style="max-width:320px;margin-bottom:16px">
+          <label>Flow name <span style="color:#999;font-weight:400">— used to auto-name the generated test</span></label>
+          <input type="text" id="ai-recorder-flow-name" class="tc-input" placeholder="e.g. Operator login"/>
+        </div>
+
         <div class="seg-tabs" id="recorder-mode-tabs" style="margin-bottom:16px">
           <button class="seg-tab active" data-recorder-mode="intab" onclick="setRecorderMode('intab')">📍 Record in this tab</button>
           <button class="seg-tab" data-recorder-mode="window" onclick="setRecorderMode('window')">🪟 Record in new window</button>
@@ -5541,6 +5548,7 @@
     if (name === 'team-members') loadTeamMembers();
     if (name === 'settings') loadSettingsFromStorage();
     if (name === 'automation-tests') renderAutomationTestsPage();
+    if (name === 'automation-builder') loadAiRecorderBlocks();
   }
 
   // ── Team Members ──
@@ -5780,6 +5788,28 @@
   // closed manually or when Stop Recording is clicked.
   let recorderSessionId = null;
   let recorderPollTimer = null;
+
+  // ── AI Recorder: block library, AI generation, review queue ──
+  let aiRecorderBlocks = [];
+
+  async function loadAiRecorderBlocks() {
+    const project = selectedProjectName();
+    const row = document.getElementById('ai-recorder-block-lib-row');
+    if (!project) { aiRecorderBlocks = []; row.innerHTML = '<span style="font-size:12.5px;color:#999">Select a project above to see its block library.</span>'; return; }
+    try {
+      const { blocks } = await api('/blocks?project=' + encodeURIComponent(project));
+      aiRecorderBlocks = blocks;
+      row.innerHTML = blocks.length
+        ? blocks.map((b) => `<span style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:6px 12px;font-size:12px;color:#666">🔒 ${b.name}</span>`).join('')
+        : '<span style="font-size:12.5px;color:#999">No blocks yet for this project — promote one from the review queue below once you have a recording.</span>';
+    } catch (e) {
+      row.textContent = 'Could not load blocks: ' + e.message;
+    }
+  }
+
+  function aiRecorderFlowName() {
+    return document.getElementById('ai-recorder-flow-name').value.trim();
+  }
 
   function setRecorderMode(mode) {
     document.querySelectorAll('#recorder-mode-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.recorderMode === mode));
