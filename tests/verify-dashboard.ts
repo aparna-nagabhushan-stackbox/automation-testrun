@@ -185,6 +185,18 @@ async function main(): Promise<void> {
     await page.waitForTimeout(250);
     check(`nav "${nav}" page becomes active`, await isActive(page, '#page-' + nav));
   }
+
+  // ── AI Recorder page and block library row ──
+  // "Automation" is a collapsible sidebar group — expand it before the
+  // nested AI Recorder item can be clicked.
+  await page.click('#navgroup-automation .nav-group-header');
+  await page.waitForTimeout(150);
+  const automationClass = (await page.locator('#navgroup-automation').getAttribute('class')) ?? '';
+  check('"Automation" group expands', !automationClass.includes('collapsed'));
+  await page.click('#nav-automation-builder');
+  await page.waitForTimeout(250);
+  check('AI Recorder block library row renders', await page.isVisible('#ai-recorder-block-lib-row'));
+
   await page.screenshot({ path: path.join(SCREEN_DIR, '03-final.png') });
 
   // ── Logout + session restore ──

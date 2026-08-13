@@ -10,8 +10,11 @@ const fs = require('fs');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
 const { requireAuth } = require('../auth');
-
-const router = express.Router();
+const Anthropic = require('@anthropic-ai/sdk');
+const db = require('../db');
+const { generateFromCode } = require('../services/claudeGenerate');
+const { maskSensitiveFields, maskSensitiveValuesInCode } = require('../services/dataMasking');
+const { segmentByBlocks, segmentForStepIndex, extractSelectors } = require('../services/blockMatcher');
 
 const RECORDINGS_DIR = path.join(__dirname, '..', 'recordings');
 fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
@@ -25,7 +28,13 @@ fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
 // profile, but as of v1.62 it makes codegen emit broken code — a
 // `browser.newContext()` call followed by a reference to an undefined
 // `page` variable — so storage-state carryover is used instead.)
-const RECORDER_PROFILE_DIR = path.join(__dirname, '..', 'recorder-profile');
+module.exports = function createRecorderRouter(deps = {}) {
+  const claudeClient = deps.claudeClient !== undefined
+    ? deps.claudeClient
+    : (process.env.ANTHROPIC_API_KEY ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) : null);
+  const router = express.Router();
+
+  const RECORDER_PROFILE_DIR = path.join(__dirname, '..', 'recorder-profile');
 fs.mkdirSync(RECORDER_PROFILE_DIR, { recursive: true });
 const RECORDER_STORAGE_STATE = path.join(RECORDER_PROFILE_DIR, 'state.json');
 
@@ -275,4 +284,159 @@ function buildBookmarklet(origin, sessionId) {
   return 'javascript:' + encodeURIComponent(injected);
 }
 
-module.exports = router;
+  const LEADING_VERBS = /^(click|type|fill|select|check|uncheck|confirm|press|enter|choose|open)\s+/i;
+  function slugify(s) {
+    return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+  // "Click zone override dropdown" -> "zone_override" — strips the leading
+  // action verb and keeps the next couple of meaningful words, so the
+  // auto-generated name reads like the mockup's `..._zone_override` suffix
+  // instead of repeating the whole step description.
+  function shortLabel(description) {
+    const stripped = String(description || '').replace(LEADING_VERBS, '');
+    return slugify(stripped.trim().split(/\s+/).slice(0, 2).join(' '));
+  }
+  // The distinguishing suffix (first new step's short label) is only useful
+  // when the recording is a genuine PARTIAL match against the block
+  // library — some steps reused, some new — so the suffix highlights the
+  // part that's actually different. When newSteps.length === steps.length,
+  // either the whole flow is new because the library is empty (nothing to
+  // contrast against) or every known block failed to match (the same
+  // "nothing meaningfully matched" case `noBlockMatched` below already
+  // captures) — either way there's no partial-match story to tell, so no
+  // suffix is added.
+  function buildTestCaseName({ project, flowName, newSteps, totalSteps }) {
+    const parts = [slugify(project), slugify(flowName)];
+    if (newSteps.length && newSteps.length < totalSteps) parts.push(shortLabel(newSteps[0].description));
+    return parts.filter(Boolean).join('_');
+  }
+
+  // Masks the recorded code's secrets, but only accepts the result if it still
+  // extracts to the identical interaction sequence — a block's whole job is to
+  // match future recordings, so masking must never be allowed to change what it
+  // matches on. See the call site for why this can (very rarely) fail.
+  function maskRawCodeIfSafe(rawCode, testData, maskedTestData, recordingId) {
+    const masked = maskSensitiveValuesInCode(rawCode, testData, maskedTestData);
+    if (masked === rawCode) return rawCode;
+    const before = extractSelectors(rawCode);
+    const after = extractSelectors(masked);
+    if (after.length === before.length && after.every((key, i) => key === before[i])) return masked;
+    console.warn(
+      `[recorder] recording ${recordingId}: masking a sensitive value would change its extracted `
+      + 'interaction sequence, so the raw recording is being stored unmasked to keep block matching '
+      + 'correct. A block promoted from it will contain that value in plaintext.'
+    );
+    return rawCode;
+  }
+
+  async function runGenerate({ project, flowName, recordingId, rawCode }, res) {
+    if (!claudeClient) return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not set on the server — AI generation is unavailable.' });
+    if (!rawCode) return res.status(400).json({ error: 'No recorded code to generate from.' });
+
+    const blocks = project ? db.getBlocksByProject(project) : [];
+    const segments = segmentByBlocks(rawCode, blocks);
+    const matchedBlockNames = [...new Set(segments.filter((s) => s.blockId).map((s) => s.blockName))];
+
+    const generated = await generateFromCode(claudeClient, { rawCode, matchedBlockNames });
+    const testData = maskSensitiveFields(generated.testData);
+    // The cleaned code carries the typed-in values inline, so it has to be
+    // masked too — otherwise a password reaches disk in plaintext here and,
+    // on promote, inside a shared block.
+    const code = maskSensitiveValuesInCode(generated.code, generated.testData, testData);
+
+    // Block attribution is looked up per generated step by POSITION, not by
+    // selector text — Claude only owns the natural-language layer
+    // (description, confidence, cleaned code); which steps belong to a known
+    // block is computed deterministically from the same segments used for
+    // naming. See segmentForStepIndex for why position rather than selector.
+    const steps = generated.steps.map((s) => {
+      const segment = segmentForStepIndex(segments, s.index);
+      return {
+        ...s,
+        blockId: segment ? segment.blockId : null,
+        blockName: segment ? segment.blockName : null,
+      };
+    });
+
+    const lowConfidenceSteps = steps.filter((s) => s.confidence === 'low').map((s) => s.index);
+    const newSteps = steps.filter((s) => !s.blockId);
+    // Only flag "no matching block" when there are blocks to match against
+    // and truly none of them matched — a project's very first recording
+    // shouldn't be forced into review just because its block library is empty.
+    const noBlockMatched = blocks.length > 0 && newSteps.length === steps.length;
+    const needsReview = lowConfidenceSteps.length > 0 || noBlockMatched;
+
+    const testCaseName = buildTestCaseName({ project, flowName, newSteps, totalSteps: steps.length });
+
+    const result = {
+      recordingId, project: project || '', flowName: flowName || '', testCaseName,
+      summary: generated.summary, steps, code, testData,
+      matchedBlockNames, needsReview,
+    };
+    // `rawCode` is kept alongside the cleaned code so that promoting this
+    // generation into a block stores the RAW recording. Block matching always
+    // runs extraction over raw recorder output, so a block's code has to be in
+    // that same representation to ever match — Claude's cleaned code prefers
+    // role-based locators and is a different shape. The response below still
+    // only exposes the masked `code` — rawCode is not surfaced to the client
+    // until (and unless) it is promoted into a block.
+    //
+    // Once promoted, though, that code IS readable by every logged-in user via
+    // GET /api/blocks, so the same secret masking is applied to it. Masking
+    // rewrites value arguments (the second argument to `.fill()`), not selector
+    // or locator arguments, so the extracted interaction sequence — the only
+    // thing matching depends on — is normally untouched. The equality check
+    // proves that per recording rather than assuming it: if a masked value's
+    // literal text also happens to appear inside a selector or locator (say a
+    // recorded PIN that is also the element's visible text, `getByText('1234')`)
+    // the keys would shift and this block would stop matching, so the original
+    // is kept instead. That block then retains a plaintext value, hence the
+    // warning — rare, but worth being able to spot in the server log.
+    db.upsertGeneration({ ...result, rawCode: maskRawCodeIfSafe(rawCode, generated.testData, testData, recordingId) });
+
+    // Re-generating the same recording replaces its generation (upsert), so it
+    // must replace its review entry too — otherwise clicking "Generate Code"
+    // twice leaves two pending entries for one recording. Done unconditionally
+    // so a re-generation that no longer needs review clears the stale entry.
+    db.removePendingReviewEntries(recordingId);
+
+    if (needsReview) {
+      db.createReviewEntry({
+        project: project || '', recordingId,
+        reason: lowConfidenceSteps.length > 0 ? 'weak locator' : 'no matching block',
+        flaggedSteps: lowConfidenceSteps.length > 0 ? lowConfidenceSteps : newSteps.map((s) => s.index),
+      });
+    }
+
+    res.json(result);
+  }
+
+  router.post('/:id/generate', requireAuth, async (req, res) => {
+    const session = sessions.get(req.params.id);
+    if (!session) return res.status(404).json({ error: 'No recording session with that id.' });
+    if (!fs.existsSync(session.outFile)) return res.status(400).json({ error: 'No recorded code for this session yet.' });
+    try {
+      await runGenerate({
+        project: req.body?.project || '', flowName: req.body?.flowName || '',
+        recordingId: req.params.id, rawCode: fs.readFileSync(session.outFile, 'utf8'),
+      }, res);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  router.post('/inpage/:sessionId/generate', requireAuth, async (req, res) => {
+    const session = inpageSessions.get(req.params.sessionId);
+    if (!session) return res.status(404).json({ error: 'Unknown or expired recording session.' });
+    try {
+      await runGenerate({
+        project: req.body?.project || '', flowName: req.body?.flowName || '',
+        recordingId: req.params.sessionId, rawCode: eventsToPlaywrightCode(session.events),
+      }, res);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  return router;
+};
