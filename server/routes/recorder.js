@@ -14,7 +14,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 const db = require('../db');
 const { generateFromCode } = require('../services/claudeGenerate');
 const { maskSensitiveFields, maskSensitiveValuesInCode } = require('../services/dataMasking');
-const { segmentByBlocks, segmentForStepIndex } = require('../services/blockMatcher');
+const { segmentByBlocks, segmentForStepIndex, extractSelectors } = require('../services/blockMatcher');
 
 const RECORDINGS_DIR = path.join(__dirname, '..', 'recordings');
 fs.mkdirSync(RECORDINGS_DIR, { recursive: true });
@@ -311,6 +311,24 @@ function buildBookmarklet(origin, sessionId) {
     return parts.filter(Boolean).join('_');
   }
 
+  // Masks the recorded code's secrets, but only accepts the result if it still
+  // extracts to the identical interaction sequence — a block's whole job is to
+  // match future recordings, so masking must never be allowed to change what it
+  // matches on. See the call site for why this can (very rarely) fail.
+  function maskRawCodeIfSafe(rawCode, testData, maskedTestData, recordingId) {
+    const masked = maskSensitiveValuesInCode(rawCode, testData, maskedTestData);
+    if (masked === rawCode) return rawCode;
+    const before = extractSelectors(rawCode);
+    const after = extractSelectors(masked);
+    if (after.length === before.length && after.every((key, i) => key === before[i])) return masked;
+    console.warn(
+      `[recorder] recording ${recordingId}: masking a sensitive value would change its extracted `
+      + 'interaction sequence, so the raw recording is being stored unmasked to keep block matching '
+      + 'correct. A block promoted from it will contain that value in plaintext.'
+    );
+    return rawCode;
+  }
+
   async function runGenerate({ project, flowName, recordingId, rawCode }, res) {
     if (!claudeClient) return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not set on the server — AI generation is unavailable.' });
     if (!rawCode) return res.status(400).json({ error: 'No recorded code to generate from.' });
@@ -362,7 +380,19 @@ function buildBookmarklet(origin, sessionId) {
     // role-based locators and is a different shape. The response below still
     // only exposes the masked `code` — rawCode is not surfaced to the client
     // until (and unless) it is promoted into a block.
-    db.upsertGeneration({ ...result, rawCode });
+    //
+    // Once promoted, though, that code IS readable by every logged-in user via
+    // GET /api/blocks, so the same secret masking is applied to it. Masking
+    // rewrites value arguments (the second argument to `.fill()`), not selector
+    // or locator arguments, so the extracted interaction sequence — the only
+    // thing matching depends on — is normally untouched. The equality check
+    // proves that per recording rather than assuming it: if a masked value's
+    // literal text also happens to appear inside a selector or locator (say a
+    // recorded PIN that is also the element's visible text, `getByText('1234')`)
+    // the keys would shift and this block would stop matching, so the original
+    // is kept instead. That block then retains a plaintext value, hence the
+    // warning — rare, but worth being able to spot in the server log.
+    db.upsertGeneration({ ...result, rawCode: maskRawCodeIfSafe(rawCode, generated.testData, testData, recordingId) });
 
     // Re-generating the same recording replaces its generation (upsert), so it
     // must replace its review entry too — otherwise clicking "Generate Code"

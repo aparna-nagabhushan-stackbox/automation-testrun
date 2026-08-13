@@ -156,6 +156,97 @@ test('inpage generate: the raw recording is persisted alongside the cleaned code
   }
 });
 
+test('the stored raw recording is masked too, and the masked version still matches as a block', async () => {
+  // The raw recording becomes a promoted block's code, and GET /api/blocks
+  // serves that to every logged-in user — so it gets the same masking the
+  // cleaned code does, as long as masking doesn't disturb block matching.
+  const holder = mutableClient({
+    summary: 'Logs in.',
+    steps: [
+      { description: 'Go to the login page', selector: 'http://x/login', confidence: 'high' },
+      { description: 'Fill the password field', selector: '#password', confidence: 'low' },
+    ],
+    code: "await page.goto('http://x/login');\nawait page.fill('#password', 's3cr3t-pass');",
+    testData: { password: 's3cr3t-pass' },
+  });
+  const { server, port } = await listen(freshApp(holder.client));
+  try {
+    const db = require('../db');
+    const base = `http://localhost:${port}/api/recorder`;
+    const LOGIN_EVENTS = [{ type: 'fill', selector: '#password', value: 's3cr3t-pass', url: 'http://x/login' }];
+
+    const first = await startInpage(base, LOGIN_EVENTS);
+    await generate(base, first, { project: 'Inbound', flowName: 'Operator login' });
+
+    const stored = db.getGenerationByRecordingId(first);
+    assert.ok(!stored.rawCode.includes('s3cr3t-pass'), 'the stored raw recording must not carry the plaintext value');
+    assert.match(stored.rawCode, /'\$env:PASSWORD'/);
+    // Still the raw recorder representation, just with the value swapped out.
+    assert.match(stored.rawCode, /page\.fill\('#password', /);
+
+    // Promote it, then record the same flow plus one new step: the masked block
+    // still matches the (unmasked) new recording, because masking only touched
+    // a value argument.
+    const entry = db.getReviewQueue().find((e) => e.recordingId === first);
+    const promoteRes = await fetch(`http://localhost:${port}/api/review-queue/${entry.id}/promote`, {
+      method: 'POST', headers: JSON_HEADERS, body: JSON.stringify({ blockName: 'Login' }),
+    });
+    const { block } = await promoteRes.json();
+    assert.ok(!block.code.includes('s3cr3t-pass'), 'a promoted block must not carry the plaintext value');
+
+    holder.input = {
+      summary: 'Logs in, then opens the zone override dropdown.',
+      steps: [
+        { description: 'Go to the login page', selector: 'http://x/login', confidence: 'high' },
+        { description: 'Fill the password field', selector: '#password', confidence: 'high' },
+        { description: 'Click zone override dropdown', selector: '.zone-override-dd', confidence: 'low' },
+      ],
+      code: 'cleaned',
+      testData: { password: 's3cr3t-pass' },
+    };
+    const second = await startInpage(base, [...LOGIN_EVENTS, { type: 'click', selector: '.zone-override-dd' }]);
+    const secondGen = await generate(base, second, { project: 'Inbound', flowName: 'Operator login' });
+
+    assert.deepEqual(secondGen.matchedBlockNames, ['Login']);
+    assert.deepEqual(secondGen.steps.map((s) => s.blockName), ['Login', 'Login', null]);
+  } finally {
+    server.close();
+  }
+});
+
+test('raw-code masking is skipped when it would change the extracted interaction sequence', async () => {
+  // Pathological case: the sensitive value is ALSO the recorded selector, so
+  // masking would rewrite an extraction key and quietly break matching for any
+  // block promoted from this recording. Matching correctness wins; the raw
+  // recording is stored unmasked (and a warning is logged).
+  const client = fakeClient({
+    summary: 'Types a PIN.',
+    steps: [
+      { description: 'Go to the page', selector: 'http://x', confidence: 'high' },
+      { description: 'Click the PIN element', selector: '123456', confidence: 'low' },
+    ],
+    code: "await page.click('123456');",
+    testData: { otp: '123456' },
+  });
+  const { server, port } = await listen(freshApp(client));
+  try {
+    const db = require('../db');
+    const base = `http://localhost:${port}/api/recorder`;
+    const sessionId = await startInpage(base, [{ type: 'click', selector: '123456', url: 'http://x' }]);
+    const body = await generate(base, sessionId, { project: 'Inbound', flowName: 'Pin entry' });
+
+    // No crash, normal response, testData still masked.
+    assert.equal(body.testData.otp, '$env:OTP');
+    const stored = db.getGenerationByRecordingId(sessionId);
+    assert.match(stored.rawCode, /page\.click\('123456'\)/, 'raw code is kept as recorded so the keys still line up');
+    // And the keys really are unchanged, which is the point of the fallback.
+    const { extractSelectors } = require('../services/blockMatcher');
+    assert.deepEqual(extractSelectors(stored.rawCode), ['http://x', '123456']);
+  } finally {
+    server.close();
+  }
+});
+
 test('inpage generate: a step matching an existing block is tagged with it and skips review on its own', async () => {
   const LOGIN_CODE = `await page.goto('http://x');\nawait page.click('#submit');`;
   const client = fakeClient({
