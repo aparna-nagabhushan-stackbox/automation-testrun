@@ -5007,7 +5007,6 @@
     { key: 'TMS', label: 'TMS', desc: 'Transport Management', color: '#2e7d32', icon: 'tms' },
     { key: 'YMS', label: 'YMS', desc: 'Yard Management', color: '#1565c0', icon: 'yms' },
     { key: 'OMS', label: 'OMS', desc: 'Order Management', color: '#ef6c00', icon: 'oms' },
-    { key: 'ADMIN', label: 'Admin', desc: 'Admin Console', color: '#5e35b1', icon: 'admin' },
   ];
   const APP_ICON_PATHS = {
     all: '<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',
@@ -5043,18 +5042,12 @@
   function renderAppPickerGrid() {
     const grid = document.getElementById('app-picker-grid');
     if (!grid) return;
-    const projectCards = allProjects.map(p => ({ key: 'proj:' + p.name, label: p.name, desc: 'Custom project', color: '#3949ab', icon: 'folder' }));
-    const cards = [...APP_DEFS, ...projectCards];
-    grid.innerHTML = cards.map(c => `
+    grid.innerHTML = APP_DEFS.map(c => `
       <div onclick="selectApp('${c.key.replace(/'/g, "\\'")}')" style="border:1px solid #eee;border-radius:12px;padding:16px;cursor:pointer" onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
         <div style="width:42px;height:42px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;margin-bottom:10px">${appIconSvg(c.icon, 20)}</div>
         <div style="font-weight:700;font-size:14px;color:#1a1a2e">${c.label}</div>
         <div style="font-size:12px;color:#888;margin-top:2px">${c.desc}</div>
-      </div>`).join('') + `
-      <div onclick="selectApp('__new_project__')" style="border:1.5px dashed #ccc;border-radius:12px;padding:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#888">
-        <div style="width:42px;height:42px;border-radius:50%;background:#f0f0f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px">${appIconSvg('plus', 20, '#888')}</div>
-        <div style="font-weight:700;font-size:13px">New Project</div>
-      </div>`;
+      </div>`).join('');
   }
   function selectApp(value) {
     if (value === '__new_project__') {
