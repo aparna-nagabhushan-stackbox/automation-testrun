@@ -322,6 +322,33 @@
     .btn-v3-secondary { padding:8px 18px; background:#f5f5f5; color:#333; border:1px solid #ddd; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
     .btn-v3-secondary:hover { background:#eeeeee; }
     .btn-v3-ghost { padding:8px 18px; background:#e8eaf6; color:#3949ab; border:1px solid #c5cae9; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+
+    /* Generate Test Case (AI) page */
+    .gen-tc-card { background:#fff; border-radius:16px; box-shadow:0 4px 24px rgba(81,45,168,0.12); overflow:hidden; }
+    .gen-tc-banner {
+      display:flex; align-items:center; gap:20px; padding:32px 36px;
+      background:linear-gradient(135deg,#4527a0 0%,#7c4dff 55%,#1565c0 100%);
+      color:#fff;
+    }
+    .gen-tc-banner-icon {
+      width:58px; height:58px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:26px; background:rgba(255,255,255,0.18); box-shadow:0 0 0 7px rgba(255,255,255,0.08);
+    }
+    .gen-tc-banner-title { font-size:21px; font-weight:700; margin-bottom:6px; }
+    .gen-tc-banner-sub { font-size:13.5px; color:rgba(255,255,255,0.85); line-height:1.6; max-width:640px; }
+    .gen-tc-body { padding:34px 36px 36px; }
+    .gen-tc-chip {
+      display:inline-block; padding:6px 12px; margin:0 8px 8px 0; border-radius:20px; font-size:11.5px; font-weight:600;
+      background:#ede7f6; color:#5e35b1; border:1px solid #d8caf5; cursor:pointer; transition:all .15s;
+    }
+    .gen-tc-chip:hover { background:#5e35b1; color:#fff; border-color:#5e35b1; }
+    .btn-ai-primary {
+      padding:12px 24px; background:linear-gradient(135deg,#6d28d9,#4f46e5); color:#fff; border:none;
+      border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif;
+      box-shadow:0 4px 14px rgba(109,40,217,0.35); transition:transform .15s, box-shadow .15s;
+    }
+    .btn-ai-primary:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(109,40,217,0.45); }
+    .btn-ai-primary:disabled { opacity:.6; cursor:default; transform:none; box-shadow:none; }
     .btn-v3-ghost:hover { background:#d1c4e9; color:#1a237e; }
 
     /* ── BUGS PAGE ── */
@@ -3866,7 +3893,7 @@
           </div>
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th><input type="checkbox" id="tc-select-all" onchange="toggleSelectAllTc(this.checked)"/></th><th>TC ID</th><th>Title</th><th>Type</th><th>Module</th><th>Project</th><th>Steps</th><th>Expected Result</th><th>Created</th><th>Action</th></tr></thead>
+              <thead><tr><th><input type="checkbox" id="tc-select-all" onchange="toggleSelectAllTc(this.checked)"/></th><th>TC ID</th><th>Title</th><th>Type</th><th>Module</th><th>Project</th><th>Scenario</th><th>Web / App</th><th>Pre-Condition</th><th>Steps</th><th>Test Data</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Created</th><th>Action</th></tr></thead>
               <tbody id="tc-tbody"></tbody>
             </table>
           </div>
@@ -3935,6 +3962,51 @@
           <div style="font-size:48px;margin-bottom:16px">🗒️</div>
           <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Plans</div>
           <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — group test cases into a plan and track sign-off per release.</div>
+        </div>
+      </div>
+      <!-- GENERATE TEST CASE PAGE (AI) -->
+      <div class="page" id="page-generate-testcase">
+        <div class="gen-tc-card" style="max-width:920px;margin:0 auto">
+          <div class="gen-tc-banner">
+            <div class="gen-tc-banner-icon">✨</div>
+            <div>
+              <div class="gen-tc-banner-title">Generate Test Cases with AI</div>
+              <div class="gen-tc-banner-sub">Describe a scenario, module, or feature — Claude drafts manual test cases (happy path, negative, and edge cases) for you to review and save.</div>
+            </div>
+          </div>
+          <div class="gen-tc-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+              <div>
+                <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module <span style="color:#aaa;font-weight:400">(optional)</span></label>
+                <input id="gen-tc-module" placeholder="e.g. Login" class="tc-input"/>
+              </div>
+              <div>
+                <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Project <span style="color:#aaa;font-weight:400">(optional)</span></label>
+                <input id="gen-tc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Scenario / Feature Description</label>
+              <textarea id="gen-tc-description" placeholder="e.g. User resets their password via the 'Forgot Password' link on the login page" class="tc-input" rows="5" style="resize:vertical;line-height:1.6;font-size:14px"></textarea>
+            </div>
+            <div style="margin-bottom:20px">
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Login with valid credentials</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Checkout fails with an expired card</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">User uploads a profile picture over the size limit</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Search returns no results for a mistyped query</span>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <button id="gen-tc-btn" onclick="generateTestCasesFromScenario()" class="btn-ai-primary">✨ Generate Test Cases</button>
+            </div>
+            <div id="gen-tc-error" style="display:none;color:#c62828;font-size:12px;margin-top:12px;background:#ffebee;padding:10px 12px;border-radius:8px"></div>
+          </div>
+        </div>
+        <div id="gen-tc-results-wrap" style="display:none;max-width:920px;margin:20px auto 0">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="font-size:14px;font-weight:700;color:#1a1a2e">✨ Generated Test Cases (<span id="gen-tc-count">0</span>)</div>
+            <button onclick="saveAllGeneratedTestCases()" class="btn-ai-primary">💾 Save All</button>
+          </div>
+          <div id="gen-tc-results"></div>
         </div>
       </div>
       <!-- AUTOMATION TESTS PAGE — automation-tagged test cases, including AI-Recorder output -->
@@ -4661,6 +4733,22 @@
           <input id="tc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
         </div>
       </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Testcase Scenario</label>
+        <textarea id="tc-scenario" placeholder="Short description of the scenario being tested" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Web / App</label>
+        <select id="tc-platform" class="tc-input">
+          <option value="Web">Web</option>
+          <option value="App">App</option>
+          <option value="Both">Both</option>
+        </select>
+      </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Pre-Condition</label>
+        <textarea id="tc-precondition" placeholder="What must be true before running this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
       <div style="margin-bottom:12px">
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Priority</label>
         <select id="tc-priority" class="tc-input">
@@ -4678,6 +4766,26 @@
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Steps <span style="color:#aaa;font-weight:400">(one per line)</span></label>
         <textarea id="tc-steps" placeholder="1. Navigate to login page&#10;2. Enter username&#10;3. Enter password&#10;4. Click Login" class="tc-input" rows="4" style="resize:vertical;line-height:1.5"></textarea>
       </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Test Data</label>
+        <textarea id="tc-testdata" placeholder="Values used to run this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+      <div class="tc-manual-only" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Actual Result</label>
+          <input id="tc-actual" placeholder="Filled in after running the test" class="tc-input"/>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
+          <select id="tc-status" class="tc-input">
+            <option value="NOT_RUN">Not Run</option>
+            <option value="PASS">Pass</option>
+            <option value="FAIL">Fail</option>
+            <option value="HOLD">Hold</option>
+            <option value="DUPLICATE">Duplicate</option>
+          </select>
+        </div>
+      </div>
       <div style="display:flex;justify-content:flex-end;gap:10px">
         <button onclick="closeCreateTcModal()" class="btn-v3-secondary">Cancel</button>
         <button onclick="addTestCase()" class="btn-v3-primary">+ Create Test Case</button>
@@ -4688,7 +4796,7 @@
 
 <!-- EDIT TEST CASE MODAL -->
 <div id="edit-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:540px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:540px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f5">
       <div style="font-size:14px;font-weight:700;color:#1a1a2e">Edit Test Case</div>
       <button onclick="closeEditModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
@@ -4730,6 +4838,22 @@
           <option value="P3">P3 — Low</option>
         </select>
       </div>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Testcase Scenario</label>
+      <textarea id="edit-tc-scenario" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="Short description of the scenario being tested"></textarea>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Web / App</label>
+      <select id="edit-tc-platform" class="tc-input">
+        <option value="Web">Web</option>
+        <option value="App">App</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Pre-Condition</label>
+      <textarea id="edit-tc-precondition" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="What must be true before running this test"></textarea>
     </div>
     <div style="margin-bottom:14px">
       <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Execution Result by Environment</label>
@@ -4774,6 +4898,26 @@
       <div>
         <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Expected Result</label>
         <input id="edit-tc-expected" class="tc-input" placeholder="Expected outcome"/>
+      </div>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Test Data</label>
+      <textarea id="edit-tc-testdata" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="Values used to run this test"></textarea>
+    </div>
+    <div class="tc-manual-only" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Actual Result</label>
+        <input id="edit-tc-actual" class="tc-input" placeholder="Filled in after running the test"/>
+      </div>
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Status</label>
+        <select id="edit-tc-status" class="tc-input">
+          <option value="NOT_RUN">Not Run</option>
+          <option value="PASS">Pass</option>
+          <option value="FAIL">Fail</option>
+          <option value="HOLD">Hold</option>
+          <option value="DUPLICATE">Duplicate</option>
+        </select>
       </div>
     </div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -5801,7 +5945,7 @@
     const titles = {
       home:'Dashboard', results:'Latest Results', testcases:'Test Cases',
       export:'Reports', bugs:'All Issues', admin:'Admin',
-      testplans:'Test Plans',
+      testplans:'Test Plans', 'generate-testcase':'Generate Test Case',
       'automation-tests':'Automation Tests', 'automation-suites':'Automation Suites', 'automation-runs':'Automation Runs', 'automation-builder':'AI Recorder',
       'failed-tests':'Failed Tests', 'flaky-tests':'Flaky Tests',
       'execution-history':'Execution History', 'open-issues':'Open Issues', 'blocked-tests':'Blocked Tests',
@@ -5816,6 +5960,7 @@
     if (name === 'settings') loadSettingsFromStorage();
     if (name === 'automation-tests') renderAutomationTestsPage();
     if (name === 'automation-builder') { loadAiRecorderBlocks(); loadAiRecorderReviewQueue(); }
+    if (name === 'generate-testcase') renderGeneratedTestCases();
   }
 
   // ── Team Members ──
@@ -6968,6 +7113,26 @@
   function saveTestCases(tcs) {
     localStorage.setItem('stacktest_testcases', JSON.stringify(tcs));
   }
+  const TC_STATUS_STYLE = {
+    PASS: 'background:#e8f5e9;color:#2e7d32',
+    FAIL: 'background:#ffebee;color:#c62828',
+    NOT_RUN: 'background:#f5f5f5;color:#757575',
+    HOLD: 'background:#fff3e0;color:#e65100',
+    DUPLICATE: 'background:#e3f2fd;color:#1565c0',
+  };
+  const TC_STATUS_LABEL = { PASS: 'Pass', FAIL: 'Fail', NOT_RUN: 'Not Run', HOLD: 'Hold', DUPLICATE: 'Duplicate' };
+  function tcStatusSelectStyle(status) {
+    const c = TC_STATUS_STYLE[status] || TC_STATUS_STYLE.NOT_RUN;
+    return `${c};padding:5px 8px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid transparent;cursor:pointer`;
+  }
+  function updateTcStatus(i, status) {
+    const tcs = loadTestCases();
+    if (!tcs[i]) return;
+    tcs[i].status = status;
+    saveTestCases(tcs);
+    renderTestCases();
+    renderDashboard();
+  }
   function renderTestCases() {
     const allTcs = loadTestCases();
     const activeProject = selectedProjectName();
@@ -6978,7 +7143,7 @@
       const msg = activeProject
         ? `No test cases tagged to "${activeProject}" yet. Add one above with that project name.`
         : 'No test cases yet. Add one above or import a CSV.';
-      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="16" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
       updateTcSelectionUi();
       return;
     }
@@ -6987,15 +7152,23 @@
       const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:#555;font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
       const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:#bbb">—</span>';
       const isAutomation = tc.type === 'automation';
+      const status = tc.status || 'NOT_RUN';
+      const dash = v => v ? v : '<span style="color:#bbb">—</span>';
       return `<tr>
         <td><input type="checkbox" class="tc-row-check" onchange="toggleTcSelect('${tc.id}', this.checked)" ${selectedTcIds.has(tc.id) ? 'checked' : ''}/></td>
         <td><span class="tc-pill">${tc.id}</span></td>
-        <td style="font-weight:500">${tc.title}</td>
+        <td style="font-weight:500">${tc.title}${tc.aiGenerated ? ' <span class="app-tag" style="background:#ede7f6;color:#5e35b1;font-size:9.5px;padding:1px 6px;vertical-align:middle">✨ AI</span>' : ''}</td>
         <td><span class="app-tag" style="background:${isAutomation ? '#ede7f6' : '#e8f5e9'};color:${isAutomation ? '#5e35b1' : '#2e7d32'}">${isAutomation ? '🖥 Automation' : '📝 Manual'}</span></td>
         <td><span class="app-tag">${tc.module}</span></td>
         <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
+        <td style="max-width:200px;font-size:12px;color:#555">${dash(tc.scenario)}</td>
+        <td>${isAutomation ? '<span style="color:#bbb">—</span>' : `<span class="app-tag">${tc.platform || 'Web'}</span>`}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.preCondition)}</td>
         <td style="max-width:220px">${stepsHtml}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.testData)}</td>
         <td style="color:#1565c0;font-size:12px">${tc.expected}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.actualResult)}</td>
+        <td>${isAutomation ? '<span style="color:#bbb">—</span>' : `<select style="${tcStatusSelectStyle(status)}" onchange="updateTcStatus(${i}, this.value)">${Object.keys(TC_STATUS_LABEL).map(k => `<option value="${k}" ${k === status ? 'selected' : ''}>${TC_STATUS_LABEL[k]}</option>`).join('')}</select>`}</td>
         <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
         <td>${rowActionsMenu('tc-' + i, [
           { label: '✏️ Edit', onclick: `editTC(${i})` },
@@ -7121,12 +7294,19 @@
     const priority = document.getElementById('tc-priority').value;
     const exp   = document.getElementById('tc-expected').value.trim();
     const steps = document.getElementById('tc-steps').value.trim();
+    const scenario = document.getElementById('tc-scenario').value.trim();
+    const platform = document.getElementById('tc-platform').value;
+    const preCondition = document.getElementById('tc-precondition').value.trim();
+    const testData = document.getElementById('tc-testdata').value.trim();
+    const actualResult = document.getElementById('tc-actual').value.trim();
+    const status = document.getElementById('tc-status').value;
     if (!id || !title) { alert('TC ID and Title are required'); return; }
     const type = document.getElementById('tc-type').value;
     const tcs = loadTestCases();
     const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     tcs.push({
       id, title, type, module: mod||'General', project: proj, priority, expected: exp||'—', steps, created: now,
+      scenario, platform, preCondition, testData, actualResult, status,
       results: { Staging: 'NOT_TESTED', UAT: 'NOT_TESTED', PreProd: 'NOT_TESTED' },
     });
     saveTestCases(tcs);
@@ -7140,7 +7320,9 @@
   // the button already lives on a type-specific page (Test Cases / Automation Tests).
   // Called with no args (Dashboard), it still asks the user to choose.
   function openCreateTcModal(fixedType) {
-    ['tc-id','tc-title','tc-module','tc-project','tc-expected','tc-steps'].forEach(fid => document.getElementById(fid).value = '');
+    ['tc-id','tc-title','tc-module','tc-project','tc-expected','tc-steps','tc-scenario','tc-precondition','tc-testdata','tc-actual'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('tc-platform').value = 'Web';
+    document.getElementById('tc-status').value = 'NOT_RUN';
     document.getElementById('create-tc-modal').style.display = 'flex';
     document.getElementById('create-tc-back-btn').style.display = fixedType ? 'none' : '';
     if (fixedType) {
@@ -7162,6 +7344,7 @@
     }
     document.getElementById('create-tc-step1').style.display = 'none';
     document.getElementById('create-tc-step2').style.display = 'block';
+    document.querySelectorAll('#create-tc-step2 .tc-manual-only').forEach(el => el.style.display = type === 'manual' ? '' : 'none');
     document.getElementById('tc-id').focus();
   }
   function backToTcTypeChoice() {
@@ -7187,6 +7370,12 @@
     document.getElementById('edit-tc-priority').value = tc.priority || 'P2';
     document.getElementById('edit-tc-steps').value = tc.steps || '';
     document.getElementById('edit-tc-expected').value = tc.expected === '—' ? '' : tc.expected;
+    document.getElementById('edit-tc-scenario').value = tc.scenario || '';
+    document.getElementById('edit-tc-platform').value = tc.platform || 'Web';
+    document.getElementById('edit-tc-precondition').value = tc.preCondition || '';
+    document.getElementById('edit-tc-testdata').value = tc.testData || '';
+    document.getElementById('edit-tc-actual').value = tc.actualResult || '';
+    document.getElementById('edit-tc-status').value = tc.status || 'NOT_RUN';
     const results = tc.results || {};
     document.getElementById('edit-tc-result-staging').value = results.Staging || 'NOT_TESTED';
     document.getElementById('edit-tc-result-uat').value = results.UAT || 'NOT_TESTED';
@@ -7197,6 +7386,7 @@
   function setEditTcTypeTab(type) {
     document.getElementById('edit-tc-type').value = type;
     document.querySelectorAll('#edit-tc-type-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+    document.querySelectorAll('#edit-tc-modal .tc-manual-only').forEach(el => el.style.display = type === 'manual' ? '' : 'none');
   }
   function closeEditModal() {
     document.getElementById('edit-tc-modal').style.display = 'none';
@@ -7214,6 +7404,12 @@
       priority: document.getElementById('edit-tc-priority').value,
       steps:    document.getElementById('edit-tc-steps').value.trim(),
       expected: document.getElementById('edit-tc-expected').value.trim() || '—',
+      scenario:     document.getElementById('edit-tc-scenario').value.trim(),
+      platform:     document.getElementById('edit-tc-platform').value,
+      preCondition: document.getElementById('edit-tc-precondition').value.trim(),
+      testData:     document.getElementById('edit-tc-testdata').value.trim(),
+      actualResult: document.getElementById('edit-tc-actual').value.trim(),
+      status:       document.getElementById('edit-tc-status').value,
       results: {
         Staging: document.getElementById('edit-tc-result-staging').value,
         UAT: document.getElementById('edit-tc-result-uat').value,
@@ -7228,20 +7424,22 @@
   function exportTestCases() {
     const tcs = loadTestCases();
     const wsData = [
-      ['TC ID','Title','Type','Module','Project','Steps','Expected Result','Created'],
-      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.steps||'', t.expected, t.created])
+      ['TC ID','Title','Type','Module','Project','Testcase Scenario','Web / App','Pre-Condition','Steps','Test Data','Expected Result','Actual Result','Status','Created'],
+      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.scenario||'', t.platform||'', t.preCondition||'', t.steps||'', t.testData||'', t.expected, t.actualResult||'', t.status||'NOT_RUN', t.created])
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
-    ws['!cols'] = [12,28,12,14,18,40,28,14].map(w => ({wch:w}));
+    ws['!cols'] = [12,28,12,14,18,28,10,28,40,24,28,24,10,14].map(w => ({wch:w}));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Test Cases');
     XLSX.writeFile(wb, 'test-cases.xlsx');
   }
   function downloadSampleTestCases() {
-    // No header row — importTestCases() detects a headerless file automatically.
+    // Header row included so the columns are self-explanatory; importTestCases()
+    // detects and skips it automatically (falls back to headerless files too).
     const rows = [
-      ['TC_001','Verify login with valid credentials','Manual','Login','','Open login page | Enter valid email and password | Click Login','User is redirected to the dashboard','14 Aug 2026'],
-      ['TC_002','Verify login fails with wrong password','Manual','Login','','Open login page | Enter valid email and wrong password | Click Login','Error message "Invalid credentials" is shown','14 Aug 2026'],
+      ['TC ID','Title','Type','Module','Project','Testcase Scenario','Web / App','Pre-Condition','Steps','Test Data','Expected Result','Actual Result','Status','Created'],
+      ['TC_001','Verify login with valid credentials','Manual','Login','','User logs in with a valid email/password pair','Web','User has an active account','Open login page | Enter valid email and password | Click Login','email: test@stackbox.xyz / password: Valid@123','User is redirected to the dashboard','','NOT_RUN','14 Aug 2026'],
+      ['TC_002','Verify login fails with wrong password','Manual','Login','','User attempts login with an incorrect password','Web','User has an active account','Open login page | Enter valid email and wrong password | Click Login','email: test@stackbox.xyz / password: WrongPass1','Error message "Invalid credentials" is shown','','NOT_RUN','14 Aug 2026'],
     ];
     const escape = v => {
       const s = String(v ?? '');
@@ -7279,7 +7477,8 @@
         const text = e.target.result;
         const lines = text.split('\n').filter(l => l.trim());
         // Columns match the Stored Test Cases table / sample file:
-        // TC ID, Title, Type, Module, Project, Steps, Expected Result, Created
+        // TC ID, Title, Type, Module, Project, Testcase Scenario, Web / App, Pre-Condition,
+        // Steps, Test Data, Expected Result, Actual Result, Status, Created
         // Only skip the first line if it's actually a header (sample file ships without one).
         const firstCol = (parseCsvLine(lines[0] || '')[0] || '').trim().toLowerCase();
         const dataLines = firstCol === 'tc id' ? lines.slice(1) : lines;
@@ -7296,9 +7495,15 @@
             type: clean(cols[2]).toLowerCase() === 'automation' ? 'automation' : 'manual',
             module: clean(cols[3])||'General',
             project: clean(cols[4])||'',
-            steps: clean(cols[5])||'',
-            expected: clean(cols[6])||'—',
-            created: clean(cols[7]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+            scenario: clean(cols[5])||'',
+            platform: clean(cols[6])||'Web',
+            preCondition: clean(cols[7])||'',
+            steps: clean(cols[8])||'',
+            testData: clean(cols[9])||'',
+            expected: clean(cols[10])||'—',
+            actualResult: clean(cols[11])||'',
+            status: clean(cols[12])||'NOT_RUN',
+            created: clean(cols[13]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
           });
           added++;
         });
@@ -7310,6 +7515,159 @@
     };
     reader.readAsText(file);
     input.value = '';
+  }
+
+  // ── Generate Test Case (AI) ──
+  function fillGenTcExample(el) {
+    document.getElementById('gen-tc-description').value = el.textContent.trim();
+  }
+  let generatedTcList = []; // pending, unsaved test cases from the last generation
+  function nextTcId() {
+    const ids = loadTestCases().map(tc => tc.id).filter(Boolean);
+    let max = 0;
+    ids.forEach(id => {
+      const m = /^TC_?(\d+)$/i.exec(id.trim());
+      if (m) max = Math.max(max, parseInt(m[1], 10));
+    });
+    return 'TC_' + String(max + 1).padStart(3, '0');
+  }
+  async function generateTestCasesFromScenario() {
+    const description = document.getElementById('gen-tc-description').value.trim();
+    const errEl = document.getElementById('gen-tc-error');
+    errEl.style.display = 'none';
+    if (!description) { errEl.textContent = 'Describe the scenario, module, or feature first.'; errEl.style.display = 'block'; return; }
+    const module = document.getElementById('gen-tc-module').value.trim();
+    const project = document.getElementById('gen-tc-project').value.trim() || selectedProjectName() || '';
+    const btn = document.getElementById('gen-tc-btn');
+    btn.disabled = true; btn.textContent = '✨ Generating…';
+    try {
+      const { testCases } = await api('/generate-testcase', { method: 'POST', body: JSON.stringify({ description, module }) });
+      generatedTcList = testCases.map(tc => ({ ...tc, steps: (tc.steps || []).join('\n'), module: module || 'General', project }));
+      renderGeneratedTestCases();
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = '✨ Generate Test Cases';
+    }
+  }
+  function updateGeneratedTc(i, field, value) {
+    if (!generatedTcList[i]) return;
+    generatedTcList[i][field] = value;
+  }
+  function renderGeneratedTestCases() {
+    const wrap = document.getElementById('gen-tc-results-wrap');
+    const list = document.getElementById('gen-tc-results');
+    if (!wrap || !list) return;
+    if (!generatedTcList.length) { wrap.style.display = 'none'; list.innerHTML = ''; return; }
+    wrap.style.display = 'block';
+    document.getElementById('gen-tc-count').textContent = generatedTcList.length;
+    const esc = s => String(s || '').replace(/"/g, '&quot;');
+    list.innerHTML = generatedTcList.map((tc, i) => `
+      <div class="table-card" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+          <input value="${esc(tc.title)}" oninput="updateGeneratedTc(${i},'title',this.value)" class="tc-input" style="font-weight:600;font-size:13.5px"/>
+          <div style="display:flex;gap:8px;flex-shrink:0">
+            <button onclick="saveGeneratedTestCase(${i})" class="btn-v3-primary" style="white-space:nowrap">💾 Save</button>
+            <button onclick="discardGeneratedTestCase(${i})" class="btn-v3-secondary" style="white-space:nowrap">Discard</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <input id="gen-tc-refine-${i}" placeholder="Optional: tell AI what to change (e.g. add more edge cases)" class="tc-input" style="flex:1;font-size:12px"/>
+          <button id="gen-tc-regen-${i}" onclick="regenerateGeneratedTestCase(${i})" class="btn-v3-secondary" style="white-space:nowrap">🔄 Regenerate</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Web / App</label>
+            <select class="tc-input" onchange="updateGeneratedTc(${i},'platform',this.value)">
+              ${['Web','App','Both'].map(p => `<option value="${p}" ${p===tc.platform?'selected':''}>${p}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Module</label>
+            <input value="${esc(tc.module)}" oninput="updateGeneratedTc(${i},'module',this.value)" class="tc-input"/>
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Scenario</label>
+          <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'scenario',this.value)">${tc.scenario||''}</textarea>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Pre-Condition</label>
+          <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'preCondition',this.value)">${tc.preCondition||''}</textarea>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Steps (one per line)</label>
+          <textarea class="tc-input" rows="4" style="resize:vertical" oninput="updateGeneratedTc(${i},'steps',this.value)">${tc.steps||''}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Test Data</label>
+            <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'testData',this.value)">${tc.testData||''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Expected Result</label>
+            <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'expected',this.value)">${tc.expected||''}</textarea>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  async function regenerateGeneratedTestCase(i) {
+    const tc = generatedTcList[i];
+    if (!tc) return;
+    const refineInput = document.getElementById('gen-tc-refine-' + i);
+    const instruction = refineInput ? refineInput.value.trim() : '';
+    const description = [
+      'Existing test case:',
+      `Title: ${tc.title}`,
+      `Scenario: ${tc.scenario}`,
+      `Pre-Condition: ${tc.preCondition}`,
+      `Steps: ${tc.steps}`,
+      `Test Data: ${tc.testData}`,
+      `Expected Result: ${tc.expected}`,
+      `Requested change: ${instruction || 'Make it more thorough — sharpen the wording and add missing edge-case coverage.'}`,
+    ].join('\n');
+    const btn = document.getElementById('gen-tc-regen-' + i);
+    if (btn) { btn.disabled = true; btn.textContent = '🔄 Regenerating…'; }
+    try {
+      const { testCases } = await api('/generate-testcase', { method: 'POST', body: JSON.stringify({ description, module: tc.module, count: 1 }) });
+      const fresh = testCases[0];
+      generatedTcList[i] = { ...fresh, steps: (fresh.steps || []).join('\n'), module: tc.module, project: tc.project };
+      renderGeneratedTestCases();
+    } catch (e) {
+      alert('Regenerate failed: ' + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = '🔄 Regenerate'; }
+    }
+  }
+  function saveGeneratedTestCase(i) {
+    const tc = generatedTcList[i];
+    if (!tc) return;
+    const tcs = loadTestCases();
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    tcs.push({
+      id: nextTcId(), title: tc.title || 'Untitled test case', type: 'manual',
+      module: tc.module || 'General', project: tc.project || '', priority: 'P2',
+      expected: tc.expected || '—', steps: tc.steps || '', created: now,
+      scenario: tc.scenario || '', platform: tc.platform || 'Web',
+      preCondition: tc.preCondition || '', testData: tc.testData || '',
+      actualResult: '', status: 'NOT_RUN', aiGenerated: true,
+      results: { Staging: 'NOT_TESTED', UAT: 'NOT_TESTED', PreProd: 'NOT_TESTED' },
+    });
+    saveTestCases(tcs);
+    generatedTcList.splice(i, 1);
+    renderGeneratedTestCases();
+    renderDashboard();
+  }
+  function discardGeneratedTestCase(i) {
+    generatedTcList.splice(i, 1);
+    renderGeneratedTestCases();
+  }
+  function saveAllGeneratedTestCases() {
+    if (!generatedTcList.length) return;
+    while (generatedTcList.length) saveGeneratedTestCase(0);
+    alert('✅ Saved. View them in Test Cases.');
+    showPage('testcases');
   }
 
   // ── Export ──
