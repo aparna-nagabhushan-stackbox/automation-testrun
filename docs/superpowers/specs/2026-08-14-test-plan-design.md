@@ -52,7 +52,14 @@ New JSON-file collection, following the exact pattern already used by
 server/data/testcases.json — array of:
 
 TestCase {
-  id: number
+  id: string                 // user-supplied, e.g. "TC001" — NOT an auto-increment
+                              // row id like blocks/reviewQueue use. This is the
+                              // existing "TC ID" field testers already type in,
+                              // referenced everywhere (Edit/Delete, CSV import/
+                              // export, nextTcId()'s "TC_00N" generator). Must be
+                              // unique — enforced server-side now that concurrent
+                              // users can collide on it (impossible when each
+                              // browser only saw its own localStorage).
   title: string
   type: 'manual' | 'automation'
   module: string
@@ -86,7 +93,7 @@ today's localStorage behavior); there's no admin-gating on test case CRUD
 elsewhere in the app, so Phase 1 doesn't introduce one either.
 
 - `GET /api/test-cases?module=&project=` — list, optionally filtered.
-- `POST /api/test-cases` — create.
+- `POST /api/test-cases` — create. `400` if `id` or `title` is missing; `409` if `id` is already taken by another test case.
 - `PATCH /api/test-cases/:id` — update (including `status`/`results`, i.e.
   what today's Edit modal and the inline Status dropdown write).
 - `DELETE /api/test-cases/:id` — delete.
@@ -153,7 +160,7 @@ Feature {
   endDate: string
   dependsOnFeatureId: number | null   // another feature's id, same plan
   blockedReason: string | null        // manual block; null = not manually blocked
-  testCaseIds: number[]        // references into Phase 1's testcases.json
+  testCaseIds: string[]        // references TestCase.id (string) in Phase 1's testcases.json
   createdAt: string
 }
 ```
