@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>StackTest</title>
+  <title>Stackbox Test</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <style>
@@ -535,7 +535,7 @@
       <img src="data:image/png;base64,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" alt="Stackbox" class="brand-logo-img"/>
     </div>
     <div class="hero">
-      <h1>Welcome to<br/>StackTest</h1>
+      <h1>Welcome to<br/>Stackbox Test</h1>
       <p>Your central place to track, review and analyse automated test results across all applications.</p>
     </div>
     <div class="footer-note">Powered by Playwright &mdash; &copy; 2026</div>
@@ -588,7 +588,7 @@
 <div id="app">
   <div class="sidebar" id="app-sidebar">
     <div class="sidebar-brand">
-      <h1>StackTest</h1>
+      <h1>Stackbox Test</h1>
       <div class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebarRail()"><span class="toggle-arrow"></span></div>
     </div>
     <nav class="sidebar-nav">
@@ -628,6 +628,10 @@
             AI Recorder
           </div>
         </div>
+      </div>
+
+      <div class="nav-item" onclick="showPage('testcases-generic')" id="nav-testcases-generic">
+        <span class="nav-icon">📄</span> <span class="nav-label">Test Cases</span>
       </div>
 
       <div class="nav-item" onclick="showPage('bugs')" id="nav-bugs">
@@ -3915,6 +3919,30 @@
         </div>
       </div>
 
+      <!-- GENERIC TEST CASES PAGE — same sheet as Manual Test Cases, minus the type tag -->
+      <div class="page" id="page-testcases-generic">
+        <div class="table-card">
+          <div class="table-card-header">
+            <h3>Test Cases</h3>
+            <div style="display:flex;gap:8px">
+              <button id="gtc-delete-selected-btn" onclick="deleteSelectedGenericTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="gtc-selected-count">0</span>)</button>
+              <button onclick="openCreateGenericTcModal()" class="btn-v3-primary">+ Create Test Case</button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th><input type="checkbox" id="gtc-select-all" onchange="toggleSelectAllGenericTc(this.checked)"/></th>
+                <th>TC ID</th><th>Title</th><th>Module</th><th>Project</th><th>Scenario</th>
+                <th>Web / App</th><th>Pre-Condition</th><th>Steps</th><th>Test Data</th>
+                <th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Created</th><th>Action</th>
+              </tr></thead>
+              <tbody id="generic-tc-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- EXPORT PAGE -->
       <div class="page" id="page-export">
         <div class="table-card" style="max-width:480px;margin:0 auto;text-align:center;padding:48px 40px">
@@ -4201,7 +4229,7 @@
             <div class="table-card-header"><h3>Record in a new window</h3></div>
             <div style="padding:20px">
               <div class="settings-card-sub" style="margin-bottom:16px">
-                Opens a real Chromium window on <b>this machine</b> (wherever the StackTest server is running) using Playwright's own recorder — better selector quality, but it's a separate window, not your current tab. Click around the site like a normal user. Close that browser window (or click Stop) when you're done and the recorded code shows up below. Your login carries over between recordings.
+                Opens a real Chromium window on <b>this machine</b> (wherever the Stackbox Test server is running) using Playwright's own recorder — better selector quality, but it's a separate window, not your current tab. Click around the site like a normal user. Close that browser window (or click Stop) when you're done and the recorded code shows up below. Your login carries over between recordings.
               </div>
               <div class="settings-field">
                 <label>URL to record against</label>
@@ -4308,6 +4336,18 @@
 
           <div class="integ-card">
             <div class="integ-card-top">
+              <div><div class="integ-title">Jira (XRay export)</div></div>
+              <div class="integ-icon" style="background:#e3ecfb"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjY4NEZGIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+SmlyYTwvdGl0bGU+PHBhdGggZD0iTTExLjU3MSAxMS41MTNIMGE1LjIxOCA1LjIxOCAwIDAgMCA1LjIzMiA1LjIxNWgyLjEzdjIuMDU3QTUuMjE1IDUuMjE1IDAgMCAwIDEyLjU3NSAyNFYxMi41MThhMS4wMDUgMS4wMDUgMCAwIDAtMS4wMDUtMS4wMDV6bTUuNzIzLTUuNzU2SDUuNzM2YTUuMjE1IDUuMjE1IDAgMCAwIDUuMjE1IDUuMjE0aDIuMTI5djIuMDU4YTUuMjE4IDUuMjE4IDAgMCAwIDUuMjE1IDUuMjE0VjYuNzU4YTEuMDAxIDEuMDAxIDAgMCAwLTEuMDAxLTEuMDAxek0yMy4wMTMgMEgxMS40NTVhNS4yMTUgNS4yMTUgMCAwIDAgNS4yMTUgNS4yMTVoMi4xMjl2Mi4wNTdBNS4yMTUgNS4yMTUgMCAwIDAgMjQgMTIuNDgzVjEuMDA1QTEuMDAxIDEuMDAxIDAgMCAwIDIzLjAxMyAwWiIvPjwvc3ZnPg==" width="24" height="24" alt="Jira"/></div>
+            </div>
+            <div class="integ-desc">Jira integration allows you to export your Test Cases to Xray &amp; other issue trackers.</div>
+            <div class="integ-card-bottom">
+              <span class="tc-pill">⚡ XRAY</span>
+              <span class="integ-status integ-status-soon">Coming soon</span>
+            </div>
+          </div>
+
+          <div class="integ-card">
+            <div class="integ-card-top">
               <div><div class="integ-title">Microsoft Excel</div></div>
               <div class="integ-icon" style="background:#e6f4ea"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNDg2cHgiIGhlaWdodD0iNTAwcHgiIHZpZXdCb3g9IjAgMCA0ODYgNTAwIiB2ZXJzaW9uPSIxLjEiPgo8ZGVmcz4KPHJhZGlhbEdyYWRpZW50IGlkPSJyYWRpYWwwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9Ii03NDYuNjU5OTczIiBjeT0iNzgxLjQ0MDAwMiIgZng9Ii03NDYuNjU5OTczIiBmeT0iNzgxLjQ0MDAwMiIgcj0iMTMuODkiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTI4LjMyNTk1MiwtMjkuODA3NjI5LC0yMy4xMTkxNjUsMjEuOTc5ODU5LC0yNTk2LjM4OTg5MywtMzg5MDAuMzA4NTk0KSI+CjxzdG9wIG9mZnNldD0iMC4wNiIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDIxLjU2ODYyNyUsNTguNDMxMzczJSwyMi4zNTI5NDElKTtzdG9wLW9wYWNpdHk6MTsiLz4KPHN0b3Agb2Zmc2V0PSIwLjQyIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMTYuMDc4NDMxJSw0OC42Mjc0NTElLDE3LjY0NzA1OSUpO3N0b3Atb3BhY2l0eToxOyIvPgo8c3RvcCBvZmZzZXQ9IjAuNyIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDguMjM1Mjk0JSwzMy43MjU0OSUsMTAuOTgwMzkyJSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjwvcmFkaWFsR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icmFkaWFsMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSItNzczLjE5MDAwMiIgY3k9Ijc3MS4yNSIgZng9Ii03NzMuMTkwMDAyIiBmeT0iNzcxLjI1IiByPSIxMy44OSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtMTEuOTc2MTIsLTExLjU4MTM3MSwtOC45NTg1MjYsOS4yNjgwNTksLTIxNTUuMTIwMTE3LC0xNTg1OC44Nzk4ODMpIj4KPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMi43NDUwOTglLDIzLjEzNzI1NSUsNi4yNzQ1MSUpO3N0b3Atb3BhY2l0eTowLjY5ODAzOTsiLz4KPHN0b3Agb2Zmc2V0PSIwLjk5IiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMy4xMzcyNTUlLDI5LjAxOTYwOCUsNy40NTA5OCUpO3N0b3Atb3BhY2l0eTowOyIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhcjAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iNjkuNDMiIHkxPSIyMTAuMzMwMDAyIiB4Mj0iMjYwLjgzOTk5NiIgeTI9IjIxMC4zMzAwMDIiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMCw1MDIpIj4KPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMzIuMTU2ODYzJSw4MS45NjA3ODQlLDQ4LjYyNzQ1MSUpO3N0b3Atb3BhY2l0eToxOyIvPgo8c3RvcCBvZmZzZXQ9IjAuMzMiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYigyOS4wMTk2MDglLDY1LjA5ODAzOSUsMjcuODQzMTM3JSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxOTQuMzk5OTk0IiB5MT0iMzM1LjMyOTk4NyIgeDI9IjE5NC4zOTk5OTQiIHkyPSIxNjEuNjc5OTkzIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDAsNTAyKSI+CjxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDE2LjA3ODQzMSUsNTIuMTU2ODYzJSwxOC40MzEzNzMlKTtzdG9wLW9wYWNpdHk6MC4zMDE5NjE7Ii8+CjxzdG9wIG9mZnNldD0iMC41IiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMjkuMDE5NjA4JSw2NS4wOTgwMzklLDI3Ljg0MzEzNyUpO3N0b3Atb3BhY2l0eTowOyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhcjIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iODAuNDg5OTk4IiB5MT0iMjk3LjIyMDAwMSIgeDI9IjMxMS40NTAwMTIiIHkyPSI0OTcuNTQwMDA5IiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDAsNTAyKSI+CjxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDQwJSw4MS41Njg2MjclLDMyLjE1Njg2MyUpO3N0b3Atb3BhY2l0eToxOyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYig1Mi4xNTY4NjMlLDkxLjM3MjU0OSUsNDQuNzA1ODgyJSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icmFkaWFsMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSItODI0LjEwOTk4NSIgY3k9IjgxMC45ODk5OSIgZng9Ii04MjQuMTA5OTg1IiBmeT0iODEwLjk4OTk5IiByPSIxMy44OSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtOS4wMiwtMC4wMDAwMDAwMDAwMDAwMDExMDUsLTAuMDAwMDAwMDAwMDAwMDAyMzM4LDE5LjA5LC03MTIwLjM5OTkwMiwtMTUzNzguNjkwNDMpIj4KPHN0b3Agb2Zmc2V0PSIwLjI5IiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMzAuNTg4MjM1JSw3MC41ODgyMzUlLDIzLjEzNzI1NSUpO3N0b3Atb3BhY2l0eToxOyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYig0NC43MDU4ODIlLDgwJSwzOC4wMzkyMTYlKTtzdG9wLW9wYWNpdHk6MDsiLz4KPC9yYWRpYWxHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXIzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjE4Mi4xMTAwMDEiIHkxPSIzNzciIHgyPSI2OS40MyIgeTI9IjM3NyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwwLDUwMikiPgo8c3RvcCBvZmZzZXQ9IjAuMTgiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYig3NS4yOTQxMTglLDg3Ljg0MzEzNyUsNDUuODgyMzUzJSk7c3RvcC1vcGFjaXR5OjA7Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDgxLjk2MDc4NCUsOTIuMTU2ODYzJSw1OC40MzEzNzMlKTtzdG9wLW9wYWNpdHk6MTsiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJyYWRpYWwzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9Ii03NjkuMTQwMDE1IiBjeT0iODA4LjkwMDAyNCIgZng9Ii03NjkuMTQwMDE1IiBmeT0iODA4LjkwMDAyNCIgcj0iMTMuODkiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTE2LjkwNzcwMywtMTMuNjgxODE2LDEzLjY0MTEyMywtMTYuODYzNDQ5LC0yMzUyMy4zNjkxNDEsMzMwOS43MDk5NjEpIj4KPHN0b3Agb2Zmc2V0PSIwLjQ0IiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoNDcuNDUwOTglLDkxLjM3MjU0OSUsNDIuNzQ1MDk4JSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDgxLjU2ODYyNyUsOTIuMTU2ODYzJSw0Ni4yNzQ1MSUpO3N0b3Atb3BhY2l0eToxOyIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InJhZGlhbDQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjeD0iLTY3NS42NDAwMTUiIGN5PSI3OTMuMjgwMDI5IiBmeD0iLTY3NS42NDAwMTUiIGZ5PSI3OTMuMjgwMDI5IiByPSIxMy44OSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxNS45OTE5NjUsMTUuOTk3NTQ3LDQ1LjU0MTUzMywtNDUuNTQ3OTcsLTI1MzE1Ljg0OTYwOSw0NzE3OC4xNzk2ODgpIj4KPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMTIuNTQ5MDIlLDY1Ljg4MjM1MyUsMzYuODYyNzQ1JSk7c3RvcC1vcGFjaXR5OjE7Ii8+CjxzdG9wIG9mZnNldD0iMC45NCIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDMuNTI5NDEyJSwyNi42NjY2NjclLDE2LjQ3MDU4OCUpO3N0b3Atb3BhY2l0eToxOyIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InJhZGlhbDUiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjeD0iLTY1Ny42MTk5OTUiIGN5PSI4NTMuOTg5OTkiIGZ4PSItNjU3LjYxOTk5NSIgZnk9Ijg1My45ODk5OSIgcj0iMTMuODkiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMC4wMDAwMDAwMDAwMDAwMDA2ODYsMTEuMiwxMi45LC0wLjAwMDAwMDAwMDAwMDAwMDc5LC0xMDkwMi44NDk2MDksNzczNC43OTk4MDUpIj4KPHN0b3Agb2Zmc2V0PSIwLjU4IiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMjAlLDY1LjA5ODAzOSUsMzguNDMxMzczJSk7c3RvcC1vcGFjaXR5OjA7Ii8+CjxzdG9wIG9mZnNldD0iMC45NyIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDU5LjYwNzg0MyUsOTQuMTE3NjQ3JSw2OS4wMTk2MDglKTtzdG9wLW9wYWNpdHk6MC4zMDE5NjE7Ii8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPGcgaWQ9InN1cmZhY2UxIj4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjcmFkaWFsMCk7IiBkPSJNIDY5LjQyOTY4OCAxNTkuNzE4NzUgQyA2OS40Mjk2ODggMTI1LjE5OTIxOSA5Ny40MTAxNTYgOTcuMjE4NzUgMTMxLjkyMTg3NSA5Ny4yMTg3NSBMIDQ4Ni4wMTE3MTkgOTcuMjE4NzUgTCA0ODYuMDExNzE5IDQ1OC4zMjgxMjUgQyA0ODYuMDExNzE5IDQ4MS4zMzk4NDQgNDY3LjM1OTM3NSA1MDAgNDQ0LjM1MTU2MiA1MDAgTCAxNTIuNzM4MjgxIDUwMCBDIDEwNi43MzA0NjkgNTAwIDY5LjQyOTY4OCA0NjIuNjkxNDA2IDY5LjQyOTY4OCA0MTYuNjcxODc1IFogTSA2OS40Mjk2ODggMTU5LjcxODc1ICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6dXJsKCNyYWRpYWwxKTsiIGQ9Ik0gNjkuNDI5Njg4IDE1OS43MTg3NSBDIDY5LjQyOTY4OCAxMjUuMTk5MjE5IDk3LjQxMDE1NiA5Ny4yMTg3NSAxMzEuOTIxODc1IDk3LjIxODc1IEwgNDg2LjAxMTcxOSA5Ny4yMTg3NSBMIDQ4Ni4wMTE3MTkgNDU4LjMyODEyNSBDIDQ4Ni4wMTE3MTkgNDgxLjMzOTg0NCA0NjcuMzU5Mzc1IDUwMCA0NDQuMzUxNTYyIDUwMCBMIDE1Mi43MzgyODEgNTAwIEMgMTA2LjczMDQ2OSA1MDAgNjkuNDI5Njg4IDQ2Mi42OTE0MDYgNjkuNDI5Njg4IDQxNi42NzE4NzUgWiBNIDY5LjQyOTY4OCAxNTkuNzE4NzUgIi8+CjxwYXRoIHN0eWxlPSIgc3Ryb2tlOm5vbmU7ZmlsbC1ydWxlOm5vbnplcm87ZmlsbDp1cmwoI2xpbmVhcjApOyIgZD0iTSA2OS40Mjk2ODggMjI5LjE3MTg3NSBDIDY5LjQyOTY4OCAxOTQuNjQ4NDM4IDk3LjQxMDE1NiAxNjYuNjcxODc1IDEzMS45MjE4NzUgMTY2LjY3MTg3NSBMIDMxOS4zNzg5MDYgMTY2LjY3MTg3NSBDIDI5Ni4zNzEwOTQgMTY2LjY3MTg3NSAyNzcuNzE4NzUgMTg1LjMyODEyNSAyNzcuNzE4NzUgMjA4LjMzOTg0NCBMIDI3Ny43MTg3NSAyOTEuNjcxODc1IEMgMjc3LjcxODc1IDMxNC42Nzk2ODggMjU5LjA3MDMxMiAzMzMuMzM5ODQ0IDIzNi4wNTg1OTQgMzMzLjMzOTg0NCBMIDE1Mi43NSAzMzMuMzM5ODQ0IEMgMTA2LjczODI4MSAzMzMuMzM5ODQ0IDY5LjQ0MTQwNiAzNzAuNjQ4NDM4IDY5LjQ0MTQwNiA0MTYuNjcxODc1IEwgNjkuNDQxNDA2IDIyOS4xNzE4NzUgWiBNIDY5LjQyOTY4OCAyMjkuMTcxODc1ICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6dXJsKCNsaW5lYXIxKTsiIGQ9Ik0gNjkuNDI5Njg4IDIyOS4xNzE4NzUgQyA2OS40Mjk2ODggMTk0LjY0ODQzOCA5Ny40MTAxNTYgMTY2LjY3MTg3NSAxMzEuOTIxODc1IDE2Ni42NzE4NzUgTCAzMTkuMzc4OTA2IDE2Ni42NzE4NzUgQyAyOTYuMzcxMDk0IDE2Ni42NzE4NzUgMjc3LjcxODc1IDE4NS4zMjgxMjUgMjc3LjcxODc1IDIwOC4zMzk4NDQgTCAyNzcuNzE4NzUgMjkxLjY3MTg3NSBDIDI3Ny43MTg3NSAzMTQuNjc5Njg4IDI1OS4wNzAzMTIgMzMzLjMzOTg0NCAyMzYuMDU4NTk0IDMzMy4zMzk4NDQgTCAxNTIuNzUgMzMzLjMzOTg0NCBDIDEwNi43MzgyODEgMzMzLjMzOTg0NCA2OS40NDE0MDYgMzcwLjY0ODQzOCA2OS40NDE0MDYgNDE2LjY3MTg3NSBMIDY5LjQ0MTQwNiAyMjkuMTcxODc1IFogTSA2OS40Mjk2ODggMjI5LjE3MTg3NSAiLz4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjbGluZWFyMik7IiBkPSJNIDY5LjQyOTY4OCA4My4zMjgxMjUgQyA2OS40Mjk2ODggMzcuMzA4NTk0IDEwNi43MzA0NjkgMCAxNTIuNzM4MjgxIDAgTCAzMTkuMzcxMDk0IDAgTCAzMTkuMzcxMDk0IDE2Ni42NzE4NzUgTCAxNTIuNzM4MjgxIDE2Ni42NzE4NzUgQyAxMDYuNzMwNDY5IDE2Ni42NzE4NzUgNjkuNDI5Njg4IDIwMy45ODA0NjkgNjkuNDI5Njg4IDI1MCBaIE0gNjkuNDI5Njg4IDgzLjMyODEyNSAiLz4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjcmFkaWFsMik7IiBkPSJNIDY5LjQyOTY4OCA4My4zMjgxMjUgQyA2OS40Mjk2ODggMzcuMzA4NTk0IDEwNi43MzA0NjkgMCAxNTIuNzM4MjgxIDAgTCAzMTkuMzcxMDk0IDAgTCAzMTkuMzcxMDk0IDE2Ni42NzE4NzUgTCAxNTIuNzM4MjgxIDE2Ni42NzE4NzUgQyAxMDYuNzMwNDY5IDE2Ni42NzE4NzUgNjkuNDI5Njg4IDIwMy45ODA0NjkgNjkuNDI5Njg4IDI1MCBaIE0gNjkuNDI5Njg4IDgzLjMyODEyNSAiLz4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjbGluZWFyMyk7IiBkPSJNIDY5LjQyOTY4OCA4My4zMjgxMjUgQyA2OS40Mjk2ODggMzcuMzA4NTk0IDEwNi43MzA0NjkgMCAxNTIuNzM4MjgxIDAgTCAzMTkuMzcxMDk0IDAgTCAzMTkuMzcxMDk0IDE2Ni42NzE4NzUgTCAxNTIuNzM4MjgxIDE2Ni42NzE4NzUgQyAxMDYuNzMwNDY5IDE2Ni42NzE4NzUgNjkuNDI5Njg4IDIwMy45ODA0NjkgNjkuNDI5Njg4IDI1MCBaIE0gNjkuNDI5Njg4IDgzLjMyODEyNSAiLz4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjcmFkaWFsMyk7IiBkPSJNIDMxOS4zNzEwOTQgMCBMIDQ0NC4zMzk4NDQgMCBDIDQ2Ny4zNDc2NTYgMCA0ODYgMTguNjUyMzQ0IDQ4NiA0MS42NjAxNTYgTCA0ODYgMTI1LjAxMTcxOSBDIDQ4NiAxNDguMDE5NTMxIDQ2Ny4zNDc2NTYgMTY2LjY3MTg3NSA0NDQuMzM5ODQ0IDE2Ni42NzE4NzUgTCAzMTkuMzcxMDk0IDE2Ni42NzE4NzUgQyAyOTYuMzYzMjgxIDE2Ni42NzE4NzUgMjc3LjcxMDkzOCAxNDguMDE5NTMxIDI3Ny43MTA5MzggMTI1LjAxMTcxOSBMIDI3Ny43MTA5MzggNDEuNjYwMTU2IEMgMjc3LjcxMDkzOCAxOC42NTIzNDQgMjk2LjM2MzI4MSAwIDMxOS4zNzEwOTQgMCBaIE0gMzE5LjM3MTA5NCAwICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6dXJsKCNyYWRpYWw0KTsiIGQ9Ik0gNDUuMTI4OTA2IDIzNi4xMDkzNzUgTCAxNzcuMDM5MDYyIDIzNi4xMDkzNzUgQyAyMDEuOTY0ODQ0IDIzNi4xMDkzNzUgMjIyLjE3MTg3NSAyNTYuMzE2NDA2IDIyMi4xNzE4NzUgMjgxLjIzODI4MSBMIDIyMi4xNzE4NzUgNDEzLjE5OTIxOSBDIDIyMi4xNzE4NzUgNDM4LjEyNSAyMDEuOTY0ODQ0IDQ1OC4zMjgxMjUgMTc3LjAzOTA2MiA0NTguMzI4MTI1IEwgNDUuMTI4OTA2IDQ1OC4zMjgxMjUgQyAyMC4yMDcwMzEgNDU4LjMyODEyNSAwIDQzOC4xMjUgMCA0MTMuMTk5MjE5IEwgMCAyODEuMjM4MjgxIEMgMCAyNTYuMzE2NDA2IDIwLjIwNzAzMSAyMzYuMTA5Mzc1IDQ1LjEyODkwNiAyMzYuMTA5Mzc1IFogTSA0NS4xMjg5MDYgMjM2LjEwOTM3NSAiLz4KPHBhdGggc3R5bGU9IiBzdHJva2U6bm9uZTtmaWxsLXJ1bGU6bm9uemVybztmaWxsOnVybCgjcmFkaWFsNSk7IiBkPSJNIDQ1LjEyODkwNiAyMzYuMTA5Mzc1IEwgMTc3LjAzOTA2MiAyMzYuMTA5Mzc1IEMgMjAxLjk2NDg0NCAyMzYuMTA5Mzc1IDIyMi4xNzE4NzUgMjU2LjMxNjQwNiAyMjIuMTcxODc1IDI4MS4yMzgyODEgTCAyMjIuMTcxODc1IDQxMy4xOTkyMTkgQyAyMjIuMTcxODc1IDQzOC4xMjUgMjAxLjk2NDg0NCA0NTguMzI4MTI1IDE3Ny4wMzkwNjIgNDU4LjMyODEyNSBMIDQ1LjEyODkwNiA0NTguMzI4MTI1IEMgMjAuMjA3MDMxIDQ1OC4zMjgxMjUgMCA0MzguMTI1IDAgNDEzLjE5OTIxOSBMIDAgMjgxLjIzODI4MSBDIDAgMjU2LjMxNjQwNiAyMC4yMDcwMzEgMjM2LjEwOTM3NSA0NS4xMjg5MDYgMjM2LjEwOTM3NSBaIE0gNDUuMTI4OTA2IDIzNi4xMDkzNzUgIi8+CjxwYXRoIHN0eWxlPSIgc3Ryb2tlOm5vbmU7ZmlsbC1ydWxlOm5vbnplcm87ZmlsbDpyZ2IoMTAwJSwxMDAlLDEwMCUpO2ZpbGwtb3BhY2l0eToxOyIgZD0iTSAxNjkuNDgwNDY5IDQxMC43MTA5MzggTCAxMzUuMjMwNDY5IDQxMC43MTA5MzggTCAxMTMuNzMwNDY5IDM3MC4yMzgyODEgQyAxMTIuOTYwOTM4IDM2OC44MjAzMTIgMTEyLjM3MTA5NCAzNjcuNjk5MjE5IDExMS45NjA5MzggMzY2Ljg3MTA5NCBDIDExMS42MDkzNzUgMzY1Ljk4ODI4MSAxMTEuMjE4NzUgMzY0Ljk4MDQ2OSAxMTAuODA4NTk0IDM2My44NTkzNzUgTCAxMTAuNDYwOTM4IDM2My44NTkzNzUgQyAxMDkuOTI5Njg4IDM2NS4yODEyNSAxMDkuNDI5Njg4IDM2Ni40Mjk2ODggMTA4Ljk2MDkzOCAzNjcuMzA4NTk0IEMgMTA4LjQ4ODI4MSAzNjguMTk5MjE5IDEwNy45Mjk2ODggMzY5LjI4OTA2MiAxMDcuMjgxMjUgMzcwLjU4OTg0NCBMIDg0Ljk4MDQ2OSA0MTAuNjk5MjE5IEwgNTIuNjc5Njg4IDQxMC42OTkyMTkgTCA5MS40NDE0MDYgMzQ3LjEyMTA5NCBMIDU1LjMzOTg0NCAyODMuNzE4NzUgTCA4OS4xNDA2MjUgMjgzLjcxODc1IEwgMTA4LjI1IDMxOS44NTE1NjIgQyAxMDkuMDE5NTMxIDMyMS4zMjgxMjUgMTA5LjY3MTg3NSAzMjIuNjI4OTA2IDExMC4xOTkyMTkgMzIzLjc1IEMgMTEwLjc4OTA2MiAzMjQuODA4NTk0IDExMS4zNzg5MDYgMzI2LjA3ODEyNSAxMTEuOTY4NzUgMzI3LjU1ODU5NCBMIDExMi4zMjAzMTIgMzI3LjU1ODU5NCBDIDExMy4xNDA2MjUgMzI1Ljg1MTU2MiAxMTMuNzg5MDYyIDMyNC40ODgyODEgMTE0LjI2OTUzMSAzMjMuNDg4MjgxIEMgMTE0LjgwMDc4MSAzMjIuNDg4MjgxIDExNS41MTE3MTkgMzIxLjE2MDE1NiAxMTYuMzkwNjI1IDMxOS41MTE3MTkgTCAxMzYuMjEwOTM4IDI4My43MzgyODEgTCAxNjguNDIxODc1IDI4My43MzgyODEgTCAxMzEuNzg5MDYyIDM0Ni4xNzE4NzUgTCAxNjkuNDg4MjgxIDQxMC43MTg3NSBaIE0gMTY5LjQ4MDQ2OSA0MTAuNzEwOTM4ICIvPgo8L2c+Cjwvc3ZnPgo=" width="24" height="24" alt="Microsoft Excel"/></div>
             </div>
@@ -4324,6 +4364,18 @@
               <div class="integ-icon" style="background:#f3ecfb"><img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAwIDMwMCIgd2lkdGg9IjE2NjciIGhlaWdodD0iMjUwMCI+PHN0eWxlPi5zdDB7ZmlsbDojMGFjZjgzfS5zdDF7ZmlsbDojYTI1OWZmfS5zdDJ7ZmlsbDojZjI0ZTFlfS5zdDN7ZmlsbDojZmY3MjYyfS5zdDR7ZmlsbDojMWFiY2ZlfTwvc3R5bGU+PHRpdGxlPkZpZ21hLmxvZ288L3RpdGxlPjxkZXNjPkNyZWF0ZWQgdXNpbmcgRmlnbWE8L2Rlc2M+PHBhdGggaWQ9InBhdGgwX2ZpbGwiIGNsYXNzPSJzdDAiIGQ9Ik01MCAzMDBjMjcuNiAwIDUwLTIyLjQgNTAtNTB2LTUwSDUwYy0yNy42IDAtNTAgMjIuNC01MCA1MHMyMi40IDUwIDUwIDUweiIvPjxwYXRoIGlkPSJwYXRoMV9maWxsIiBjbGFzcz0ic3QxIiBkPSJNMCAxNTBjMC0yNy42IDIyLjQtNTAgNTAtNTBoNTB2MTAwSDUwYy0yNy42IDAtNTAtMjIuNC01MC01MHoiLz48cGF0aCBpZD0icGF0aDFfZmlsbF8xXyIgY2xhc3M9InN0MiIgZD0iTTAgNTBDMCAyMi40IDIyLjQgMCA1MCAwaDUwdjEwMEg1MEMyMi40IDEwMCAwIDc3LjYgMCA1MHoiLz48cGF0aCBpZD0icGF0aDJfZmlsbCIgY2xhc3M9InN0MyIgZD0iTTEwMCAwaDUwYzI3LjYgMCA1MCAyMi40IDUwIDUwcy0yMi40IDUwLTUwIDUwaC01MFYweiIvPjxwYXRoIGlkPSJwYXRoM19maWxsIiBjbGFzcz0ic3Q0IiBkPSJNMjAwIDE1MGMwIDI3LjYtMjIuNCA1MC01MCA1MHMtNTAtMjIuNC01MC01MCAyMi40LTUwIDUwLTUwIDUwIDIyLjQgNTAgNTB6Ii8+PC9zdmc+" width="22" height="24" alt="Figma"/></div>
             </div>
             <div class="integ-desc">Translate Figma designs into well-written test cases using AI.</div>
+            <div class="integ-card-bottom">
+              <span></span>
+              <span class="integ-status integ-status-soon">Coming soon</span>
+            </div>
+          </div>
+
+          <div class="integ-card">
+            <div class="integ-card-top">
+              <div><div class="integ-title">BrowserStack</div></div>
+              <div class="integ-icon" style="background:#fdeeea"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGc+PHBhdGggZD0ibTMxLjAzNDQ4MjggMTUuNTE3MjQxNGMwIDguNTcwMTg4Mi02Ljk0NzA1MzIgMTUuNTE3MjQxNC0xNS41MTcyNDE0IDE1LjUxNzI0MTQtOC41Njk4OTQyMyAwLTE1LjUxNzI0MTQtNi45NDcwNTMyLTE1LjUxNzI0MTQtMTUuNTE3MjQxNCAwLTguNTY5ODk0MjMgNi45NDczNDcxNy0xNS41MTcyNDE0IDE1LjUxNzI0MTQtMTUuNTE3MjQxNCA4LjU3MDE4ODIgMCAxNS41MTcyNDE0IDYuOTQ3MzQ3MTcgMTUuNTE3MjQxNCAxNS41MTcyNDE0IiBmaWxsPSIjZWNiMzYwIj48L3BhdGg+PHBhdGggZD0ibTI2Ljg5NjU1MTcgMTMuOTY1NTE3MmMwIDcuNzEyODg0Ny02LjAyMTMzNjkgMTMuOTY1NTE3My0xMy40NDgyNzU4IDEzLjk2NTUxNzMtNy40MjcyMjIyNyAwLTEzLjQ0ODI3NTktNi4yNTI2MzI2LTEzLjQ0ODI3NTktMTMuOTY1NTE3MyAwLTcuNzEyODg0NTkgNi4wMjEwNTM2My0xMy45NjU1MTcyIDEzLjQ0ODI3NTktMTMuOTY1NTE3MiA3LjQyNjkzODkgMCAxMy40NDgyNzU4IDYuMjUyNjMyNjEgMTMuNDQ4Mjc1OCAxMy45NjU1MTcyIiBmaWxsPSIjZDc2ODM1Ij48L3BhdGg+PHBhdGggZD0ibTI3LjkzMTAzNDUgMTIuNDEzNjQyMmMwIDYuODU2MDY1Mi01LjMyNjMwMDYgMTIuNDEzOTQ0LTExLjg5Njk4NTUgMTIuNDEzOTQ0LTYuNTY5ODE3NCAwLTExLjg5NjExNzk3LTUuNTU3ODc4OC0xMS44OTYxMTc5Ny0xMi40MTM5NDQgMC02Ljg1NTc2MzM1IDUuMzI2MzAwNTctMTIuNDEzNjQyMiAxMS44OTYxMTc5Ny0xMi40MTM2NDIyIDYuNTcwNjg0OSAwIDExLjg5Njk4NTUgNS41NTc4Nzg4NSAxMS44OTY5ODU1IDEyLjQxMzY0MjIiIGZpbGw9IiNkMzNhNDEiPjwvcGF0aD48cGF0aCBkPSJtMjYuODk2NTUxNyAxMy40NDg0MjYyYzAgNi4yODQzMDU0LTQuODYzMjcwMyAxMS4zNzkxNi0xMC44NjIyMTI0IDExLjM3OTE2LTUuOTk4OTQyMiAwLTEwLjg2MTkyNTUxLTUuMDk0ODU0Ni0xMC44NjE5MjU1MS0xMS4zNzkxNiAwLTYuMjg0OTA2NzcgNC44NjI5ODMzMS0xMS4zNzk0NjA2OCAxMC44NjE5MjU1MS0xMS4zNzk0NjA2OCA1Ljk5ODk0MjEgMCAxMC44NjIyMTI0IDUuMDk0NTUzOTEgMTAuODYyMjEyNCAxMS4zNzk0NjA2OCIgZmlsbD0iI2I2Y2I0NiI+PC9wYXRoPjxwYXRoIGQ9Im0yNS44NjIwNjkgMTQuNDgyNjExMWMwIDUuNzEzMzEwNi00LjYzMTY2NDUgMTAuMzQ0OTc1MS0xMC4zNDQ5NzUxIDEwLjM0NDk3NTEtNS43MTMwMTU2NSAwLTEwLjM0NDY4MDExLTQuNjMxNjY0NS0xMC4zNDQ2ODAxMS0xMC4zNDQ5NzUxIDAtNS43MTMzMTA2NSA0LjYzMTY2NDQ2LTEwLjM0NDY4MDA3IDEwLjM0NDY4MDExLTEwLjM0NDY4MDA3IDUuNzEzMzEwNiAwIDEwLjM0NDk3NTEgNC42MzEzNjk0MiAxMC4zNDQ5NzUxIDEwLjM0NDY4MDA3IiBmaWxsPSIjNjZhZDRhIj48L3BhdGg+PHBhdGggZD0ibTIxLjcyNDEzNzkgMTIuNDEzNzkzMWMwIDQuNTcwNjI0Ny0zLjcwNTIzNzMgOC4yNzU4NjIxLTguMjc1ODYyIDguMjc1ODYyMS00LjU3MDkwNTE1IDAtOC4yNzU4NjIxMS0zLjcwNTIzNzQtOC4yNzU4NjIxMS04LjI3NTg2MjEgMC00LjU3MDYyNDY5IDMuNzA0OTU2OTYtOC4yNzU4NjIwNyA4LjI3NTg2MjExLTguMjc1ODYyMDcgNC41NzA2MjQ3IDAgOC4yNzU4NjIgMy43MDUyMzczOCA4LjI3NTg2MiA4LjI3NTg2MjA3IiBmaWxsPSIjYWVkN2RjIj48L3BhdGg+PHBhdGggZD0ibTIyLjc1ODYyMDcgMTEuMzc5MzEwM2MwIDMuOTk5MTc2NC0zLjI0MTk3NTUgNy4yNDEzNzk0LTcuMjQxNTI1OSA3LjI0MTM3OTQtMy45OTk1NTA1IDAtNy4yNDEyMzI3My0zLjI0MjIwMy03LjI0MTIzMjczLTcuMjQxMzc5NCAwLTMuOTk5NDY5NDUgMy4yNDE2ODIyMy03LjI0MTM3OTI3IDcuMjQxMjMyNzMtNy4yNDEzNzkyNyAzLjk5OTU1MDQgMCA3LjI0MTUyNTkgMy4yNDE5MDk4MiA3LjI0MTUyNTkgNy4yNDEzNzkyNyIgZmlsbD0iIzViYjFjZiI+PC9wYXRoPjxwYXRoIGQ9Im0yMi43NTg2MjA3IDExLjg5NjM5NjdjMCAzLjcxMzY0MjItMi43Nzg4NDAyIDYuNzI0MjkzLTYuMjA2ODk2NiA2LjcyNDI5M3MtNi4yMDY4OTY1LTMuMDEwNjUwOC02LjIwNjg5NjUtNi43MjQyOTNjMC0zLjcxMzMzMjE3IDIuNzc4ODQwMS02LjcyMzk4MjkxIDYuMjA2ODk2NS02LjcyMzk4MjkxczYuMjA2ODk2NiAzLjAxMDY1MDc0IDYuMjA2ODk2NiA2LjcyMzk4MjkxIiBmaWxsPSIjMjVhOGMzIj48L3BhdGg+PHBhdGggZD0ibTIwLjY4OTY1NTIgMTIuOTMwODgxM2MwIDMuMTQyMzUyNC0yLjMxNTg2OSA1LjY4OTgwODQtNS4xNzI1NTMxIDUuNjg5ODA4NC0yLjg1NjQwNTUgMC01LjE3MjI3NDUtMi41NDc0NTYtNS4xNzIyNzQ1LTUuNjg5ODA4NCAwLTMuMTQyMzUyNDEgMi4zMTU4NjktNS42ODk1MDE5OSA1LjE3MjI3NDUtNS42ODk1MDE5OSAyLjg1NjY4NDEgMCA1LjE3MjU1MzEgMi41NDcxNDk1OCA1LjE3MjU1MzEgNS42ODk1MDE5OSI+PC9wYXRoPjxwYXRoIGQ9Im0xNS41MTcxMDIxIDE4LjYyMDY4OTdjLTIuODU2NDA1NSAwLTUuMTcyMjc0NS0yLjU0NzQ1Ni01LjE3MjI3NDUtNS42ODk4MDg0IDAtMy4xNDIzNTI0MSAyLjMxNTg2OS01LjY4OTUwMTk5IDUuMTcyMjc0NS01LjY4OTUwMTk5IDIuODU2Njg0MSAwIDUuMTcyNTUzMSAyLjU0NzE0OTU4IDUuMTcyNTUzMSA1LjY4OTUwMTk5IDAgMy4xNDIzNTI0LTIuMzE1ODY5IDUuNjg5ODA4NC01LjE3MjU1MzEgNS42ODk4MDg0eiIgZmlsbD0iIzFiMWExOCI+PC9wYXRoPjxwYXRoIGQ9Im0xOC4zMzk1NDMyIDExLjI5MDQxNjNjLS40OTIwODExLjgyMzE5NzUtMS40NTk1NjI2IDEuMjk5MjkxLTIuMTYxMjkgMS4wNjI2NjgtLjcwMTcyNzQtLjIzNjMzODMtLjg3MTU2NzQtMS4wOTU2OTg0LS4zNzk4NjU0LTEuOTE5MTgwNy40OTIwODExLS44MjM0ODIzMSAxLjQ1OTU2MjYtMS4yOTkyOTEwNyAyLjE2MTI5LTEuMDYyOTUyNzlzLjg3MTU2NzQgMS4wOTU2OTgzOS4zNzk4NjU0IDEuOTE5NDY1NDkiIGZpbGw9IiNmZmZmZmUiPjwvcGF0aD48L2c+PC9zdmc+" width="24" height="24" alt="BrowserStack"/></div>
+            </div>
+            <div class="integ-desc">Run your automation tests on BrowserStack's cloud infrastructure with real browsers and devices.</div>
             <div class="integ-card-bottom">
               <span></span>
               <span class="integ-status integ-status-soon">Coming soon</span>
@@ -4437,7 +4489,7 @@
             <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Role</div>
             <button onclick="closeCreateRoleModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
-          <div style="font-size:12.5px;color:#888;margin-bottom:14px">Custom roles are a label only for now — they don't yet unlock or restrict anything in StackTest beyond the Admin/non-Admin split.</div>
+          <div style="font-size:12.5px;color:#888;margin-bottom:14px">Custom roles are a label only for now — they don't yet unlock or restrict anything in Stackbox Test beyond the Admin/non-Admin split.</div>
           <input type="text" id="create-role-name" placeholder="Role name" class="tc-input" style="margin-bottom:10px"/>
           <textarea id="create-role-desc" placeholder="Description" class="tc-input" rows="2" style="margin-bottom:14px"></textarea>
           <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -4804,6 +4856,93 @@
         <button onclick="closeCreateTcModal()" class="btn-v3-secondary">Cancel</button>
         <button onclick="addTestCase()" class="btn-v3-primary">+ Create Test Case</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE GENERIC TEST CASE MODAL — no Manual/Automation tag -->
+<div id="create-generic-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Test Case</div>
+      <button onclick="closeCreateGenericTcModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">TC ID</label>
+        <input id="gtc-id" placeholder="e.g. TC001" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Title</label>
+        <input id="gtc-title" placeholder="Test case title" class="tc-input"/>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+        <input id="gtc-module" placeholder="e.g. Login" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Project <span style="color:#aaa;font-weight:400">(optional)</span></label>
+        <input id="gtc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Testcase Scenario</label>
+      <textarea id="gtc-scenario" placeholder="Short description of the scenario being tested" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Web / App</label>
+      <select id="gtc-platform" class="tc-input">
+        <option value="Web">Web</option>
+        <option value="App">App</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Pre-Condition</label>
+      <textarea id="gtc-precondition" placeholder="What must be true before running this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Priority</label>
+      <select id="gtc-priority" class="tc-input">
+        <option value="P0">P0 — Critical</option>
+        <option value="P1">P1 — High</option>
+        <option value="P2" selected>P2 — Medium</option>
+        <option value="P3">P3 — Low</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Expected Result</label>
+      <input id="gtc-expected" placeholder="Expected outcome" class="tc-input"/>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Steps <span style="color:#aaa;font-weight:400">(one per line)</span></label>
+      <textarea id="gtc-steps" placeholder="1. Navigate to login page&#10;2. Enter username&#10;3. Enter password&#10;4. Click Login" class="tc-input" rows="4" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Test Data</label>
+      <textarea id="gtc-testdata" placeholder="Values used to run this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Actual Result</label>
+        <input id="gtc-actual" placeholder="Filled in after running the test" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
+        <select id="gtc-status" class="tc-input">
+          <option value="NOT_RUN">Not Run</option>
+          <option value="PASS">Pass</option>
+          <option value="FAIL">Fail</option>
+          <option value="HOLD">Hold</option>
+          <option value="DUPLICATE">Duplicate</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="closeCreateGenericTcModal()" class="btn-v3-secondary">Cancel</button>
+      <button onclick="addGenericTestCase()" class="btn-v3-primary">+ Create Test Case</button>
     </div>
   </div>
 </div>
@@ -5841,7 +5980,7 @@
     const btnEl = document.getElementById('auth-submit-btn');
     if (mode === 'bootstrap') {
       titleEl.textContent = 'Create the first admin account';
-      subEl.textContent = 'No one has set up StackTest yet — this account becomes an admin.';
+      subEl.textContent = 'No one has set up Stackbox Test yet — this account becomes an admin.';
       btnEl.textContent = 'Create Admin Account';
     } else if (mode === 'invite') {
       titleEl.textContent = opts.type === 'reset' ? 'Reset your password' : 'Set your password';
@@ -6020,6 +6159,7 @@
     if (navEl) navEl.classList.add('active');
     const titles = {
       home:'Dashboard', results:'Latest Results', testcases:'Test Cases',
+      'testcases-generic':'Test Cases',
       export:'Reports', bugs:'All Issues', admin:'Admin',
       testplans:'Test Plans', 'generate-testcase':'Generate Test Case',
       'automation-tests':'Automation Tests', 'automation-suites':'Automation Suites', 'automation-runs':'Automation Runs', 'automation-builder':'AI Recorder',
@@ -6030,6 +6170,7 @@
     document.getElementById('page-title').textContent = titles[name] || name;
     if (name === 'home') renderDashboard();
     if (name === 'testcases') renderTestCases();
+    if (name === 'testcases-generic') renderGenericTestCases();
     if (name === 'bugs') renderBugs();
     if (name === 'admin') loadAdminInvites();
     if (name === 'team-members') loadTeamMembers();
@@ -6043,7 +6184,7 @@
   // 'admin' is the only role the backend actually enforces (invite
   // generation, removing/re-roling teammates). Viewer/Developer/Tester/
   // Content Manager are real, persisted role labels an admin can assign,
-  // but StackTest doesn't have a fine-grained permission engine yet, so
+  // but Stackbox Test doesn't have a fine-grained permission engine yet, so
   // they all currently behave like a non-admin "Member" in the app itself —
   // the "features" list below is what each role is INTENDED to cover.
   const SYSTEM_ROLES = {
@@ -7389,6 +7530,129 @@
     renderTestCases();
     renderDashboard();
     closeCreateTcModal();
+  }
+
+  // ── Generic Test Cases (localStorage) — same sheet as Manual Test Cases, minus the type tag ──
+  function loadGenericTestCases() {
+    return JSON.parse(localStorage.getItem('stacktest_testcases_generic') || '[]');
+  }
+  function saveGenericTestCases(tcs) {
+    localStorage.setItem('stacktest_testcases_generic', JSON.stringify(tcs));
+  }
+  function openCreateGenericTcModal() {
+    ['gtc-id','gtc-title','gtc-module','gtc-project','gtc-expected','gtc-steps','gtc-scenario','gtc-precondition','gtc-testdata','gtc-actual'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('gtc-platform').value = 'Web';
+    document.getElementById('gtc-priority').value = 'P2';
+    document.getElementById('gtc-status').value = 'NOT_RUN';
+    document.getElementById('create-generic-tc-modal').style.display = 'flex';
+  }
+  function closeCreateGenericTcModal() {
+    document.getElementById('create-generic-tc-modal').style.display = 'none';
+  }
+  function addGenericTestCase() {
+    const id    = document.getElementById('gtc-id').value.trim();
+    const title = document.getElementById('gtc-title').value.trim();
+    const mod   = document.getElementById('gtc-module').value.trim();
+    const proj  = document.getElementById('gtc-project').value.trim() || selectedProjectName() || '';
+    const priority = document.getElementById('gtc-priority').value;
+    const exp   = document.getElementById('gtc-expected').value.trim();
+    const steps = document.getElementById('gtc-steps').value.trim();
+    const scenario = document.getElementById('gtc-scenario').value.trim();
+    const platform = document.getElementById('gtc-platform').value;
+    const preCondition = document.getElementById('gtc-precondition').value.trim();
+    const testData = document.getElementById('gtc-testdata').value.trim();
+    const actualResult = document.getElementById('gtc-actual').value.trim();
+    const status = document.getElementById('gtc-status').value;
+    if (!id || !title) { alert('TC ID and Title are required'); return; }
+    const tcs = loadGenericTestCases();
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    tcs.push({
+      id, title, module: mod||'General', project: proj, priority, expected: exp||'—', steps, created: now,
+      scenario, platform, preCondition, testData, actualResult, status,
+    });
+    saveGenericTestCases(tcs);
+    renderGenericTestCases();
+    closeCreateGenericTcModal();
+  }
+  function updateGenericTcStatus(i, value) {
+    const tcs = loadGenericTestCases();
+    tcs[i].status = value;
+    saveGenericTestCases(tcs);
+  }
+  function deleteGenericTC(i) {
+    if (!confirm('Delete this test case?')) return;
+    const tcs = loadGenericTestCases(); tcs.splice(i,1); saveGenericTestCases(tcs); renderGenericTestCases();
+  }
+  function renderGenericTestCases() {
+    const allTcs = loadGenericTestCases();
+    const activeProject = selectedProjectName();
+    const tcs = activeProject ? allTcs.filter(tc => tc.project === activeProject) : allTcs;
+    const tbody = document.getElementById('generic-tc-tbody');
+    if (!tbody) return;
+    if (tcs.length === 0) {
+      const msg = activeProject
+        ? `No test cases tagged to "${activeProject}" yet. Add one above with that project name.`
+        : 'No test cases yet. Add one above.';
+      tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      updateGenericTcSelectionUi();
+      return;
+    }
+    const dash = v => v ? v : '<span style="color:#bbb">—</span>';
+    tbody.innerHTML = tcs.map((tc) => {
+      const i = allTcs.indexOf(tc);
+      const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:#555;font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
+      const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:#bbb">—</span>';
+      const status = tc.status || 'NOT_RUN';
+      return `<tr>
+        <td><input type="checkbox" class="gtc-row-check" onchange="toggleGenericTcSelect('${tc.id}', this.checked)" ${selectedGenericTcIds.has(tc.id) ? 'checked' : ''}/></td>
+        <td><span class="tc-pill">${tc.id}</span></td>
+        <td style="font-weight:500">${tc.title}</td>
+        <td><span class="app-tag">${tc.module}</span></td>
+        <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
+        <td style="max-width:200px;font-size:12px;color:#555">${dash(tc.scenario)}</td>
+        <td><span class="app-tag">${tc.platform || 'Web'}</span></td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.preCondition)}</td>
+        <td style="max-width:220px">${stepsHtml}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.testData)}</td>
+        <td style="color:#1565c0;font-size:12px">${tc.expected}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.actualResult)}</td>
+        <td><select style="${tcStatusSelectStyle(status)}" onchange="updateGenericTcStatus(${i}, this.value)">${Object.keys(TC_STATUS_LABEL).map(k => `<option value="${k}" ${k === status ? 'selected' : ''}>${TC_STATUS_LABEL[k]}</option>`).join('')}</select></td>
+        <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
+        <td>${rowActionsMenu('gtc-' + i, [
+          { label: '🗑️ Delete', danger: true, onclick: `deleteGenericTC(${i})` },
+        ])}</td>
+      </tr>`;
+    }).join('');
+    updateGenericTcSelectionUi();
+  }
+
+  // ── Bulk select/delete: Test Cases (generic) ──
+  const selectedGenericTcIds = new Set();
+  function toggleGenericTcSelect(id, checked) {
+    if (checked) selectedGenericTcIds.add(id); else selectedGenericTcIds.delete(id);
+    updateGenericTcSelectionUi();
+  }
+  function toggleSelectAllGenericTc(checked) {
+    document.querySelectorAll('#generic-tc-tbody .gtc-row-check').forEach(cb => {
+      cb.checked = checked;
+      cb.dispatchEvent(new Event('change'));
+    });
+  }
+  function updateGenericTcSelectionUi() {
+    const count = selectedGenericTcIds.size;
+    document.getElementById('gtc-selected-count').textContent = count;
+    document.getElementById('gtc-delete-selected-btn').style.display = count ? 'inline-block' : 'none';
+    const rowChecks = document.querySelectorAll('#generic-tc-tbody .gtc-row-check');
+    const selectAll = document.getElementById('gtc-select-all');
+    selectAll.checked = rowChecks.length > 0 && Array.from(rowChecks).every(cb => cb.checked);
+  }
+  function deleteSelectedGenericTc() {
+    if (!selectedGenericTcIds.size) return;
+    if (!confirm(`Delete ${selectedGenericTcIds.size} selected test case(s)? This can't be undone.`)) return;
+    const tcs = loadGenericTestCases().filter(tc => !selectedGenericTcIds.has(tc.id));
+    saveGenericTestCases(tcs);
+    selectedGenericTcIds.clear();
+    renderGenericTestCases();
   }
 
   // ── Create Test Case modal: step 1 (pick a type) → step 2 (fill details) ──
