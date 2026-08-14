@@ -392,6 +392,18 @@
     .integ-status-soon { color:#9aa0ac; }
     .integ-status-live { color:#2e7d32; cursor:pointer; }
     @media (max-width:1100px) { .integ-grid { grid-template-columns:repeat(2, 1fr); } }
+    .trinetra-logo-badge { display:flex; align-items:center; gap:8px; background:#1b1e3d; border:1px solid #1b1e3d; border-radius:10px; padding:8px 14px; flex:none; }
+    .trinetra-logo-bars { display:flex; gap:2px; }
+    .trinetra-logo-bars span { width:4px; height:27px; border-radius:3px; display:block; transform-origin:center; animation:trinetra-bar-move 1.1s ease-in-out infinite; }
+    .trinetra-logo-bars span:nth-child(1) { animation-delay:0s; }
+    .trinetra-logo-bars span:nth-child(2) { animation-delay:0.15s; }
+    .trinetra-logo-bars span:nth-child(3) { animation-delay:0.3s; }
+    .trinetra-logo-bars span:nth-child(4) { animation-delay:0.45s; }
+    .trinetra-logo-text-row { display:flex; align-items:center; gap:4px; font-size:9px; font-weight:700; letter-spacing:1.4px; color:#9aa0c4; white-space:nowrap; }
+    .trinetra-logo-word { font-size:17px; font-weight:800; color:#fff; letter-spacing:0.3px; line-height:1.2; }
+    @keyframes trinetra-bar-move { 0%, 100% { transform:scaleY(0.55); } 50% { transform:scaleY(1); } }
+    @keyframes trinetra-blink { 0%, 90%, 100% { transform:scaleY(1); } 93%, 96% { transform:scaleY(0.12); } }
+    .trinetra-eye-blink { display:inline-block; transform-origin:center; animation:trinetra-blink 4s ease-in-out infinite; }
 
     /* Settings page */
     .settings-tabs { margin-bottom:22px; background:transparent; padding:0; border-radius:0; border-bottom:1px solid #eaecf0; gap:22px; }
@@ -4273,13 +4285,24 @@
         <div class="integ-grid">
           <div class="integ-card">
             <div class="integ-card-top">
-              <div><div class="integ-title">Jira (XRay export)</div></div>
-              <div class="integ-icon" style="background:#e3ecfb"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjY4NEZGIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+SmlyYTwvdGl0bGU+PHBhdGggZD0iTTExLjU3MSAxMS41MTNIMGE1LjIxOCA1LjIxOCAwIDAgMCA1LjIzMiA1LjIxNWgyLjEzdjIuMDU3QTUuMjE1IDUuMjE1IDAgMCAwIDEyLjU3NSAyNFYxMi41MThhMS4wMDUgMS4wMDUgMCAwIDAtMS4wMDUtMS4wMDV6bTUuNzIzLTUuNzU2SDUuNzM2YTUuMjE1IDUuMjE1IDAgMCAwIDUuMjE1IDUuMjE0aDIuMTI5djIuMDU4YTUuMjE4IDUuMjE4IDAgMCAwIDUuMjE1IDUuMjE0VjYuNzU4YTEuMDAxIDEuMDAxIDAgMCAwLTEuMDAxLTEuMDAxek0yMy4wMTMgMEgxMS40NTVhNS4yMTUgNS4yMTUgMCAwIDAgNS4yMTUgNS4yMTVoMi4xMjl2Mi4wNTdBNS4yMTUgNS4yMTUgMCAwIDAgMjQgMTIuNDgzVjEuMDA1QTEuMDAxIDEuMDAxIDAgMCAwIDIzLjAxMyAwWiIvPjwvc3ZnPg==" width="24" height="24" alt="Jira"/></div>
+              <div><div class="integ-title">Trinetra</div></div>
+              <div class="trinetra-logo-badge">
+                <div class="trinetra-logo-bars">
+                  <span style="background:#6c74ee"></span>
+                  <span style="background:#5a62e0"></span>
+                  <span style="background:#4850d4"></span>
+                  <span style="background:#363ec4"></span>
+                </div>
+                <div>
+                  <div class="trinetra-logo-text-row">STACKBOX <svg class="trinetra-eye-blink" width="13" height="10" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 10C2 10 6.5 4 12 4C17.5 4 22 10 22 10C22 10 17.5 16 12 16C6.5 16 2 10 2 10Z" stroke="#9aa0c4" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" fill="#9aa0c4"/></svg></div>
+                  <div class="trinetra-logo-word">TRINETRA</div>
+                </div>
+              </div>
             </div>
-            <div class="integ-desc">Jira integration allows you to export your Test Cases to Xray &amp; other issue trackers.</div>
+            <div class="integ-desc">Jump straight into Trinetra — StackBox's live deployment tracker and debug dashboard.</div>
             <div class="integ-card-bottom">
-              <span class="tc-pill">⚡ XRAY</span>
-              <span class="integ-status integ-status-soon">Coming soon</span>
+              <span></span>
+              <a href="https://3i.stackbox.xyz/dashboard" target="_blank" rel="noopener noreferrer" class="integ-status integ-status-live">Open dashboard →</a>
             </div>
           </div>
 
@@ -4301,18 +4324,6 @@
               <div class="integ-icon" style="background:#f3ecfb"><img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAwIDMwMCIgd2lkdGg9IjE2NjciIGhlaWdodD0iMjUwMCI+PHN0eWxlPi5zdDB7ZmlsbDojMGFjZjgzfS5zdDF7ZmlsbDojYTI1OWZmfS5zdDJ7ZmlsbDojZjI0ZTFlfS5zdDN7ZmlsbDojZmY3MjYyfS5zdDR7ZmlsbDojMWFiY2ZlfTwvc3R5bGU+PHRpdGxlPkZpZ21hLmxvZ288L3RpdGxlPjxkZXNjPkNyZWF0ZWQgdXNpbmcgRmlnbWE8L2Rlc2M+PHBhdGggaWQ9InBhdGgwX2ZpbGwiIGNsYXNzPSJzdDAiIGQ9Ik01MCAzMDBjMjcuNiAwIDUwLTIyLjQgNTAtNTB2LTUwSDUwYy0yNy42IDAtNTAgMjIuNC01MCA1MHMyMi40IDUwIDUwIDUweiIvPjxwYXRoIGlkPSJwYXRoMV9maWxsIiBjbGFzcz0ic3QxIiBkPSJNMCAxNTBjMC0yNy42IDIyLjQtNTAgNTAtNTBoNTB2MTAwSDUwYy0yNy42IDAtNTAtMjIuNC01MC01MHoiLz48cGF0aCBpZD0icGF0aDFfZmlsbF8xXyIgY2xhc3M9InN0MiIgZD0iTTAgNTBDMCAyMi40IDIyLjQgMCA1MCAwaDUwdjEwMEg1MEMyMi40IDEwMCAwIDc3LjYgMCA1MHoiLz48cGF0aCBpZD0icGF0aDJfZmlsbCIgY2xhc3M9InN0MyIgZD0iTTEwMCAwaDUwYzI3LjYgMCA1MCAyMi40IDUwIDUwcy0yMi40IDUwLTUwIDUwaC01MFYweiIvPjxwYXRoIGlkPSJwYXRoM19maWxsIiBjbGFzcz0ic3Q0IiBkPSJNMjAwIDE1MGMwIDI3LjYtMjIuNCA1MC01MCA1MHMtNTAtMjIuNC01MC01MCAyMi40LTUwIDUwLTUwIDUwIDIyLjQgNTAgNTB6Ii8+PC9zdmc+" width="22" height="24" alt="Figma"/></div>
             </div>
             <div class="integ-desc">Translate Figma designs into well-written test cases using AI.</div>
-            <div class="integ-card-bottom">
-              <span></span>
-              <span class="integ-status integ-status-soon">Coming soon</span>
-            </div>
-          </div>
-
-          <div class="integ-card">
-            <div class="integ-card-top">
-              <div><div class="integ-title">BrowserStack</div></div>
-              <div class="integ-icon" style="background:#fdeeea"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGc+PHBhdGggZD0ibTMxLjAzNDQ4MjggMTUuNTE3MjQxNGMwIDguNTcwMTg4Mi02Ljk0NzA1MzIgMTUuNTE3MjQxNC0xNS41MTcyNDE0IDE1LjUxNzI0MTQtOC41Njk4OTQyMyAwLTE1LjUxNzI0MTQtNi45NDcwNTMyLTE1LjUxNzI0MTQtMTUuNTE3MjQxNCAwLTguNTY5ODk0MjMgNi45NDczNDcxNy0xNS41MTcyNDE0IDE1LjUxNzI0MTQtMTUuNTE3MjQxNCA4LjU3MDE4ODIgMCAxNS41MTcyNDE0IDYuOTQ3MzQ3MTcgMTUuNTE3MjQxNCAxNS41MTcyNDE0IiBmaWxsPSIjZWNiMzYwIj48L3BhdGg+PHBhdGggZD0ibTI2Ljg5NjU1MTcgMTMuOTY1NTE3MmMwIDcuNzEyODg0Ny02LjAyMTMzNjkgMTMuOTY1NTE3My0xMy40NDgyNzU4IDEzLjk2NTUxNzMtNy40MjcyMjIyNyAwLTEzLjQ0ODI3NTktNi4yNTI2MzI2LTEzLjQ0ODI3NTktMTMuOTY1NTE3MyAwLTcuNzEyODg0NTkgNi4wMjEwNTM2My0xMy45NjU1MTcyIDEzLjQ0ODI3NTktMTMuOTY1NTE3MiA3LjQyNjkzODkgMCAxMy40NDgyNzU4IDYuMjUyNjMyNjEgMTMuNDQ4Mjc1OCAxMy45NjU1MTcyIiBmaWxsPSIjZDc2ODM1Ij48L3BhdGg+PHBhdGggZD0ibTI3LjkzMTAzNDUgMTIuNDEzNjQyMmMwIDYuODU2MDY1Mi01LjMyNjMwMDYgMTIuNDEzOTQ0LTExLjg5Njk4NTUgMTIuNDEzOTQ0LTYuNTY5ODE3NCAwLTExLjg5NjExNzk3LTUuNTU3ODc4OC0xMS44OTYxMTc5Ny0xMi40MTM5NDQgMC02Ljg1NTc2MzM1IDUuMzI2MzAwNTctMTIuNDEzNjQyMiAxMS44OTYxMTc5Ny0xMi40MTM2NDIyIDYuNTcwNjg0OSAwIDExLjg5Njk4NTUgNS41NTc4Nzg4NSAxMS44OTY5ODU1IDEyLjQxMzY0MjIiIGZpbGw9IiNkMzNhNDEiPjwvcGF0aD48cGF0aCBkPSJtMjYuODk2NTUxNyAxMy40NDg0MjYyYzAgNi4yODQzMDU0LTQuODYzMjcwMyAxMS4zNzkxNi0xMC44NjIyMTI0IDExLjM3OTE2LTUuOTk4OTQyMiAwLTEwLjg2MTkyNTUxLTUuMDk0ODU0Ni0xMC44NjE5MjU1MS0xMS4zNzkxNiAwLTYuMjg0OTA2NzcgNC44NjI5ODMzMS0xMS4zNzk0NjA2OCAxMC44NjE5MjU1MS0xMS4zNzk0NjA2OCA1Ljk5ODk0MjEgMCAxMC44NjIyMTI0IDUuMDk0NTUzOTEgMTAuODYyMjEyNCAxMS4zNzk0NjA2OCIgZmlsbD0iI2I2Y2I0NiI+PC9wYXRoPjxwYXRoIGQ9Im0yNS44NjIwNjkgMTQuNDgyNjExMWMwIDUuNzEzMzEwNi00LjYzMTY2NDUgMTAuMzQ0OTc1MS0xMC4zNDQ5NzUxIDEwLjM0NDk3NTEtNS43MTMwMTU2NSAwLTEwLjM0NDY4MDExLTQuNjMxNjY0NS0xMC4zNDQ2ODAxMS0xMC4zNDQ5NzUxIDAtNS43MTMzMTA2NSA0LjYzMTY2NDQ2LTEwLjM0NDY4MDA3IDEwLjM0NDY4MDExLTEwLjM0NDY4MDA3IDUuNzEzMzEwNiAwIDEwLjM0NDk3NTEgNC42MzEzNjk0MiAxMC4zNDQ5NzUxIDEwLjM0NDY4MDA3IiBmaWxsPSIjNjZhZDRhIj48L3BhdGg+PHBhdGggZD0ibTIxLjcyNDEzNzkgMTIuNDEzNzkzMWMwIDQuNTcwNjI0Ny0zLjcwNTIzNzMgOC4yNzU4NjIxLTguMjc1ODYyIDguMjc1ODYyMS00LjU3MDkwNTE1IDAtOC4yNzU4NjIxMS0zLjcwNTIzNzQtOC4yNzU4NjIxMS04LjI3NTg2MjEgMC00LjU3MDYyNDY5IDMuNzA0OTU2OTYtOC4yNzU4NjIwNyA4LjI3NTg2MjExLTguMjc1ODYyMDcgNC41NzA2MjQ3IDAgOC4yNzU4NjIgMy43MDUyMzczOCA4LjI3NTg2MiA4LjI3NTg2MjA3IiBmaWxsPSIjYWVkN2RjIj48L3BhdGg+PHBhdGggZD0ibTIyLjc1ODYyMDcgMTEuMzc5MzEwM2MwIDMuOTk5MTc2NC0zLjI0MTk3NTUgNy4yNDEzNzk0LTcuMjQxNTI1OSA3LjI0MTM3OTQtMy45OTk1NTA1IDAtNy4yNDEyMzI3My0zLjI0MjIwMy03LjI0MTIzMjczLTcuMjQxMzc5NCAwLTMuOTk5NDY5NDUgMy4yNDE2ODIyMy03LjI0MTM3OTI3IDcuMjQxMjMyNzMtNy4yNDEzNzkyNyAzLjk5OTU1MDQgMCA3LjI0MTUyNTkgMy4yNDE5MDk4MiA3LjI0MTUyNTkgNy4yNDEzNzkyNyIgZmlsbD0iIzViYjFjZiI+PC9wYXRoPjxwYXRoIGQ9Im0yMi43NTg2MjA3IDExLjg5NjM5NjdjMCAzLjcxMzY0MjItMi43Nzg4NDAyIDYuNzI0MjkzLTYuMjA2ODk2NiA2LjcyNDI5M3MtNi4yMDY4OTY1LTMuMDEwNjUwOC02LjIwNjg5NjUtNi43MjQyOTNjMC0zLjcxMzMzMjE3IDIuNzc4ODQwMS02LjcyMzk4MjkxIDYuMjA2ODk2NS02LjcyMzk4MjkxczYuMjA2ODk2NiAzLjAxMDY1MDc0IDYuMjA2ODk2NiA2LjcyMzk4MjkxIiBmaWxsPSIjMjVhOGMzIj48L3BhdGg+PHBhdGggZD0ibTIwLjY4OTY1NTIgMTIuOTMwODgxM2MwIDMuMTQyMzUyNC0yLjMxNTg2OSA1LjY4OTgwODQtNS4xNzI1NTMxIDUuNjg5ODA4NC0yLjg1NjQwNTUgMC01LjE3MjI3NDUtMi41NDc0NTYtNS4xNzIyNzQ1LTUuNjg5ODA4NCAwLTMuMTQyMzUyNDEgMi4zMTU4NjktNS42ODk1MDE5OSA1LjE3MjI3NDUtNS42ODk1MDE5OSAyLjg1NjY4NDEgMCA1LjE3MjU1MzEgMi41NDcxNDk1OCA1LjE3MjU1MzEgNS42ODk1MDE5OSI+PC9wYXRoPjxwYXRoIGQ9Im0xNS41MTcxMDIxIDE4LjYyMDY4OTdjLTIuODU2NDA1NSAwLTUuMTcyMjc0NS0yLjU0NzQ1Ni01LjE3MjI3NDUtNS42ODk4MDg0IDAtMy4xNDIzNTI0MSAyLjMxNTg2OS01LjY4OTUwMTk5IDUuMTcyMjc0NS01LjY4OTUwMTk5IDIuODU2Njg0MSAwIDUuMTcyNTUzMSAyLjU0NzE0OTU4IDUuMTcyNTUzMSA1LjY4OTUwMTk5IDAgMy4xNDIzNTI0LTIuMzE1ODY5IDUuNjg5ODA4NC01LjE3MjU1MzEgNS42ODk4MDg0eiIgZmlsbD0iIzFiMWExOCI+PC9wYXRoPjxwYXRoIGQ9Im0xOC4zMzk1NDMyIDExLjI5MDQxNjNjLS40OTIwODExLjgyMzE5NzUtMS40NTk1NjI2IDEuMjk5MjkxLTIuMTYxMjkgMS4wNjI2NjgtLjcwMTcyNzQtLjIzNjMzODMtLjg3MTU2NzQtMS4wOTU2OTg0LS4zNzk4NjU0LTEuOTE5MTgwNy40OTIwODExLS44MjM0ODIzMSAxLjQ1OTU2MjYtMS4yOTkyOTEwNyAyLjE2MTI5LTEuMDYyOTUyNzlzLjg3MTU2NzQgMS4wOTU2OTgzOS4zNzk4NjU0IDEuOTE5NDY1NDkiIGZpbGw9IiNmZmZmZmUiPjwvcGF0aD48L2c+PC9zdmc+" width="24" height="24" alt="BrowserStack"/></div>
-            </div>
-            <div class="integ-desc">Run your automation tests on BrowserStack's cloud infrastructure with real browsers and devices.</div>
             <div class="integ-card-bottom">
               <span></span>
               <span class="integ-status integ-status-soon">Coming soon</span>
