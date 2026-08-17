@@ -10,6 +10,7 @@ const teamRoutes = require('./routes/team');
 const createRecorderRouter = require('./routes/recorder');
 const blockRoutes = require('./routes/blocks');
 const reviewQueueRoutes = require('./routes/reviewQueue');
+const createGenerateTestcaseRouter = require('./routes/generateTestcase');
 const { requireAuth } = require('./auth');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/team', teamRoutes);
 app.use('/api/recorder', createRecorderRouter());
 app.use('/api/blocks', requireAuth, blockRoutes);
 app.use('/api/review-queue', requireAuth, reviewQueueRoutes);
+app.use('/api/generate-testcase', createGenerateTestcaseRouter());
 
 // Serve the dashboard itself. Any path (including "/?invite=..." style
 // links) falls through to index.html since this is a single-page file.

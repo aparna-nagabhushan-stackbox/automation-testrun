@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>StackTest</title>
+  <title>Stackbox Test</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <style>
@@ -322,6 +322,33 @@
     .btn-v3-secondary { padding:8px 18px; background:#f5f5f5; color:#333; border:1px solid #ddd; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
     .btn-v3-secondary:hover { background:#eeeeee; }
     .btn-v3-ghost { padding:8px 18px; background:#e8eaf6; color:#3949ab; border:1px solid #c5cae9; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+
+    /* Generate Test Case (AI) page */
+    .gen-tc-card { background:#fff; border-radius:16px; box-shadow:0 4px 24px rgba(81,45,168,0.12); overflow:hidden; }
+    .gen-tc-banner {
+      display:flex; align-items:center; gap:20px; padding:32px 36px;
+      background:linear-gradient(135deg,#4527a0 0%,#7c4dff 55%,#1565c0 100%);
+      color:#fff;
+    }
+    .gen-tc-banner-icon {
+      width:58px; height:58px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:26px; background:rgba(255,255,255,0.18); box-shadow:0 0 0 7px rgba(255,255,255,0.08);
+    }
+    .gen-tc-banner-title { font-size:21px; font-weight:700; margin-bottom:6px; }
+    .gen-tc-banner-sub { font-size:13.5px; color:rgba(255,255,255,0.85); line-height:1.6; max-width:640px; }
+    .gen-tc-body { padding:34px 36px 36px; }
+    .gen-tc-chip {
+      display:inline-block; padding:6px 12px; margin:0 8px 8px 0; border-radius:20px; font-size:11.5px; font-weight:600;
+      background:#ede7f6; color:#5e35b1; border:1px solid #d8caf5; cursor:pointer; transition:all .15s;
+    }
+    .gen-tc-chip:hover { background:#5e35b1; color:#fff; border-color:#5e35b1; }
+    .btn-ai-primary {
+      padding:12px 24px; background:linear-gradient(135deg,#6d28d9,#4f46e5); color:#fff; border:none;
+      border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif;
+      box-shadow:0 4px 14px rgba(109,40,217,0.35); transition:transform .15s, box-shadow .15s;
+    }
+    .btn-ai-primary:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(109,40,217,0.45); }
+    .btn-ai-primary:disabled { opacity:.6; cursor:default; transform:none; box-shadow:none; }
     .btn-v3-ghost:hover { background:#d1c4e9; color:#1a237e; }
 
     /* ── BUGS PAGE ── */
@@ -365,6 +392,18 @@
     .integ-status-soon { color:#9aa0ac; }
     .integ-status-live { color:#2e7d32; cursor:pointer; }
     @media (max-width:1100px) { .integ-grid { grid-template-columns:repeat(2, 1fr); } }
+    .trinetra-logo-badge { display:flex; align-items:center; gap:8px; background:#1b1e3d; border:1px solid #1b1e3d; border-radius:10px; padding:8px 14px; flex:none; }
+    .trinetra-logo-bars { display:flex; gap:2px; }
+    .trinetra-logo-bars span { width:4px; height:27px; border-radius:3px; display:block; transform-origin:center; animation:trinetra-bar-move 1.1s ease-in-out infinite; }
+    .trinetra-logo-bars span:nth-child(1) { animation-delay:0s; }
+    .trinetra-logo-bars span:nth-child(2) { animation-delay:0.15s; }
+    .trinetra-logo-bars span:nth-child(3) { animation-delay:0.3s; }
+    .trinetra-logo-bars span:nth-child(4) { animation-delay:0.45s; }
+    .trinetra-logo-text-row { display:flex; align-items:center; gap:4px; font-size:9px; font-weight:700; letter-spacing:1.4px; color:#9aa0c4; white-space:nowrap; }
+    .trinetra-logo-word { font-size:17px; font-weight:800; color:#fff; letter-spacing:0.3px; line-height:1.2; }
+    @keyframes trinetra-bar-move { 0%, 100% { transform:scaleY(0.55); } 50% { transform:scaleY(1); } }
+    @keyframes trinetra-blink { 0%, 90%, 100% { transform:scaleY(1); } 93%, 96% { transform:scaleY(0.12); } }
+    .trinetra-eye-blink { display:inline-block; transform-origin:center; animation:trinetra-blink 4s ease-in-out infinite; }
 
     /* Settings page */
     .settings-tabs { margin-bottom:22px; background:transparent; padding:0; border-radius:0; border-bottom:1px solid #eaecf0; gap:22px; }
@@ -496,7 +535,7 @@
       <img src="data:image/png;base64,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" alt="Stackbox" class="brand-logo-img"/>
     </div>
     <div class="hero">
-      <h1>Welcome to<br/>StackTest</h1>
+      <h1>Welcome to<br/>Stackbox Test</h1>
       <p>Your central place to track, review and analyse automated test results across all applications.</p>
     </div>
     <div class="footer-note">Powered by Playwright &mdash; &copy; 2026</div>
@@ -549,7 +588,7 @@
 <div id="app">
   <div class="sidebar" id="app-sidebar">
     <div class="sidebar-brand">
-      <h1>StackTest</h1>
+      <h1>Stackbox Test</h1>
       <div class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebarRail()"><span class="toggle-arrow"></span></div>
     </div>
     <nav class="sidebar-nav">
@@ -591,6 +630,10 @@
         </div>
       </div>
 
+      <div class="nav-item" onclick="showPage('testcases-generic')" id="nav-testcases-generic">
+        <span class="nav-icon">📄</span> <span class="nav-label">Test Cases</span>
+      </div>
+
       <div class="nav-item" onclick="showPage('bugs')" id="nav-bugs">
         <span class="nav-icon">🐛</span> <span class="nav-label">Issues</span>
       </div>
@@ -615,13 +658,16 @@
     <div class="topbar">
       <h2 id="page-title">Dashboard</h2>
       <div class="topbar-right">
-        <div class="app-filter-wrap">
-          <span class="app-filter-label">Project:</span>
-          <select class="app-filter" id="app-filter" onchange="onAppFilterChange(this.value)">
-            <option value="ALL">All Projects</option>
-            <option value="YMS">YMS</option><option value="YMSOUTBOUND">YMSOUTBOUND</option>
-            <option value="__new_project__">+ New Project…</option>
-          </select>
+        <div class="app-filter-wrap" style="position:relative">
+          <button id="app-picker-btn" onclick="toggleAppPicker(event)" type="button" style="display:flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border:1.5px solid #ddd;border-radius:22px;background:#fff;cursor:pointer;font-family:Inter,sans-serif">
+            <span id="app-picker-icon" style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"></span>
+            <span id="app-picker-label" style="font-weight:700;font-size:13px;color:#1a1a2e;white-space:nowrap">All Projects</span>
+            <span style="font-size:10px;color:#888">▾</span>
+          </button>
+          <div id="app-picker-panel" onclick="event.stopPropagation()" style="display:none;position:absolute;top:calc(100% + 10px);right:0;width:440px;max-height:75vh;overflow-y:auto;background:#fff;border-radius:14px;box-shadow:0 14px 44px rgba(0,0,0,0.2);padding:26px;z-index:9999">
+            <div style="font-size:22px;font-weight:800;color:#1a1a2e;margin-bottom:20px">Applications</div>
+            <div id="app-picker-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+          </div>
         </div>
         <div class="user-menu-wrap" id="user-menu-wrap">
           <span class="topbar-user" id="topbar-user"></span>
@@ -3866,8 +3912,50 @@
           </div>
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th><input type="checkbox" id="tc-select-all" onchange="toggleSelectAllTc(this.checked)"/></th><th>TC ID</th><th>Title</th><th>Type</th><th>Module</th><th>Project</th><th>Steps</th><th>Expected Result</th><th>Created</th><th>Action</th></tr></thead>
+              <thead><tr><th><input type="checkbox" id="tc-select-all" onchange="toggleSelectAllTc(this.checked)"/></th><th>TC ID</th><th>Title</th><th>Type</th><th>Module</th><th>Project</th><th>Scenario</th><th>Web / App</th><th>Pre-Condition</th><th>Steps</th><th>Test Data</th><th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Created</th><th>Action</th></tr></thead>
               <tbody id="tc-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERIC TEST CASES PAGE — same sheet as Manual Test Cases, minus the type tag -->
+      <div class="page" id="page-testcases-generic">
+        <div class="table-card">
+          <div class="table-card-header">
+            <h3>Test Cases</h3>
+            <div style="display:flex;gap:8px">
+              <button id="gtc-delete-selected-btn" onclick="deleteSelectedGenericTc()" class="btn-v3-secondary" style="display:none;color:#c62828;border-color:#f5c6c6">🗑 Delete Selected (<span id="gtc-selected-count">0</span>)</button>
+              <button id="gtc-add-to-suite-btn" onclick="openAddToSuiteModal()" class="btn-v3-secondary" style="display:none">🗂️ Add to Suite (<span id="gtc-selected-count-2">0</span>)</button>
+              <button onclick="showPage('test-suites')" class="btn-v3-secondary">🗂️ Test Suites</button>
+              <button onclick="openCreateGenericTcModal()" class="btn-v3-primary">+ Create Test Case</button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th><input type="checkbox" id="gtc-select-all" onchange="toggleSelectAllGenericTc(this.checked)"/></th>
+                <th>TC ID</th><th>Title</th><th>Module</th><th>Project</th><th>Scenario</th>
+                <th>Web / App</th><th>Pre-Condition</th><th>Steps</th><th>Test Data</th>
+                <th>Expected Result</th><th>Actual Result</th><th>Status</th><th>Created</th><th>Action</th>
+              </tr></thead>
+              <tbody id="generic-tc-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEST SUITES PAGE -->
+      <div class="page" id="page-test-suites">
+        <div class="table-card">
+          <div class="table-card-header">
+            <h3>Test Suites</h3>
+            <button onclick="openCreateSuiteModal()" class="btn-v3-primary">+ Create Suite</button>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Suite Name</th><th>Test Cases</th><th>Created</th><th>Action</th></tr></thead>
+              <tbody id="test-suites-tbody"></tbody>
             </table>
           </div>
         </div>
@@ -3935,6 +4023,51 @@
           <div style="font-size:48px;margin-bottom:16px">🗒️</div>
           <div style="font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:8px">Test Plans</div>
           <div style="font-size:13px;color:#666;line-height:1.7">Coming soon — group test cases into a plan and track sign-off per release.</div>
+        </div>
+      </div>
+      <!-- GENERATE TEST CASE PAGE (AI) -->
+      <div class="page" id="page-generate-testcase">
+        <div class="gen-tc-card" style="max-width:920px;margin:0 auto">
+          <div class="gen-tc-banner">
+            <div class="gen-tc-banner-icon">✨</div>
+            <div>
+              <div class="gen-tc-banner-title">Generate Test Cases with AI</div>
+              <div class="gen-tc-banner-sub">Describe a scenario, module, or feature — Claude drafts manual test cases (happy path, negative, and edge cases) for you to review and save.</div>
+            </div>
+          </div>
+          <div class="gen-tc-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+              <div>
+                <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module <span style="color:#aaa;font-weight:400">(optional)</span></label>
+                <input id="gen-tc-module" placeholder="e.g. Login" class="tc-input"/>
+              </div>
+              <div>
+                <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Project <span style="color:#aaa;font-weight:400">(optional)</span></label>
+                <input id="gen-tc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Scenario / Feature Description</label>
+              <textarea id="gen-tc-description" placeholder="e.g. User resets their password via the 'Forgot Password' link on the login page" class="tc-input" rows="5" style="resize:vertical;line-height:1.6;font-size:14px"></textarea>
+            </div>
+            <div style="margin-bottom:20px">
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Login with valid credentials</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Checkout fails with an expired card</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">User uploads a profile picture over the size limit</span>
+              <span class="gen-tc-chip" onclick="fillGenTcExample(this)">Search returns no results for a mistyped query</span>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <button id="gen-tc-btn" onclick="generateTestCasesFromScenario()" class="btn-ai-primary">✨ Generate Test Cases</button>
+            </div>
+            <div id="gen-tc-error" style="display:none;color:#c62828;font-size:12px;margin-top:12px;background:#ffebee;padding:10px 12px;border-radius:8px"></div>
+          </div>
+        </div>
+        <div id="gen-tc-results-wrap" style="display:none;max-width:920px;margin:20px auto 0">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="font-size:14px;font-weight:700;color:#1a1a2e">✨ Generated Test Cases (<span id="gen-tc-count">0</span>)</div>
+            <button onclick="saveAllGeneratedTestCases()" class="btn-ai-primary">💾 Save All</button>
+          </div>
+          <div id="gen-tc-results"></div>
         </div>
       </div>
       <!-- AUTOMATION TESTS PAGE — automation-tagged test cases, including AI-Recorder output -->
@@ -4114,7 +4247,7 @@
             <div class="table-card-header"><h3>Record in a new window</h3></div>
             <div style="padding:20px">
               <div class="settings-card-sub" style="margin-bottom:16px">
-                Opens a real Chromium window on <b>this machine</b> (wherever the StackTest server is running) using Playwright's own recorder — better selector quality, but it's a separate window, not your current tab. Click around the site like a normal user. Close that browser window (or click Stop) when you're done and the recorded code shows up below. Your login carries over between recordings.
+                Opens a real Chromium window on <b>this machine</b> (wherever the Stackbox Test server is running) using Playwright's own recorder — better selector quality, but it's a separate window, not your current tab. Click around the site like a normal user. Close that browser window (or click Stop) when you're done and the recorded code shows up below. Your login carries over between recordings.
               </div>
               <div class="settings-field">
                 <label>URL to record against</label>
@@ -4196,6 +4329,29 @@
       <div class="page" id="page-integrations">
         <div class="dash-section-label"><span class="dot dot-blue"></span> Integrations</div>
         <div class="integ-grid">
+          <div class="integ-card">
+            <div class="integ-card-top">
+              <div><div class="integ-title">Trinetra</div></div>
+              <div class="trinetra-logo-badge">
+                <div class="trinetra-logo-bars">
+                  <span style="background:#6c74ee"></span>
+                  <span style="background:#5a62e0"></span>
+                  <span style="background:#4850d4"></span>
+                  <span style="background:#363ec4"></span>
+                </div>
+                <div>
+                  <div class="trinetra-logo-text-row">STACKBOX <svg class="trinetra-eye-blink" width="13" height="10" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 10C2 10 6.5 4 12 4C17.5 4 22 10 22 10C22 10 17.5 16 12 16C6.5 16 2 10 2 10Z" stroke="#9aa0c4" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" fill="#9aa0c4"/></svg></div>
+                  <div class="trinetra-logo-word">TRINETRA</div>
+                </div>
+              </div>
+            </div>
+            <div class="integ-desc">Jump straight into Trinetra — StackBox's live deployment tracker and debug dashboard.</div>
+            <div class="integ-card-bottom">
+              <span></span>
+              <a href="https://3i.stackbox.xyz/tech-issues?env=b41f6317-eb45-4932-a8ac-abd4cec0ea01" target="_blank" rel="noopener noreferrer" class="integ-status integ-status-live">Tech Issues →</a>
+            </div>
+          </div>
+
           <div class="integ-card">
             <div class="integ-card-top">
               <div><div class="integ-title">Jira (XRay export)</div></div>
@@ -4351,7 +4507,7 @@
             <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Role</div>
             <button onclick="closeCreateRoleModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
           </div>
-          <div style="font-size:12.5px;color:#888;margin-bottom:14px">Custom roles are a label only for now — they don't yet unlock or restrict anything in StackTest beyond the Admin/non-Admin split.</div>
+          <div style="font-size:12.5px;color:#888;margin-bottom:14px">Custom roles are a label only for now — they don't yet unlock or restrict anything in Stackbox Test beyond the Admin/non-Admin split.</div>
           <input type="text" id="create-role-name" placeholder="Role name" class="tc-input" style="margin-bottom:10px"/>
           <textarea id="create-role-desc" placeholder="Description" class="tc-input" rows="2" style="margin-bottom:14px"></textarea>
           <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -4661,6 +4817,22 @@
           <input id="tc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
         </div>
       </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Testcase Scenario</label>
+        <textarea id="tc-scenario" placeholder="Short description of the scenario being tested" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Web / App</label>
+        <select id="tc-platform" class="tc-input">
+          <option value="Web">Web</option>
+          <option value="App">App</option>
+          <option value="Both">Both</option>
+        </select>
+      </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Pre-Condition</label>
+        <textarea id="tc-precondition" placeholder="What must be true before running this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
       <div style="margin-bottom:12px">
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Priority</label>
         <select id="tc-priority" class="tc-input">
@@ -4678,6 +4850,26 @@
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Steps <span style="color:#aaa;font-weight:400">(one per line)</span></label>
         <textarea id="tc-steps" placeholder="1. Navigate to login page&#10;2. Enter username&#10;3. Enter password&#10;4. Click Login" class="tc-input" rows="4" style="resize:vertical;line-height:1.5"></textarea>
       </div>
+      <div class="tc-manual-only" style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Test Data</label>
+        <textarea id="tc-testdata" placeholder="Values used to run this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+      <div class="tc-manual-only" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Actual Result</label>
+          <input id="tc-actual" placeholder="Filled in after running the test" class="tc-input"/>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
+          <select id="tc-status" class="tc-input">
+            <option value="NOT_RUN">Not Run</option>
+            <option value="PASS">Pass</option>
+            <option value="FAIL">Fail</option>
+            <option value="HOLD">Hold</option>
+            <option value="DUPLICATE">Duplicate</option>
+          </select>
+        </div>
+      </div>
       <div style="display:flex;justify-content:flex-end;gap:10px">
         <button onclick="closeCreateTcModal()" class="btn-v3-secondary">Cancel</button>
         <button onclick="addTestCase()" class="btn-v3-primary">+ Create Test Case</button>
@@ -4686,9 +4878,145 @@
   </div>
 </div>
 
+<!-- CREATE GENERIC TEST CASE MODAL — no Manual/Automation tag -->
+<div id="create-generic-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Test Case</div>
+      <button onclick="closeCreateGenericTcModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">TC ID</label>
+        <input id="gtc-id" placeholder="e.g. TC001" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Title</label>
+        <input id="gtc-title" placeholder="Test case title" class="tc-input"/>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+        <input id="gtc-module" placeholder="e.g. Login" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Project <span style="color:#aaa;font-weight:400">(optional)</span></label>
+        <input id="gtc-project" placeholder="e.g. Checkout Revamp" class="tc-input"/>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Testcase Scenario</label>
+      <textarea id="gtc-scenario" placeholder="Short description of the scenario being tested" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Web / App</label>
+      <select id="gtc-platform" class="tc-input">
+        <option value="Web">Web</option>
+        <option value="App">App</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Pre-Condition</label>
+      <textarea id="gtc-precondition" placeholder="What must be true before running this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Priority</label>
+      <select id="gtc-priority" class="tc-input">
+        <option value="P0">P0 — Critical</option>
+        <option value="P1">P1 — High</option>
+        <option value="P2" selected>P2 — Medium</option>
+        <option value="P3">P3 — Low</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Expected Result</label>
+      <input id="gtc-expected" placeholder="Expected outcome" class="tc-input"/>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Steps <span style="color:#aaa;font-weight:400">(one per line)</span></label>
+      <textarea id="gtc-steps" placeholder="1. Navigate to login page&#10;2. Enter username&#10;3. Enter password&#10;4. Click Login" class="tc-input" rows="4" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Test Data</label>
+      <textarea id="gtc-testdata" placeholder="Values used to run this test" class="tc-input" rows="2" style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Actual Result</label>
+        <input id="gtc-actual" placeholder="Filled in after running the test" class="tc-input"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Status</label>
+        <select id="gtc-status" class="tc-input">
+          <option value="NOT_RUN">Not Run</option>
+          <option value="PASS">Pass</option>
+          <option value="FAIL">Fail</option>
+          <option value="HOLD">Hold</option>
+          <option value="DUPLICATE">Duplicate</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="closeCreateGenericTcModal()" class="btn-v3-secondary">Cancel</button>
+      <button onclick="addGenericTestCase()" class="btn-v3-primary">+ Create Test Case</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE TEST SUITE MODAL -->
+<div id="create-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:420px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Test Suite</div>
+      <button onclick="closeCreateSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Suite Name</label>
+      <input id="suite-name" placeholder="e.g. Login Regression" class="tc-input"/>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="closeCreateSuiteModal()" class="btn-v3-secondary">Cancel</button>
+      <button onclick="createTestSuite()" class="btn-v3-primary">+ Create Suite</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TO SUITE MODAL -->
+<div id="add-to-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:420px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Add to Suite</div>
+      <button onclick="closeAddToSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div id="add-to-suite-body">
+      <div style="margin-bottom:20px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Suite</label>
+        <select id="add-to-suite-select" class="tc-input"></select>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="closeAddToSuiteModal()" class="btn-v3-secondary">Cancel</button>
+      <button onclick="confirmAddToSuite()" class="btn-v3-primary">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW TEST SUITE MODAL -->
+<div id="view-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e" id="view-suite-title">Suite</div>
+      <button onclick="closeViewSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div id="view-suite-tc-list"></div>
+  </div>
+</div>
+
 <!-- EDIT TEST CASE MODAL -->
 <div id="edit-tc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:540px;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:540px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f5">
       <div style="font-size:14px;font-weight:700;color:#1a1a2e">Edit Test Case</div>
       <button onclick="closeEditModal()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;line-height:1;padding:4px;border-radius:6px" onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background='none'">✕</button>
@@ -4730,6 +5058,22 @@
           <option value="P3">P3 — Low</option>
         </select>
       </div>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Testcase Scenario</label>
+      <textarea id="edit-tc-scenario" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="Short description of the scenario being tested"></textarea>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Web / App</label>
+      <select id="edit-tc-platform" class="tc-input">
+        <option value="Web">Web</option>
+        <option value="App">App</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Pre-Condition</label>
+      <textarea id="edit-tc-precondition" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="What must be true before running this test"></textarea>
     </div>
     <div style="margin-bottom:14px">
       <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Execution Result by Environment</label>
@@ -4776,6 +5120,26 @@
         <input id="edit-tc-expected" class="tc-input" placeholder="Expected outcome"/>
       </div>
     </div>
+    <div class="tc-manual-only" style="margin-bottom:14px">
+      <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Test Data</label>
+      <textarea id="edit-tc-testdata" class="tc-input" rows="2" style="resize:vertical;line-height:1.5" placeholder="Values used to run this test"></textarea>
+    </div>
+    <div class="tc-manual-only" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Actual Result</label>
+        <input id="edit-tc-actual" class="tc-input" placeholder="Filled in after running the test"/>
+      </div>
+      <div>
+        <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Status</label>
+        <select id="edit-tc-status" class="tc-input">
+          <option value="NOT_RUN">Not Run</option>
+          <option value="PASS">Pass</option>
+          <option value="FAIL">Fail</option>
+          <option value="HOLD">Hold</option>
+          <option value="DUPLICATE">Duplicate</option>
+        </select>
+      </div>
+    </div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
       <button onclick="closeEditModal()" class="btn-v3-secondary">Cancel</button>
       <button onclick="saveEditTC()" class="btn-v3-primary">Save Changes</button>
@@ -4809,6 +5173,8 @@
   // ── Filter logic ──
   function applyFilter(app) {
     currentApp = app;
+    localStorage.setItem('stacktest_current_app', app);
+    updateAppPickerButton();
     updateStats();
     filterTable();
     updateLastExecution();
@@ -4837,6 +5203,16 @@
     return currentApp.startsWith('proj:') ? currentApp.slice(5) : null;
   }
 
+  // True if a test case's project belongs under the current Applications
+  // selection. Picking a fixed app (e.g. "WMS") rolls up every project
+  // prefixed "WMS-" (WMS-Core, WMS-Inbound, ...); picking a specific
+  // sub-project (proj:WMS-Core) matches only that one project exactly.
+  function matchesActiveScope(projectName) {
+    if (currentApp === 'ALL') return true;
+    if (currentApp.startsWith('proj:')) return (projectName || '') === currentApp.slice(5);
+    return (projectName || '').startsWith(currentApp + '-');
+  }
+
   // ── Projects ──
   let allProjects = [];
 
@@ -4847,28 +5223,111 @@
     } catch (e) {
       allProjects = [];
     }
-    const sel = document.getElementById('app-filter');
-    const prevVal = sel.value;
-    const projectOptions = allProjects.map(p =>
-      `<option value="proj:${p.name}">📁 ${p.name}</option>`).join('');
-    sel.innerHTML = `
-      <option value="ALL">All Projects</option>
-      <option value="YMS">YMS</option>
-      <option value="YMSOUTBOUND">YMSOUTBOUND</option>
-      ${projectOptions ? `<option disabled>──────────</option>${projectOptions}` : ''}
-      <option value="__new_project__">+ New Project…</option>
-    `;
-    if ([...sel.options].some(o => o.value === prevVal)) sel.value = prevVal;
+    updateAppPickerButton();
   }
 
-  function onAppFilterChange(value) {
+  // ── Applications picker (replaces the old Project <select>) ──
+  // Fixed set of applications — no "All Projects" combined view and no
+  // custom/dynamic entries beyond these five.
+  const APP_DEFS = [
+    { key: 'ALL', label: 'All', desc: 'Combined view across every application', color: '#6b7280', icon: 'all' },
+    { key: 'WMS', label: 'WMS', desc: 'Warehouse Management', color: '#00838f', icon: 'wms' },
+    { key: 'TMS', label: 'TMS', desc: 'Transport Management', color: '#2e7d32', icon: 'tms' },
+    { key: 'YMS', label: 'YMS', desc: 'Yard Management', color: '#1565c0', icon: 'yms' },
+    { key: 'OMS', label: 'OMS', desc: 'Order Management', color: '#ef6c00', icon: 'oms' },
+  ];
+  const APP_ICON_PATHS = {
+    all: '<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',
+    wms: '<path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/>',
+    tms: '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/>',
+    yms: '<path d="M4 20V6l4-2 4 2 4-2 4 2v14"/><path d="M4 20h16"/><path d="M8 20v-5M12 20v-5M16 20v-5"/>',
+    oms: '<rect x="6" y="4" width="12" height="17" rx="1.5"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="m9 12 2 2 4-4"/>',
+    admin: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+    outbound: '<rect x="3" y="8" width="12" height="12" rx="1.5"/><path d="M13 4h6v6"/><path d="m19 4-8 8"/>',
+    folder: '<path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+  };
+  function appIconSvg(type, size, stroke) {
+    return `<svg width="${size || 16}" height="${size || 16}" viewBox="0 0 24 24" fill="none" stroke="${stroke || '#fff'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${APP_ICON_PATHS[type] || APP_ICON_PATHS.folder}</svg>`;
+  }
+  function appDisplayInfo(value) {
+    const def = APP_DEFS.find(a => a.key === value);
+    if (def) return def;
+    if (value.startsWith('proj:')) {
+      return { key: value, label: value.slice(5), desc: 'Custom project', color: '#3949ab', icon: 'folder' };
+    }
+    return APP_DEFS[0];
+  }
+  function updateAppPickerButton() {
+    const info = appDisplayInfo(currentApp);
+    const labelEl = document.getElementById('app-picker-label');
+    const iconEl = document.getElementById('app-picker-icon');
+    if (!labelEl || !iconEl) return;
+    labelEl.textContent = info.label;
+    iconEl.style.background = info.color;
+    iconEl.innerHTML = appIconSvg(info.icon, 15);
+  }
+  function renderAppPickerGrid() {
+    const grid = document.getElementById('app-picker-grid');
+    if (!grid) return;
+    grid.innerHTML = APP_DEFS.map(c => {
+      const isAll = c.key === 'ALL';
+      const prefix = c.key + '-';
+      const subProjects = isAll ? [] : allProjects.filter(p => p.name.startsWith(prefix));
+      const chipsHtml = subProjects.length ? `
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px">
+          ${subProjects.map(p => `<span onclick="event.stopPropagation();selectApp('proj:${p.name.replace(/'/g, "\\'")}')" style="font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:10px;background:#eef2f8;color:#3949ab;cursor:pointer">${p.name}</span>`).join('')}
+        </div>` : '';
+      const addBtnHtml = isAll ? '' : `<button onclick="event.stopPropagation();createSubProject('${c.key.replace(/'/g, "\\'")}')" title="Add a project under ${c.label}" style="position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:1px solid #ddd;background:#fff;color:#888;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">+</button>`;
+      return `
+      <div onclick="selectApp('${c.key.replace(/'/g, "\\'")}')" style="position:relative;border:1px solid #eee;border-radius:12px;padding:16px;cursor:pointer" onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+        ${addBtnHtml}
+        <div style="width:42px;height:42px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;margin-bottom:10px">${appIconSvg(c.icon, 20)}</div>
+        <div style="font-weight:700;font-size:14px;color:#1a1a2e">${c.label}</div>
+        <div style="font-size:12px;color:#888;margin-top:2px">${c.desc}</div>
+        ${chipsHtml}
+      </div>`;
+    }).join('');
+  }
+  async function createSubProject(appKey) {
+    const name = prompt('New project name under ' + appKey + ' (e.g. "Core" becomes "' + appKey + '-Core"):');
+    if (!name || !name.trim()) return;
+    const fullName = appKey + '-' + name.trim();
+    try {
+      const { project } = await api('/projects', { method: 'POST', body: JSON.stringify({ name: fullName }) });
+      await loadProjectsIntoFilter();
+      renderAppPickerGrid();
+      selectApp('proj:' + project.name);
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+  function selectApp(value) {
     if (value === '__new_project__') {
-      document.getElementById('app-filter').value = currentApp; // don't leave the sentinel selected
+      closeAppPicker();
       openCreateProjectModal();
       return;
     }
     applyFilter(value);
+    closeAppPicker();
   }
+  function toggleAppPicker(e) {
+    if (e) e.stopPropagation();
+    const panel = document.getElementById('app-picker-panel');
+    const opening = panel.style.display !== 'block';
+    panel.style.display = opening ? 'block' : 'none';
+    if (opening) renderAppPickerGrid();
+  }
+  function closeAppPicker() {
+    document.getElementById('app-picker-panel').style.display = 'none';
+  }
+  document.addEventListener('click', (e) => {
+    const btn = document.getElementById('app-picker-btn');
+    const panel = document.getElementById('app-picker-panel');
+    if (panel && panel.style.display === 'block' && btn && !btn.contains(e.target) && !panel.contains(e.target)) {
+      closeAppPicker();
+    }
+  });
 
   function openCreateProjectModal() {
     document.getElementById('new-project-name').value = '';
@@ -4889,9 +5348,7 @@
       const { project } = await api('/projects', { method: 'POST', body: JSON.stringify({ name }) });
       closeCreateProjectModal();
       await loadProjectsIntoFilter();
-      const value = 'proj:' + project.name;
-      document.getElementById('app-filter').value = value;
-      applyFilter(value);
+      applyFilter('proj:' + project.name);
     } catch (e) {
       errEl.textContent = e.message;
       errEl.style.display = 'block';
@@ -5139,8 +5596,7 @@
     if (modTbody) {
       // Scoped to the active Project filter — same convention as the other
       // Manual dashboard widgets (renderManualModuleBreakdown etc.).
-      const activeProject = selectedProjectName();
-      const projectTcs = activeProject ? tcs.filter(tc => tc.project === activeProject) : tcs;
+      const projectTcs = tcs.filter(tc => matchesActiveScope(tc.project));
       const modules = [...new Set(projectTcs.map(tc => tc.module || 'General'))].sort();
       modTbody.innerHTML = modules.length ? modules.map((m, idx) => {
         const group = projectTcs.filter(tc => (tc.module || 'General') === m);
@@ -5190,8 +5646,7 @@
   }
 
   function renderManualKeyMetrics(manualTCs) {
-    const activeProject = selectedProjectName();
-    const scoped = activeProject ? manualTCs.filter(tc => tc.project === activeProject) : manualTCs;
+    const scoped = manualTCs.filter(tc => matchesActiveScope(tc.project));
     const modules = new Set(scoped.map(tc => tc.module || 'General'));
     const projects = new Set(scoped.map(tc => tc.project).filter(Boolean));
     const dates = scoped.map(tc => new Date(tc.created)).filter(dt => !isNaN(dt.getTime()));
@@ -5228,8 +5683,7 @@
   }
 
   function renderManualModuleBreakdown(manualTCs) {
-    const activeProject = selectedProjectName();
-    const scoped = activeProject ? manualTCs.filter(tc => tc.project === activeProject) : manualTCs;
+    const scoped = manualTCs.filter(tc => matchesActiveScope(tc.project));
     const counts = {};
     scoped.forEach(tc => { const m = tc.module || 'General'; counts[m] = (counts[m] || 0) + 1; });
     renderBreakdownBars('manual-module-breakdown-card', counts, 'No manual test cases yet');
@@ -5259,8 +5713,7 @@
     // Manual test cases must respect whatever project is selected in the App
     // filter too — otherwise this tile silently counted every project's
     // manual test cases even while looking at just one of them.
-    const activeProject = selectedProjectName();
-    const scopedManualTCs = activeProject ? manualTCs.filter(tc => tc.project === activeProject) : manualTCs;
+    const scopedManualTCs = manualTCs.filter(tc => matchesActiveScope(tc.project));
     const manualCount = dashScope === 'AUTOMATION' ? 0 : scopedManualTCs.length;
     const totalTCs = automatedTCs + manualCount;
 
@@ -5626,7 +6079,7 @@
     const btnEl = document.getElementById('auth-submit-btn');
     if (mode === 'bootstrap') {
       titleEl.textContent = 'Create the first admin account';
-      subEl.textContent = 'No one has set up StackTest yet — this account becomes an admin.';
+      subEl.textContent = 'No one has set up Stackbox Test yet — this account becomes an admin.';
       btnEl.textContent = 'Create Admin Account';
     } else if (mode === 'invite') {
       titleEl.textContent = opts.type === 'reset' ? 'Reset your password' : 'Set your password';
@@ -5657,7 +6110,12 @@
     document.getElementById('nav-admin-section').style.display = isAdmin ? 'block' : 'none';
     showAuthMessage('');
     await loadProjectsIntoFilter();
-    applyFilter('ALL');
+
+    // Restore the Application the user had selected instead of always
+    // resetting to All on refresh.
+    const savedApp = localStorage.getItem('stacktest_current_app') || 'ALL';
+    const savedAppStillValid = APP_DEFS.some(a => a.key === savedApp) || allProjects.some(p => 'proj:' + p.name === savedApp);
+    applyFilter(savedAppStillValid ? savedApp : 'ALL');
 
     // Restore whichever page the user was last looking at instead of
     // always dropping back to the Dashboard on refresh.
@@ -5800,8 +6258,9 @@
     if (navEl) navEl.classList.add('active');
     const titles = {
       home:'Dashboard', results:'Latest Results', testcases:'Test Cases',
+      'testcases-generic':'Test Cases', 'test-suites':'Test Suites',
       export:'Reports', bugs:'All Issues', admin:'Admin',
-      testplans:'Test Plans',
+      testplans:'Test Plans', 'generate-testcase':'Generate Test Case',
       'automation-tests':'Automation Tests', 'automation-suites':'Automation Suites', 'automation-runs':'Automation Runs', 'automation-builder':'AI Recorder',
       'failed-tests':'Failed Tests', 'flaky-tests':'Flaky Tests',
       'execution-history':'Execution History', 'open-issues':'Open Issues', 'blocked-tests':'Blocked Tests',
@@ -5810,19 +6269,22 @@
     document.getElementById('page-title').textContent = titles[name] || name;
     if (name === 'home') renderDashboard();
     if (name === 'testcases') renderTestCases();
+    if (name === 'testcases-generic') renderGenericTestCases();
+    if (name === 'test-suites') renderTestSuitesPage();
     if (name === 'bugs') renderBugs();
     if (name === 'admin') loadAdminInvites();
     if (name === 'team-members') loadTeamMembers();
     if (name === 'settings') loadSettingsFromStorage();
     if (name === 'automation-tests') renderAutomationTestsPage();
     if (name === 'automation-builder') { loadAiRecorderBlocks(); loadAiRecorderReviewQueue(); }
+    if (name === 'generate-testcase') renderGeneratedTestCases();
   }
 
   // ── Team Members ──
   // 'admin' is the only role the backend actually enforces (invite
   // generation, removing/re-roling teammates). Viewer/Developer/Tester/
   // Content Manager are real, persisted role labels an admin can assign,
-  // but StackTest doesn't have a fine-grained permission engine yet, so
+  // but Stackbox Test doesn't have a fine-grained permission engine yet, so
   // they all currently behave like a non-admin "Member" in the app itself —
   // the "features" list below is what each role is INTENDED to cover.
   const SYSTEM_ROLES = {
@@ -6968,17 +7430,36 @@
   function saveTestCases(tcs) {
     localStorage.setItem('stacktest_testcases', JSON.stringify(tcs));
   }
+  const TC_STATUS_STYLE = {
+    PASS: 'background:#e8f5e9;color:#2e7d32',
+    FAIL: 'background:#ffebee;color:#c62828',
+    NOT_RUN: 'background:#f5f5f5;color:#757575',
+    HOLD: 'background:#fff3e0;color:#e65100',
+    DUPLICATE: 'background:#e3f2fd;color:#1565c0',
+  };
+  const TC_STATUS_LABEL = { PASS: 'Pass', FAIL: 'Fail', NOT_RUN: 'Not Run', HOLD: 'Hold', DUPLICATE: 'Duplicate' };
+  function tcStatusSelectStyle(status) {
+    const c = TC_STATUS_STYLE[status] || TC_STATUS_STYLE.NOT_RUN;
+    return `${c};padding:5px 8px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid transparent;cursor:pointer`;
+  }
+  function updateTcStatus(i, status) {
+    const tcs = loadTestCases();
+    if (!tcs[i]) return;
+    tcs[i].status = status;
+    saveTestCases(tcs);
+    renderTestCases();
+    renderDashboard();
+  }
   function renderTestCases() {
     const allTcs = loadTestCases();
-    const activeProject = selectedProjectName();
-    const tcs = activeProject ? allTcs.filter(tc => tc.project === activeProject) : allTcs;
+    const tcs = allTcs.filter(tc => matchesActiveScope(tc.project));
     const tbody = document.getElementById('tc-tbody');
     if (!tbody) return;
     if (tcs.length === 0) {
-      const msg = activeProject
-        ? `No test cases tagged to "${activeProject}" yet. Add one above with that project name.`
+      const msg = currentApp !== 'ALL'
+        ? `No test cases tagged to "${appDisplayInfo(currentApp).label}" yet. Add one above with that project name.`
         : 'No test cases yet. Add one above or import a CSV.';
-      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="16" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
       updateTcSelectionUi();
       return;
     }
@@ -6987,15 +7468,23 @@
       const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:#555;font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
       const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:#bbb">—</span>';
       const isAutomation = tc.type === 'automation';
+      const status = tc.status || 'NOT_RUN';
+      const dash = v => v ? v : '<span style="color:#bbb">—</span>';
       return `<tr>
         <td><input type="checkbox" class="tc-row-check" onchange="toggleTcSelect('${tc.id}', this.checked)" ${selectedTcIds.has(tc.id) ? 'checked' : ''}/></td>
         <td><span class="tc-pill">${tc.id}</span></td>
-        <td style="font-weight:500">${tc.title}</td>
+        <td style="font-weight:500">${tc.title}${tc.aiGenerated ? ' <span class="app-tag" style="background:#ede7f6;color:#5e35b1;font-size:9.5px;padding:1px 6px;vertical-align:middle">✨ AI</span>' : ''}</td>
         <td><span class="app-tag" style="background:${isAutomation ? '#ede7f6' : '#e8f5e9'};color:${isAutomation ? '#5e35b1' : '#2e7d32'}">${isAutomation ? '🖥 Automation' : '📝 Manual'}</span></td>
         <td><span class="app-tag">${tc.module}</span></td>
         <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
+        <td style="max-width:200px;font-size:12px;color:#555">${dash(tc.scenario)}</td>
+        <td>${isAutomation ? '<span style="color:#bbb">—</span>' : `<span class="app-tag">${tc.platform || 'Web'}</span>`}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.preCondition)}</td>
         <td style="max-width:220px">${stepsHtml}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.testData)}</td>
         <td style="color:#1565c0;font-size:12px">${tc.expected}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.actualResult)}</td>
+        <td>${isAutomation ? '<span style="color:#bbb">—</span>' : `<select style="${tcStatusSelectStyle(status)}" onchange="updateTcStatus(${i}, this.value)">${Object.keys(TC_STATUS_LABEL).map(k => `<option value="${k}" ${k === status ? 'selected' : ''}>${TC_STATUS_LABEL[k]}</option>`).join('')}</select>`}</td>
         <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
         <td>${rowActionsMenu('tc-' + i, [
           { label: '✏️ Edit', onclick: `editTC(${i})` },
@@ -7038,15 +7527,14 @@
   }
   function renderAutomationTestsPage() {
     const allTcs = loadTestCases();
-    const activeProject = selectedProjectName();
     let tcs = allTcs.filter(tc => tc.type === 'automation');
-    if (activeProject) tcs = tcs.filter(tc => tc.project === activeProject);
+    tcs = tcs.filter(tc => matchesActiveScope(tc.project));
     document.getElementById('automation-tests-count-heading').textContent = `Automation Tests (${tcs.length})`;
     const tbody = document.getElementById('automation-tests-tbody');
     if (!tbody) return;
     if (tcs.length === 0) {
-      const msg = activeProject
-        ? `No automation test cases tagged to "${activeProject}" yet.`
+      const msg = currentApp !== 'ALL'
+        ? `No automation test cases tagged to "${appDisplayInfo(currentApp).label}" yet.`
         : 'No automation test cases yet — create one, or record one with the AI Recorder.';
       tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
       updateAutomationTcSelectionUi();
@@ -7121,12 +7609,19 @@
     const priority = document.getElementById('tc-priority').value;
     const exp   = document.getElementById('tc-expected').value.trim();
     const steps = document.getElementById('tc-steps').value.trim();
+    const scenario = document.getElementById('tc-scenario').value.trim();
+    const platform = document.getElementById('tc-platform').value;
+    const preCondition = document.getElementById('tc-precondition').value.trim();
+    const testData = document.getElementById('tc-testdata').value.trim();
+    const actualResult = document.getElementById('tc-actual').value.trim();
+    const status = document.getElementById('tc-status').value;
     if (!id || !title) { alert('TC ID and Title are required'); return; }
     const type = document.getElementById('tc-type').value;
     const tcs = loadTestCases();
     const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     tcs.push({
       id, title, type, module: mod||'General', project: proj, priority, expected: exp||'—', steps, created: now,
+      scenario, platform, preCondition, testData, actualResult, status,
       results: { Staging: 'NOT_TESTED', UAT: 'NOT_TESTED', PreProd: 'NOT_TESTED' },
     });
     saveTestCases(tcs);
@@ -7135,12 +7630,249 @@
     closeCreateTcModal();
   }
 
+  // ── Generic Test Cases (localStorage) — same sheet as Manual Test Cases, minus the type tag ──
+  function loadGenericTestCases() {
+    return JSON.parse(localStorage.getItem('stacktest_testcases_generic') || '[]');
+  }
+  function saveGenericTestCases(tcs) {
+    localStorage.setItem('stacktest_testcases_generic', JSON.stringify(tcs));
+  }
+  function openCreateGenericTcModal() {
+    ['gtc-id','gtc-title','gtc-module','gtc-project','gtc-expected','gtc-steps','gtc-scenario','gtc-precondition','gtc-testdata','gtc-actual'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('gtc-platform').value = 'Web';
+    document.getElementById('gtc-priority').value = 'P2';
+    document.getElementById('gtc-status').value = 'NOT_RUN';
+    document.getElementById('create-generic-tc-modal').style.display = 'flex';
+  }
+  function closeCreateGenericTcModal() {
+    document.getElementById('create-generic-tc-modal').style.display = 'none';
+  }
+  function addGenericTestCase() {
+    const id    = document.getElementById('gtc-id').value.trim();
+    const title = document.getElementById('gtc-title').value.trim();
+    const mod   = document.getElementById('gtc-module').value.trim();
+    const proj  = document.getElementById('gtc-project').value.trim() || selectedProjectName() || '';
+    const priority = document.getElementById('gtc-priority').value;
+    const exp   = document.getElementById('gtc-expected').value.trim();
+    const steps = document.getElementById('gtc-steps').value.trim();
+    const scenario = document.getElementById('gtc-scenario').value.trim();
+    const platform = document.getElementById('gtc-platform').value;
+    const preCondition = document.getElementById('gtc-precondition').value.trim();
+    const testData = document.getElementById('gtc-testdata').value.trim();
+    const actualResult = document.getElementById('gtc-actual').value.trim();
+    const status = document.getElementById('gtc-status').value;
+    if (!id || !title) { alert('TC ID and Title are required'); return; }
+    const tcs = loadGenericTestCases();
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    tcs.push({
+      id, title, module: mod||'General', project: proj, priority, expected: exp||'—', steps, created: now,
+      scenario, platform, preCondition, testData, actualResult, status,
+    });
+    saveGenericTestCases(tcs);
+    renderGenericTestCases();
+    closeCreateGenericTcModal();
+  }
+  function updateGenericTcStatus(i, value) {
+    const tcs = loadGenericTestCases();
+    tcs[i].status = value;
+    saveGenericTestCases(tcs);
+  }
+  function deleteGenericTC(i) {
+    if (!confirm('Delete this test case?')) return;
+    const tcs = loadGenericTestCases(); tcs.splice(i,1); saveGenericTestCases(tcs); renderGenericTestCases();
+  }
+  function renderGenericTestCases() {
+    const allTcs = loadGenericTestCases();
+    const activeProject = selectedProjectName();
+    const tcs = activeProject ? allTcs.filter(tc => tc.project === activeProject) : allTcs;
+    const tbody = document.getElementById('generic-tc-tbody');
+    if (!tbody) return;
+    if (tcs.length === 0) {
+      const msg = activeProject
+        ? `No test cases tagged to "${activeProject}" yet. Add one above with that project name.`
+        : 'No test cases yet. Add one above.';
+      tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;color:#aaa;padding:20px">${msg}</td></tr>`;
+      updateGenericTcSelectionUi();
+      return;
+    }
+    const dash = v => v ? v : '<span style="color:#bbb">—</span>';
+    tbody.innerHTML = tcs.map((tc) => {
+      const i = allTcs.indexOf(tc);
+      const stepsList = tc.steps ? tc.steps.split('\n').filter(s => s.trim()).map((s,si) => `<li style="color:#555;font-size:11px;padding:1px 0">${si+1}. ${s.trim()}</li>`).join('') : '';
+      const stepsHtml = stepsList ? `<ol style="padding-left:14px;margin:0;list-style:none">${stepsList}</ol>` : '<span style="color:#bbb">—</span>';
+      const status = tc.status || 'NOT_RUN';
+      return `<tr>
+        <td><input type="checkbox" class="gtc-row-check" onchange="toggleGenericTcSelect('${tc.id}', this.checked)" ${selectedGenericTcIds.has(tc.id) ? 'checked' : ''}/></td>
+        <td><span class="tc-pill">${tc.id}</span></td>
+        <td style="font-weight:500">${tc.title}</td>
+        <td><span class="app-tag">${tc.module}</span></td>
+        <td>${tc.project ? `<span class="app-tag" style="background:#e8eaf6;color:#3949ab">📁 ${tc.project}</span>` : '<span style="color:#bbb;font-size:12px">—</span>'}</td>
+        <td style="max-width:200px;font-size:12px;color:#555">${dash(tc.scenario)}</td>
+        <td><span class="app-tag">${tc.platform || 'Web'}</span></td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.preCondition)}</td>
+        <td style="max-width:220px">${stepsHtml}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.testData)}</td>
+        <td style="color:#1565c0;font-size:12px">${tc.expected}</td>
+        <td style="max-width:180px;font-size:12px;color:#555">${dash(tc.actualResult)}</td>
+        <td><select style="${tcStatusSelectStyle(status)}" onchange="updateGenericTcStatus(${i}, this.value)">${Object.keys(TC_STATUS_LABEL).map(k => `<option value="${k}" ${k === status ? 'selected' : ''}>${TC_STATUS_LABEL[k]}</option>`).join('')}</select></td>
+        <td style="color:#aaa;font-size:11px;white-space:nowrap">${tc.created}</td>
+        <td>${rowActionsMenu('gtc-' + i, [
+          { label: '🗑️ Delete', danger: true, onclick: `deleteGenericTC(${i})` },
+        ])}</td>
+      </tr>`;
+    }).join('');
+    updateGenericTcSelectionUi();
+  }
+
+  // ── Bulk select/delete: Test Cases (generic) ──
+  const selectedGenericTcIds = new Set();
+  function toggleGenericTcSelect(id, checked) {
+    if (checked) selectedGenericTcIds.add(id); else selectedGenericTcIds.delete(id);
+    updateGenericTcSelectionUi();
+  }
+  function toggleSelectAllGenericTc(checked) {
+    document.querySelectorAll('#generic-tc-tbody .gtc-row-check').forEach(cb => {
+      cb.checked = checked;
+      cb.dispatchEvent(new Event('change'));
+    });
+  }
+  function updateGenericTcSelectionUi() {
+    const count = selectedGenericTcIds.size;
+    document.getElementById('gtc-selected-count').textContent = count;
+    document.getElementById('gtc-selected-count-2').textContent = count;
+    document.getElementById('gtc-delete-selected-btn').style.display = count ? 'inline-block' : 'none';
+    document.getElementById('gtc-add-to-suite-btn').style.display = count ? 'inline-block' : 'none';
+    const rowChecks = document.querySelectorAll('#generic-tc-tbody .gtc-row-check');
+    const selectAll = document.getElementById('gtc-select-all');
+    selectAll.checked = rowChecks.length > 0 && Array.from(rowChecks).every(cb => cb.checked);
+  }
+  function deleteSelectedGenericTc() {
+    if (!selectedGenericTcIds.size) return;
+    if (!confirm(`Delete ${selectedGenericTcIds.size} selected test case(s)? This can't be undone.`)) return;
+    const tcs = loadGenericTestCases().filter(tc => !selectedGenericTcIds.has(tc.id));
+    saveGenericTestCases(tcs);
+    selectedGenericTcIds.clear();
+    renderGenericTestCases();
+  }
+
+  // ── Test Suites (localStorage) — group existing test cases for execution/reporting ──
+  function loadTestSuites() {
+    return JSON.parse(localStorage.getItem('stacktest_test_suites') || '[]');
+  }
+  function saveTestSuites(suites) {
+    localStorage.setItem('stacktest_test_suites', JSON.stringify(suites));
+  }
+  function openCreateSuiteModal() {
+    document.getElementById('suite-name').value = '';
+    document.getElementById('create-suite-modal').style.display = 'flex';
+  }
+  function closeCreateSuiteModal() {
+    document.getElementById('create-suite-modal').style.display = 'none';
+  }
+  function createTestSuite() {
+    const name = document.getElementById('suite-name').value.trim();
+    if (!name) { alert('Suite name is required'); return; }
+    const suites = loadTestSuites();
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    suites.push({
+      id: suites.length ? Math.max(...suites.map(s => s.id)) + 1 : 1,
+      name, tcIds: [], created: now,
+    });
+    saveTestSuites(suites);
+    closeCreateSuiteModal();
+    renderTestSuitesPage();
+  }
+  function deleteTestSuite(id) {
+    if (!confirm('Delete this test suite? Test cases themselves are not affected.')) return;
+    saveTestSuites(loadTestSuites().filter(s => s.id !== id));
+    renderTestSuitesPage();
+  }
+  function renderTestSuitesPage() {
+    const suites = loadTestSuites();
+    const tbody = document.getElementById('test-suites-tbody');
+    if (!tbody) return;
+    if (suites.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">No test suites yet. Create one, or select test cases on the Test Cases page and use "Add to Suite".</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = suites.map(s => `
+      <tr>
+        <td style="font-weight:500"><a href="#" onclick="openViewSuiteModal(${s.id});return false" style="color:#1565c0;text-decoration:none">${s.name}</a></td>
+        <td>${s.tcIds.length}</td>
+        <td style="color:#aaa;font-size:11px;white-space:nowrap">${s.created}</td>
+        <td>${rowActionsMenu('suite-' + s.id, [
+          { label: '🗑️ Delete', danger: true, onclick: `deleteTestSuite(${s.id})` },
+        ])}</td>
+      </tr>`).join('');
+  }
+  function openViewSuiteModal(suiteId) {
+    const suite = loadTestSuites().find(s => s.id === suiteId);
+    if (!suite) return;
+    document.getElementById('view-suite-title').textContent = suite.name;
+    const allTcs = loadGenericTestCases();
+    const list = document.getElementById('view-suite-tc-list');
+    if (!suite.tcIds.length) {
+      list.innerHTML = `<div style="color:#aaa;padding:12px 0">No test cases in this suite yet.</div>`;
+    } else {
+      list.innerHTML = suite.tcIds.map(tcId => {
+        const tc = allTcs.find(t => t.id === tcId);
+        const label = tc ? `<span class="tc-pill">${tc.id}</span> ${tc.title}` : `<span class="tc-pill">${tcId}</span> <span style="color:#aaa">(deleted)</span>`;
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f5">
+          <span style="font-size:13px">${label}</span>
+          <button onclick="removeTcFromSuite(${suiteId}, '${tcId}')" class="btn-v3-secondary" style="padding:2px 8px;font-size:11px;color:#c62828;border-color:#f5c6c6">Remove</button>
+        </div>`;
+      }).join('');
+    }
+    document.getElementById('view-suite-modal').style.display = 'flex';
+  }
+  function closeViewSuiteModal() {
+    document.getElementById('view-suite-modal').style.display = 'none';
+  }
+  function removeTcFromSuite(suiteId, tcId) {
+    const suites = loadTestSuites();
+    const suite = suites.find(s => s.id === suiteId);
+    if (!suite) return;
+    suite.tcIds = suite.tcIds.filter(id => id !== tcId);
+    saveTestSuites(suites);
+    renderTestSuitesPage();
+    openViewSuiteModal(suiteId);
+  }
+  function openAddToSuiteModal() {
+    if (!selectedGenericTcIds.size) return;
+    const suites = loadTestSuites();
+    const select = document.getElementById('add-to-suite-select');
+    if (!suites.length) {
+      select.innerHTML = `<option value="">No suites yet — create one first</option>`;
+    } else {
+      select.innerHTML = suites.map(s => `<option value="${s.id}">${s.name} (${s.tcIds.length})</option>`).join('');
+    }
+    document.getElementById('add-to-suite-modal').style.display = 'flex';
+  }
+  function closeAddToSuiteModal() {
+    document.getElementById('add-to-suite-modal').style.display = 'none';
+  }
+  function confirmAddToSuite() {
+    const suiteId = Number(document.getElementById('add-to-suite-select').value);
+    if (!suiteId) { alert('Create a test suite first.'); return; }
+    const suites = loadTestSuites();
+    const suite = suites.find(s => s.id === suiteId);
+    if (!suite) return;
+    const merged = new Set(suite.tcIds);
+    selectedGenericTcIds.forEach(id => merged.add(id));
+    suite.tcIds = Array.from(merged);
+    saveTestSuites(suites);
+    closeAddToSuiteModal();
+    renderTestSuitesPage();
+  }
+
   // ── Create Test Case modal: step 1 (pick a type) → step 2 (fill details) ──
   // A fixedType ('manual' or 'automation') skips the picker entirely — used when
   // the button already lives on a type-specific page (Test Cases / Automation Tests).
   // Called with no args (Dashboard), it still asks the user to choose.
   function openCreateTcModal(fixedType) {
-    ['tc-id','tc-title','tc-module','tc-project','tc-expected','tc-steps'].forEach(fid => document.getElementById(fid).value = '');
+    ['tc-id','tc-title','tc-module','tc-project','tc-expected','tc-steps','tc-scenario','tc-precondition','tc-testdata','tc-actual'].forEach(fid => document.getElementById(fid).value = '');
+    document.getElementById('tc-platform').value = 'Web';
+    document.getElementById('tc-status').value = 'NOT_RUN';
     document.getElementById('create-tc-modal').style.display = 'flex';
     document.getElementById('create-tc-back-btn').style.display = fixedType ? 'none' : '';
     if (fixedType) {
@@ -7162,6 +7894,7 @@
     }
     document.getElementById('create-tc-step1').style.display = 'none';
     document.getElementById('create-tc-step2').style.display = 'block';
+    document.querySelectorAll('#create-tc-step2 .tc-manual-only').forEach(el => el.style.display = type === 'manual' ? '' : 'none');
     document.getElementById('tc-id').focus();
   }
   function backToTcTypeChoice() {
@@ -7187,6 +7920,12 @@
     document.getElementById('edit-tc-priority').value = tc.priority || 'P2';
     document.getElementById('edit-tc-steps').value = tc.steps || '';
     document.getElementById('edit-tc-expected').value = tc.expected === '—' ? '' : tc.expected;
+    document.getElementById('edit-tc-scenario').value = tc.scenario || '';
+    document.getElementById('edit-tc-platform').value = tc.platform || 'Web';
+    document.getElementById('edit-tc-precondition').value = tc.preCondition || '';
+    document.getElementById('edit-tc-testdata').value = tc.testData || '';
+    document.getElementById('edit-tc-actual').value = tc.actualResult || '';
+    document.getElementById('edit-tc-status').value = tc.status || 'NOT_RUN';
     const results = tc.results || {};
     document.getElementById('edit-tc-result-staging').value = results.Staging || 'NOT_TESTED';
     document.getElementById('edit-tc-result-uat').value = results.UAT || 'NOT_TESTED';
@@ -7197,6 +7936,7 @@
   function setEditTcTypeTab(type) {
     document.getElementById('edit-tc-type').value = type;
     document.querySelectorAll('#edit-tc-type-tabs .seg-tab').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+    document.querySelectorAll('#edit-tc-modal .tc-manual-only').forEach(el => el.style.display = type === 'manual' ? '' : 'none');
   }
   function closeEditModal() {
     document.getElementById('edit-tc-modal').style.display = 'none';
@@ -7214,6 +7954,12 @@
       priority: document.getElementById('edit-tc-priority').value,
       steps:    document.getElementById('edit-tc-steps').value.trim(),
       expected: document.getElementById('edit-tc-expected').value.trim() || '—',
+      scenario:     document.getElementById('edit-tc-scenario').value.trim(),
+      platform:     document.getElementById('edit-tc-platform').value,
+      preCondition: document.getElementById('edit-tc-precondition').value.trim(),
+      testData:     document.getElementById('edit-tc-testdata').value.trim(),
+      actualResult: document.getElementById('edit-tc-actual').value.trim(),
+      status:       document.getElementById('edit-tc-status').value,
       results: {
         Staging: document.getElementById('edit-tc-result-staging').value,
         UAT: document.getElementById('edit-tc-result-uat').value,
@@ -7228,20 +7974,22 @@
   function exportTestCases() {
     const tcs = loadTestCases();
     const wsData = [
-      ['TC ID','Title','Type','Module','Project','Steps','Expected Result','Created'],
-      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.steps||'', t.expected, t.created])
+      ['TC ID','Title','Type','Module','Project','Testcase Scenario','Web / App','Pre-Condition','Steps','Test Data','Expected Result','Actual Result','Status','Created'],
+      ...tcs.map(t => [t.id, t.title, t.type === 'automation' ? 'Automation' : 'Manual', t.module, t.project||'', t.scenario||'', t.platform||'', t.preCondition||'', t.steps||'', t.testData||'', t.expected, t.actualResult||'', t.status||'NOT_RUN', t.created])
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
-    ws['!cols'] = [12,28,12,14,18,40,28,14].map(w => ({wch:w}));
+    ws['!cols'] = [12,28,12,14,18,28,10,28,40,24,28,24,10,14].map(w => ({wch:w}));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Test Cases');
     XLSX.writeFile(wb, 'test-cases.xlsx');
   }
   function downloadSampleTestCases() {
-    // No header row — importTestCases() detects a headerless file automatically.
+    // Header row included so the columns are self-explanatory; importTestCases()
+    // detects and skips it automatically (falls back to headerless files too).
     const rows = [
-      ['TC_001','Verify login with valid credentials','Manual','Login','','Open login page | Enter valid email and password | Click Login','User is redirected to the dashboard','14 Aug 2026'],
-      ['TC_002','Verify login fails with wrong password','Manual','Login','','Open login page | Enter valid email and wrong password | Click Login','Error message "Invalid credentials" is shown','14 Aug 2026'],
+      ['TC ID','Title','Type','Module','Project','Testcase Scenario','Web / App','Pre-Condition','Steps','Test Data','Expected Result','Actual Result','Status','Created'],
+      ['TC_001','Verify login with valid credentials','Manual','Login','','User logs in with a valid email/password pair','Web','User has an active account','Open login page | Enter valid email and password | Click Login','email: test@stackbox.xyz / password: Valid@123','User is redirected to the dashboard','','NOT_RUN','14 Aug 2026'],
+      ['TC_002','Verify login fails with wrong password','Manual','Login','','User attempts login with an incorrect password','Web','User has an active account','Open login page | Enter valid email and wrong password | Click Login','email: test@stackbox.xyz / password: WrongPass1','Error message "Invalid credentials" is shown','','NOT_RUN','14 Aug 2026'],
     ];
     const escape = v => {
       const s = String(v ?? '');
@@ -7279,7 +8027,8 @@
         const text = e.target.result;
         const lines = text.split('\n').filter(l => l.trim());
         // Columns match the Stored Test Cases table / sample file:
-        // TC ID, Title, Type, Module, Project, Steps, Expected Result, Created
+        // TC ID, Title, Type, Module, Project, Testcase Scenario, Web / App, Pre-Condition,
+        // Steps, Test Data, Expected Result, Actual Result, Status, Created
         // Only skip the first line if it's actually a header (sample file ships without one).
         const firstCol = (parseCsvLine(lines[0] || '')[0] || '').trim().toLowerCase();
         const dataLines = firstCol === 'tc id' ? lines.slice(1) : lines;
@@ -7296,9 +8045,15 @@
             type: clean(cols[2]).toLowerCase() === 'automation' ? 'automation' : 'manual',
             module: clean(cols[3])||'General',
             project: clean(cols[4])||'',
-            steps: clean(cols[5])||'',
-            expected: clean(cols[6])||'—',
-            created: clean(cols[7]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+            scenario: clean(cols[5])||'',
+            platform: clean(cols[6])||'Web',
+            preCondition: clean(cols[7])||'',
+            steps: clean(cols[8])||'',
+            testData: clean(cols[9])||'',
+            expected: clean(cols[10])||'—',
+            actualResult: clean(cols[11])||'',
+            status: clean(cols[12])||'NOT_RUN',
+            created: clean(cols[13]) || new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
           });
           added++;
         });
@@ -7310,6 +8065,159 @@
     };
     reader.readAsText(file);
     input.value = '';
+  }
+
+  // ── Generate Test Case (AI) ──
+  function fillGenTcExample(el) {
+    document.getElementById('gen-tc-description').value = el.textContent.trim();
+  }
+  let generatedTcList = []; // pending, unsaved test cases from the last generation
+  function nextTcId() {
+    const ids = loadTestCases().map(tc => tc.id).filter(Boolean);
+    let max = 0;
+    ids.forEach(id => {
+      const m = /^TC_?(\d+)$/i.exec(id.trim());
+      if (m) max = Math.max(max, parseInt(m[1], 10));
+    });
+    return 'TC_' + String(max + 1).padStart(3, '0');
+  }
+  async function generateTestCasesFromScenario() {
+    const description = document.getElementById('gen-tc-description').value.trim();
+    const errEl = document.getElementById('gen-tc-error');
+    errEl.style.display = 'none';
+    if (!description) { errEl.textContent = 'Describe the scenario, module, or feature first.'; errEl.style.display = 'block'; return; }
+    const module = document.getElementById('gen-tc-module').value.trim();
+    const project = document.getElementById('gen-tc-project').value.trim() || selectedProjectName() || '';
+    const btn = document.getElementById('gen-tc-btn');
+    btn.disabled = true; btn.textContent = '✨ Generating…';
+    try {
+      const { testCases } = await api('/generate-testcase', { method: 'POST', body: JSON.stringify({ description, module }) });
+      generatedTcList = testCases.map(tc => ({ ...tc, steps: (tc.steps || []).join('\n'), module: module || 'General', project }));
+      renderGeneratedTestCases();
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = '✨ Generate Test Cases';
+    }
+  }
+  function updateGeneratedTc(i, field, value) {
+    if (!generatedTcList[i]) return;
+    generatedTcList[i][field] = value;
+  }
+  function renderGeneratedTestCases() {
+    const wrap = document.getElementById('gen-tc-results-wrap');
+    const list = document.getElementById('gen-tc-results');
+    if (!wrap || !list) return;
+    if (!generatedTcList.length) { wrap.style.display = 'none'; list.innerHTML = ''; return; }
+    wrap.style.display = 'block';
+    document.getElementById('gen-tc-count').textContent = generatedTcList.length;
+    const esc = s => String(s || '').replace(/"/g, '&quot;');
+    list.innerHTML = generatedTcList.map((tc, i) => `
+      <div class="table-card" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px">
+          <input value="${esc(tc.title)}" oninput="updateGeneratedTc(${i},'title',this.value)" class="tc-input" style="font-weight:600;font-size:13.5px"/>
+          <div style="display:flex;gap:8px;flex-shrink:0">
+            <button onclick="saveGeneratedTestCase(${i})" class="btn-v3-primary" style="white-space:nowrap">💾 Save</button>
+            <button onclick="discardGeneratedTestCase(${i})" class="btn-v3-secondary" style="white-space:nowrap">Discard</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <input id="gen-tc-refine-${i}" placeholder="Optional: tell AI what to change (e.g. add more edge cases)" class="tc-input" style="flex:1;font-size:12px"/>
+          <button id="gen-tc-regen-${i}" onclick="regenerateGeneratedTestCase(${i})" class="btn-v3-secondary" style="white-space:nowrap">🔄 Regenerate</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Web / App</label>
+            <select class="tc-input" onchange="updateGeneratedTc(${i},'platform',this.value)">
+              ${['Web','App','Both'].map(p => `<option value="${p}" ${p===tc.platform?'selected':''}>${p}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Module</label>
+            <input value="${esc(tc.module)}" oninput="updateGeneratedTc(${i},'module',this.value)" class="tc-input"/>
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Scenario</label>
+          <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'scenario',this.value)">${tc.scenario||''}</textarea>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Pre-Condition</label>
+          <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'preCondition',this.value)">${tc.preCondition||''}</textarea>
+        </div>
+        <div style="margin-bottom:10px">
+          <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Steps (one per line)</label>
+          <textarea class="tc-input" rows="4" style="resize:vertical" oninput="updateGeneratedTc(${i},'steps',this.value)">${tc.steps||''}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Test Data</label>
+            <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'testData',this.value)">${tc.testData||''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:10px;font-weight:700;color:#6B7280;display:block;margin-bottom:4px;text-transform:uppercase">Expected Result</label>
+            <textarea class="tc-input" rows="2" style="resize:vertical" oninput="updateGeneratedTc(${i},'expected',this.value)">${tc.expected||''}</textarea>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  async function regenerateGeneratedTestCase(i) {
+    const tc = generatedTcList[i];
+    if (!tc) return;
+    const refineInput = document.getElementById('gen-tc-refine-' + i);
+    const instruction = refineInput ? refineInput.value.trim() : '';
+    const description = [
+      'Existing test case:',
+      `Title: ${tc.title}`,
+      `Scenario: ${tc.scenario}`,
+      `Pre-Condition: ${tc.preCondition}`,
+      `Steps: ${tc.steps}`,
+      `Test Data: ${tc.testData}`,
+      `Expected Result: ${tc.expected}`,
+      `Requested change: ${instruction || 'Make it more thorough — sharpen the wording and add missing edge-case coverage.'}`,
+    ].join('\n');
+    const btn = document.getElementById('gen-tc-regen-' + i);
+    if (btn) { btn.disabled = true; btn.textContent = '🔄 Regenerating…'; }
+    try {
+      const { testCases } = await api('/generate-testcase', { method: 'POST', body: JSON.stringify({ description, module: tc.module, count: 1 }) });
+      const fresh = testCases[0];
+      generatedTcList[i] = { ...fresh, steps: (fresh.steps || []).join('\n'), module: tc.module, project: tc.project };
+      renderGeneratedTestCases();
+    } catch (e) {
+      alert('Regenerate failed: ' + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = '🔄 Regenerate'; }
+    }
+  }
+  function saveGeneratedTestCase(i) {
+    const tc = generatedTcList[i];
+    if (!tc) return;
+    const tcs = loadTestCases();
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    tcs.push({
+      id: nextTcId(), title: tc.title || 'Untitled test case', type: 'manual',
+      module: tc.module || 'General', project: tc.project || '', priority: 'P2',
+      expected: tc.expected || '—', steps: tc.steps || '', created: now,
+      scenario: tc.scenario || '', platform: tc.platform || 'Web',
+      preCondition: tc.preCondition || '', testData: tc.testData || '',
+      actualResult: '', status: 'NOT_RUN', aiGenerated: true,
+      results: { Staging: 'NOT_TESTED', UAT: 'NOT_TESTED', PreProd: 'NOT_TESTED' },
+    });
+    saveTestCases(tcs);
+    generatedTcList.splice(i, 1);
+    renderGeneratedTestCases();
+    renderDashboard();
+  }
+  function discardGeneratedTestCase(i) {
+    generatedTcList.splice(i, 1);
+    renderGeneratedTestCases();
+  }
+  function saveAllGeneratedTestCases() {
+    if (!generatedTcList.length) return;
+    while (generatedTcList.length) saveGeneratedTestCase(0);
+    alert('✅ Saved. View them in Test Cases.');
+    showPage('testcases');
   }
 
   // ── Export ──
