@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite" thread-count="1">
+
+    <listeners>
+        <listener class-name="framework.listeners.DriverInit"/>
+        <listener class-name="framework.listeners.RetryTransformer"/>
+        <listener class-name="framework.listeners.ExecutionListener"/>
+    </listeners>
+
+    <suite-files>
+        <suite-file path="login.xml"/>
+        <!-- Add one <suite-file> per module suite XML as new modules are automated -->
+    </suite-files>
+
+</suite>

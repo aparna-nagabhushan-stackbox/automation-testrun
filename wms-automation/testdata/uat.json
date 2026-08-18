@@ -1,0 +1,11 @@
+{
+  "login": [
+    {
+      "TC_001": {
+      },
+      "TC_002": {
+        "branchName": "TEST BRANCH1"
+      }
+    }
+  ]
+}
