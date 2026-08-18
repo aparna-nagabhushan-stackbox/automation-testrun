@@ -12,6 +12,8 @@ const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
 const BLOCKS_FILE = path.join(DATA_DIR, 'blocks.json');
 const REVIEW_QUEUE_FILE = path.join(DATA_DIR, 'reviewQueue.json');
 const GENERATIONS_FILE = path.join(DATA_DIR, 'generations.json');
+const TEST_SUITES_FILE = path.join(DATA_DIR, 'testSuites.json');
+const SUITE_RUNS_FILE = path.join(DATA_DIR, 'suiteRuns.json');
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
@@ -206,6 +208,152 @@ function getGenerationByRecordingId(recordingId) {
   return getGenerations().find((g) => g.recordingId === recordingId) || null;
 }
 
+function getTestSuites() {
+  return readJson(TEST_SUITES_FILE, []);
+}
+function saveTestSuites(suites) {
+  writeJson(TEST_SUITES_FILE, suites);
+}
+function findTestSuiteById(id) {
+  return getTestSuites().find((s) => s.id === id) || null;
+}
+function createTestSuite({ name, description, module: mod, environment, createdBy }) {
+  const suites = getTestSuites();
+  const now = new Date().toISOString();
+  const suite = {
+    id: suites.length ? Math.max(...suites.map((s) => s.id)) + 1 : 1,
+    name, description: description || '', module: mod || '', environment: environment || '',
+    createdBy, createdAt: now, updatedAt: now, testCases: [],
+  };
+  suites.push(suite);
+  saveTestSuites(suites);
+  return suite;
+}
+function updateTestSuite(id, updates) {
+  const suites = getTestSuites();
+  const suite = suites.find((s) => s.id === id);
+  if (!suite) return null;
+  ['name', 'description', 'module', 'environment'].forEach((key) => {
+    if (updates[key] !== undefined) suite[key] = updates[key];
+  });
+  suite.updatedAt = new Date().toISOString();
+  saveTestSuites(suites);
+  return suite;
+}
+function deleteTestSuite(id) {
+  const suites = getTestSuites();
+  const idx = suites.findIndex((s) => s.id === id);
+  if (idx === -1) return false;
+  suites.splice(idx, 1);
+  saveTestSuites(suites);
+  // Cascade: a suite's runs are meaningless once the suite is gone.
+  saveSuiteRuns(getSuiteRuns().filter((r) => r.suiteId !== id));
+  return true;
+}
+// items: [{testCaseId, executionType}] — upserts by testCaseId so re-adding
+// an already-present test case just updates its execution type.
+function addTestCasesToSuite(suiteId, items) {
+  const suites = getTestSuites();
+  const suite = suites.find((s) => s.id === suiteId);
+  if (!suite) return null;
+  items.forEach(({ testCaseId, executionType }) => {
+    const existing = suite.testCases.find((tc) => tc.testCaseId === testCaseId);
+    if (existing) existing.executionType = executionType || existing.executionType;
+    else suite.testCases.push({ testCaseId, executionType: executionType || 'manual' });
+  });
+  suite.updatedAt = new Date().toISOString();
+  saveTestSuites(suites);
+  return suite;
+}
+function updateSuiteTestCaseType(suiteId, testCaseId, executionType) {
+  const suites = getTestSuites();
+  const suite = suites.find((s) => s.id === suiteId);
+  const tc = suite && suite.testCases.find((t) => t.testCaseId === testCaseId);
+  if (!tc) return null;
+  tc.executionType = executionType;
+  suite.updatedAt = new Date().toISOString();
+  saveTestSuites(suites);
+  return suite;
+}
+function removeTestCaseFromSuite(suiteId, testCaseId) {
+  const suites = getTestSuites();
+  const suite = suites.find((s) => s.id === suiteId);
+  if (!suite) return null;
+  suite.testCases = suite.testCases.filter((t) => t.testCaseId !== testCaseId);
+  suite.updatedAt = new Date().toISOString();
+  saveTestSuites(suites);
+  return suite;
+}
+
+function getSuiteRuns() {
+  return readJson(SUITE_RUNS_FILE, []);
+}
+function saveSuiteRuns(runs) {
+  writeJson(SUITE_RUNS_FILE, runs);
+}
+function getRunsBySuite(suiteId) {
+  return getSuiteRuns()
+    .filter((r) => r.suiteId === suiteId)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+function findSuiteRunById(id) {
+  return getSuiteRuns().find((r) => r.id === id) || null;
+}
+// testCases: the suite's [{testCaseId, executionType}] at run time — each
+// gets a 'not_run' result row up front so the run always reflects every
+// test case it covers, even ones no one has marked yet.
+function createSuiteRun({ suiteId, runType, environment, triggeredBy, testCases }) {
+  const runs = getSuiteRuns();
+  const now = new Date().toISOString();
+  const run = {
+    id: runs.length ? Math.max(...runs.map((r) => r.id)) + 1 : 1,
+    suiteId, runType, status: 'running', environment: environment || '',
+    triggeredBy, startedAt: now, completedAt: null, createdAt: now,
+    results: testCases.map((tc) => ({
+      testCaseId: tc.testCaseId, executionType: tc.executionType,
+      status: 'not_run', executedBy: null, executedAt: null,
+    })),
+  };
+  runs.push(run);
+  saveSuiteRuns(runs);
+  return run;
+}
+// results: [{testCaseId, status}] — the single write path for both the
+// manual checklist UI and (later) an automation-pipeline callback.
+function upsertSuiteRunResults(runId, results, executedBy) {
+  const runs = getSuiteRuns();
+  const run = runs.find((r) => r.id === runId);
+  if (!run) return null;
+  const now = new Date().toISOString();
+  results.forEach(({ testCaseId, status }) => {
+    const existing = run.results.find((r) => r.testCaseId === testCaseId);
+    if (!existing) return;
+    existing.status = status;
+    existing.executedBy = executedBy || existing.executedBy;
+    existing.executedAt = now;
+  });
+  saveSuiteRuns(runs);
+  return run;
+}
+function completeSuiteRun(runId) {
+  const runs = getSuiteRuns();
+  const run = runs.find((r) => r.id === runId);
+  if (!run) return null;
+  const relevant = run.results.filter((r) => r.status !== 'skipped');
+  const total = relevant.length;
+  const failed = relevant.filter((r) => r.status === 'fail').length;
+  const passed = relevant.filter((r) => r.status === 'pass').length;
+  const blocked = relevant.filter((r) => r.status === 'blocked').length;
+  if (total === 0) run.status = 'blocked';
+  else if (failed === total) run.status = 'failed';
+  else if (passed === total) run.status = 'passed';
+  else if (blocked === total) run.status = 'blocked';
+  else run.status = 'partial';
+  run.completedAt = new Date().toISOString();
+  saveSuiteRuns(runs);
+  return run;
+}
+
 module.exports = {
   getUsers, saveUsers, findUserByEmail, createUser, updateUserPassword, updateUserRole, deleteUser,
   getInvites, saveInvites, findInviteByToken, createInvite, markInviteAccepted,
@@ -213,4 +361,8 @@ module.exports = {
   getBlocks, saveBlocks, getBlocksByProject, createBlock,
   getReviewQueue, saveReviewQueue, createReviewEntry, removePendingReviewEntries, updateReviewEntryStatus,
   getGenerations, saveGenerations, upsertGeneration, getGenerationByRecordingId,
+  getTestSuites, saveTestSuites, findTestSuiteById, createTestSuite, updateTestSuite, deleteTestSuite,
+  addTestCasesToSuite, updateSuiteTestCaseType, removeTestCaseFromSuite,
+  getSuiteRuns, saveSuiteRuns, getRunsBySuite, findSuiteRunById, createSuiteRun,
+  upsertSuiteRunResults, completeSuiteRun,
 };

@@ -193,6 +193,41 @@
     .sc-total { border-color:#1565c0; } .sc-total .stat-val { color:#1565c0; }
     .sc-pass  { border-color:#2e7d32; } .sc-pass  .stat-val { color:#2e7d32; }
     .sc-fail  { border-color:#c62828; } .sc-fail  .stat-val { color:#c62828; }
+    .sc-manual{ border-color:#e08a1e; } .sc-manual .stat-val { color:#e08a1e; }
+    .sc-auto  { border-color:#1a9e7c; } .sc-auto  .stat-val { color:#1a9e7c; }
+    .sc-mixed { border-color:#3949ab; } .sc-mixed .stat-val { color:#3949ab; }
+    .sc-rate  { border-color:#2e7d32; } .sc-rate  .stat-val { color:#2e7d32; }
+
+    /* Test Suites */
+    .ts-stats-grid { display:grid; grid-template-columns:1fr 2fr 1fr; gap:16px; margin-bottom:16px; }
+    .module-pill-row { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+    .module-pill {
+      padding:7px 16px; border-radius:20px; border:1.5px solid #e0e0e0; background:#fff;
+      font-size:12.5px; font-weight:600; color:#555; cursor:pointer; white-space:nowrap;
+      font-family:'Inter',sans-serif;
+    }
+    .module-pill:hover { border-color:#c5cae9; }
+    .module-pill.active { background:#1a1a2e; border-color:#1a1a2e; color:#fff; }
+    .coverage-bar { height:6px; border-radius:3px; overflow:hidden; display:flex; background:#eee; width:140px; }
+    .coverage-bar-manual { background:#e08a1e; height:100%; }
+    .coverage-bar-auto   { background:#1a9e7c; height:100%; }
+    .coverage-legend { font-size:11px; color:#777; margin-top:5px; display:flex; gap:12px; white-space:nowrap; }
+    .coverage-dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; }
+    .run-status-pill { display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+    .rsp-pass { background:#e8f5e9; color:#2e7d32; }
+    .rsp-warn { background:#fce4ec; color:#c62828; }
+    .rsp-none { background:#f0f2f5; color:#888; }
+    .rsp-running { background:#e3e8fd; color:#3949ab; }
+    .run-dropdown-btn {
+      padding:7px 14px; border-radius:8px; border:1.5px solid #0f3460; background:#0f3460; color:#fff;
+      font-size:12.5px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif;
+    }
+    .run-dropdown-btn:hover { background:#0c2a4d; }
+    .user-menu-item.disabled { opacity:.4; cursor:not-allowed; pointer-events:none; }
+    .exec-type-badge { display:inline-block; padding:2px 9px; border-radius:12px; font-size:10.5px; font-weight:700; }
+    .etb-manual    { background:#fdf1e0; color:#e08a1e; }
+    .etb-automated { background:#e1f5ee; color:#1a9e7c; }
+    .etb-both      { background:#e8eaf6; color:#3949ab; }
 
     /* Run summary strip */
     .run-strip {
@@ -3947,14 +3982,31 @@
 
       <!-- TEST SUITES PAGE -->
       <div class="page" id="page-test-suites">
-        <div class="table-card">
-          <div class="table-card-header">
-            <h3>Test Suites</h3>
-            <button onclick="openCreateSuiteModal()" class="btn-v3-primary">+ Create Suite</button>
+        <button onclick="showPage('testcases-generic')" style="background:none;border:none;color:#0f3460;font-size:12px;cursor:pointer;font-weight:600;padding:0;margin-bottom:10px;display:inline-block">← Back to Test Cases</button>
+        <div class="dash-header" style="margin-bottom:14px">
+          <div class="home-welcome">
+            <h2>Test Suites</h2>
+            <p style="color:#888">Group test cases once, run manually or via Playwright/Appium — status rolls up either way.</p>
           </div>
+          <button onclick="openCreateSuiteModal()" class="btn-v3-primary">+ Create Test Suite</button>
+        </div>
+        <div class="ts-stats-grid">
+          <div class="stat-card sc-total"><div class="stat-icon">🗂️</div><div><div class="stat-val" id="ts-stat-total">—</div><div class="stat-lbl">Total suites</div></div></div>
+          <div class="stat-card sc-mixed" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="stat-lbl" style="margin:0">Coverage</div>
+            <div style="display:flex;gap:16px;width:100%">
+              <div><div class="stat-val" id="ts-stat-manual" style="font-size:18px;color:#e08a1e">—</div><div class="stat-lbl">Manual-only</div></div>
+              <div><div class="stat-val" id="ts-stat-auto" style="font-size:18px;color:#1a9e7c">—</div><div class="stat-lbl">Automated-only</div></div>
+              <div><div class="stat-val" id="ts-stat-mixed" style="font-size:18px;color:#3949ab">—</div><div class="stat-lbl">Mixed</div></div>
+            </div>
+          </div>
+          <div class="stat-card sc-rate"><div class="stat-icon">📈</div><div><div class="stat-val" id="ts-stat-rate">—</div><div class="stat-lbl">Avg. pass rate (7d)</div></div></div>
+        </div>
+        <div class="module-pill-row" id="ts-module-pills" style="margin-bottom:14px"></div>
+        <div class="table-card">
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th>Suite Name</th><th>Test Cases</th><th>Created</th><th>Action</th></tr></thead>
+              <thead><tr><th>Suite</th><th>Test Cases</th><th>Coverage Split</th><th>Last Run</th><th>Run Date</th><th>Actions</th></tr></thead>
               <tbody id="test-suites-tbody"></tbody>
             </table>
           </div>
@@ -4972,9 +5024,23 @@
       <div style="font-size:16px;font-weight:700;color:#1a1a2e">Create Test Suite</div>
       <button onclick="closeCreateSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
     </div>
-    <div style="margin-bottom:20px">
+    <div style="margin-bottom:16px">
       <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Suite Name</label>
       <input id="suite-name" placeholder="e.g. Login Regression" class="tc-input"/>
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:16px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+        <input id="suite-module" placeholder="e.g. WMS-PUTAWAY" class="tc-input"/>
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Environment</label>
+        <input id="suite-environment" placeholder="e.g. UAT-01" class="tc-input"/>
+      </div>
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Description</label>
+      <textarea id="suite-description" rows="2" class="tc-input" placeholder="What does this suite cover?"></textarea>
     </div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
       <button onclick="closeCreateSuiteModal()" class="btn-v3-secondary">Cancel</button>
@@ -4983,7 +5049,7 @@
   </div>
 </div>
 
-<!-- ADD TO SUITE MODAL -->
+<!-- ADD TO SUITE MODAL (bulk action from the Test Cases page) -->
 <div id="add-to-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:12px;padding:32px;width:420px;max-width:92vw;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
@@ -4991,9 +5057,17 @@
       <button onclick="closeAddToSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
     </div>
     <div id="add-to-suite-body">
-      <div style="margin-bottom:20px">
+      <div style="margin-bottom:16px">
         <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Suite</label>
         <select id="add-to-suite-select" class="tc-input"></select>
+      </div>
+      <div style="margin-bottom:20px">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Run as</label>
+        <select id="add-to-suite-exectype" class="tc-input">
+          <option value="manual">Manual</option>
+          <option value="automated">Automated</option>
+          <option value="both">Both</option>
+        </select>
       </div>
     </div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
@@ -5005,12 +5079,67 @@
 
 <!-- VIEW TEST SUITE MODAL -->
 <div id="view-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:12px;padding:32px;width:600px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:660px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <div style="font-size:16px;font-weight:700;color:#1a1a2e" id="view-suite-title">Suite</div>
+      <input id="view-suite-name" class="tc-input" style="font-size:16px;font-weight:700;color:#1a1a2e;border:none;padding:2px 0;flex:1;margin-right:12px"/>
       <button onclick="closeViewSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
     </div>
+    <div style="display:flex;gap:12px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Module</label>
+        <input id="view-suite-module" class="tc-input"/>
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Environment</label>
+        <input id="view-suite-environment" class="tc-input"/>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Description</label>
+      <textarea id="view-suite-description" rows="2" class="tc-input"></textarea>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+      <button onclick="saveSuiteDetails()" class="btn-v3-secondary">Save Details</button>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:700;color:#1a1a2e">Test Cases</div>
+      <div style="display:flex;gap:8px">
+        <button id="view-suite-run-manual" onclick="startSuiteRun(currentViewSuiteId,'manual')" class="btn-v3-secondary" style="font-size:11px;padding:5px 10px">▶ Run Manual</button>
+        <button id="view-suite-run-auto" onclick="startSuiteRun(currentViewSuiteId,'automated')" class="btn-v3-secondary" style="font-size:11px;padding:5px 10px">▶ Run Automated</button>
+        <button id="view-suite-run-both" onclick="startSuiteRun(currentViewSuiteId,'both')" class="btn-v3-secondary" style="font-size:11px;padding:5px 10px">▶ Run Both</button>
+        <button onclick="openAddTcToSuiteModal()" class="btn-v3-primary" style="font-size:11px;padding:5px 10px">+ Add Test Cases</button>
+      </div>
+    </div>
     <div id="view-suite-tc-list"></div>
+
+    <div style="font-size:13px;font-weight:700;color:#1a1a2e;margin:22px 0 10px">Execution History</div>
+    <div id="view-suite-run-history"></div>
+  </div>
+</div>
+
+<!-- ADD TEST CASES TO SUITE (from within the View Suite modal) -->
+<div id="add-tc-to-suite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:480px;max-width:92vw;max-height:80vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <div style="font-size:16px;font-weight:700;color:#1a1a2e">Add Test Cases</div>
+      <button onclick="closeAddTcToSuiteModal()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#999">✕</button>
+    </div>
+    <div id="add-tc-to-suite-subtitle" style="font-size:12px;color:#888;margin-bottom:14px"></div>
+    <input id="add-tc-to-suite-search" oninput="renderAddTcToSuitePicker()" placeholder="Search test cases…" class="tc-input" style="margin-bottom:12px"/>
+    <div id="add-tc-to-suite-list" style="border:1px solid #f0f0f5;border-radius:8px;padding:6px;min-height:120px;max-height:280px;overflow-y:auto"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
+      <label style="font-size:11px;font-weight:600;color:#555;white-space:nowrap">Run as</label>
+      <select id="add-tc-to-suite-exectype" class="tc-input" style="flex:1">
+        <option value="manual">Manual</option>
+        <option value="automated">Automated</option>
+        <option value="both">Both</option>
+      </select>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;position:sticky;bottom:0;background:#fff;padding-top:4px">
+      <button onclick="closeAddTcToSuiteModal()" class="btn-v3-secondary">Cancel</button>
+      <button onclick="confirmAddTcToSuite()" class="btn-v3-primary">Add Selected</button>
+    </div>
   </div>
 </div>
 
@@ -7755,114 +7884,405 @@
     renderGenericTestCases();
   }
 
-  // ── Test Suites (localStorage) — group existing test cases for execution/reporting ──
-  function loadTestSuites() {
-    return JSON.parse(localStorage.getItem('stacktest_test_suites') || '[]');
+  // ── Test Suites (server-backed) — group existing test cases for execution/reporting ──
+  let allTestSuites = [];
+  let activeSuiteModuleFilter = null;
+  let currentViewSuiteId = null;
+  let currentViewSuiteDetail = null;
+  const addTcPickerSelected = new Set();
+
+  // Test cases live in two separate localStorage-backed stores in this app:
+  // the classic Manual Testing / Automation pages (stacktest_testcases,
+  // distinguished by a `type` field) and the newer shared Test Cases page
+  // (stacktest_testcases_generic, no type field). A suite needs to draw from
+  // both, so this merges them and tags each with where it came from.
+  function loadAllTestCasesForSuites() {
+    const generic = loadGenericTestCases().map(tc => ({ ...tc, source: 'generic' }));
+    const classic = loadTestCases().map(tc => ({ ...tc, source: tc.type === 'automation' ? 'automation' : 'manual' }));
+    return [...generic, ...classic];
   }
-  function saveTestSuites(suites) {
-    localStorage.setItem('stacktest_test_suites', JSON.stringify(suites));
+  function findAnyTestCase(id) {
+    return loadAllTestCasesForSuites().find(tc => tc.id === id);
   }
+  function tcSourceBadge(source) {
+    if (source === 'automation') return `<span class="exec-type-badge etb-automated">automation</span>`;
+    if (source === 'manual') return `<span class="exec-type-badge etb-manual">manual</span>`;
+    return '';
+  }
+
   function openCreateSuiteModal() {
     document.getElementById('suite-name').value = '';
+    document.getElementById('suite-module').value = '';
+    document.getElementById('suite-environment').value = '';
+    document.getElementById('suite-description').value = '';
     document.getElementById('create-suite-modal').style.display = 'flex';
   }
   function closeCreateSuiteModal() {
     document.getElementById('create-suite-modal').style.display = 'none';
   }
-  function createTestSuite() {
+  async function createTestSuite() {
     const name = document.getElementById('suite-name').value.trim();
     if (!name) { alert('Suite name is required'); return; }
-    const suites = loadTestSuites();
-    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-    suites.push({
-      id: suites.length ? Math.max(...suites.map(s => s.id)) + 1 : 1,
-      name, tcIds: [], created: now,
-    });
-    saveTestSuites(suites);
-    closeCreateSuiteModal();
-    renderTestSuitesPage();
+    try {
+      await api('/test-suites', { method: 'POST', body: JSON.stringify({
+        name,
+        module: document.getElementById('suite-module').value.trim(),
+        environment: document.getElementById('suite-environment').value.trim(),
+        description: document.getElementById('suite-description').value.trim(),
+      }) });
+      closeCreateSuiteModal();
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
   }
-  function deleteTestSuite(id) {
+  async function deleteTestSuite(id) {
     if (!confirm('Delete this test suite? Test cases themselves are not affected.')) return;
-    saveTestSuites(loadTestSuites().filter(s => s.id !== id));
-    renderTestSuitesPage();
+    try {
+      await api('/test-suites/' + id, { method: 'DELETE' });
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
   }
-  function renderTestSuitesPage() {
-    const suites = loadTestSuites();
+
+  async function renderTestSuitesPage() {
     const tbody = document.getElementById('test-suites-tbody');
     if (!tbody) return;
-    if (suites.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">No test suites yet. Create one, or select test cases on the Test Cases page and use "Add to Suite".</td></tr>`;
+    try {
+      const { suites } = await api('/test-suites');
+      allTestSuites = suites;
+    } catch (e) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#c62828;padding:20px">${e.message}</td></tr>`;
+      return;
+    }
+    renderSuiteStats(allTestSuites);
+    renderSuiteModulePills(allTestSuites);
+    renderSuiteRows(suitesForActiveModule());
+  }
+  function suitesForActiveModule() {
+    if (!activeSuiteModuleFilter) return allTestSuites;
+    return allTestSuites.filter(s => (s.module || 'Uncategorized') === activeSuiteModuleFilter);
+  }
+
+  function renderSuiteStats(suites) {
+    const manualOnly = suites.filter(s => s.coverage.manual > 0 && s.coverage.automated === 0 && s.coverage.both === 0).length;
+    const autoOnly = suites.filter(s => s.coverage.automated > 0 && s.coverage.manual === 0 && s.coverage.both === 0).length;
+    const mixed = suites.filter(s => s.testCaseCount > 0).length - manualOnly - autoOnly;
+    const withRuns = suites.filter(s => s.latestRun && s.latestRun.total > 0);
+    const rate = withRuns.length
+      ? Math.round(withRuns.reduce((sum, s) => sum + (s.latestRun.passed / s.latestRun.total) * 100, 0) / withRuns.length)
+      : null;
+    document.getElementById('ts-stat-total').textContent = suites.length;
+    document.getElementById('ts-stat-manual').textContent = manualOnly;
+    document.getElementById('ts-stat-auto').textContent = autoOnly;
+    document.getElementById('ts-stat-mixed').textContent = mixed;
+    document.getElementById('ts-stat-rate').textContent = rate === null ? '—' : rate + '%';
+  }
+
+  function renderSuiteModulePills(suites) {
+    const wrap = document.getElementById('ts-module-pills');
+    if (!wrap) return;
+    const modules = Array.from(new Set(suites.map(s => s.module).filter(Boolean))).sort();
+    const pill = (label, value) => `<button class="module-pill ${activeSuiteModuleFilter === value ? 'active' : ''}" onclick="setSuiteModuleFilter(${value === null ? 'null' : `'${value.replace(/'/g, "\\'")}'`})">${label}</button>`;
+    wrap.innerHTML = [pill('All modules', null)].concat(modules.map(m => pill(m, m))).join('');
+  }
+  function setSuiteModuleFilter(value) {
+    activeSuiteModuleFilter = value;
+    renderSuiteModulePills(allTestSuites);
+    renderSuiteRows(suitesForActiveModule());
+  }
+
+  function coverageBarHtml(coverage) {
+    const manualWeight = coverage.manual + coverage.both;
+    const autoWeight = coverage.automated + coverage.both;
+    const totalWeight = manualWeight + autoWeight;
+    if (!totalWeight) return `<span style="color:#bbb;font-size:12px">No test cases yet</span>`;
+    const manualPct = Math.round((manualWeight / totalWeight) * 100);
+    const autoPct = 100 - manualPct;
+    return `
+      <div class="coverage-bar"><div class="coverage-bar-manual" style="width:${manualPct}%"></div><div class="coverage-bar-auto" style="width:${autoPct}%"></div></div>
+      <div class="coverage-legend">
+        <span><span class="coverage-dot" style="background:#e08a1e"></span>${manualPct}% manual</span>
+        <span><span class="coverage-dot" style="background:#1a9e7c"></span>${autoPct}% auto</span>
+      </div>`;
+  }
+
+  // Shared by the suite list's "Last Run" column and the run-history rows in
+  // the suite detail modal — both deal in the same {status, passed, total,
+  // completedAt} shape.
+  function lastRunPill(latestRun) {
+    if (!latestRun) return `<span class="run-status-pill rsp-none">Not yet run</span>`;
+    if (latestRun.status === 'running') return `<span class="run-status-pill rsp-running">● Running…</span>`;
+    if (latestRun.status === 'blocked') return `<span class="run-status-pill rsp-none">● Blocked</span>`;
+    const rate = latestRun.total ? latestRun.passed / latestRun.total : 0;
+    const cls = rate >= 0.9 ? 'rsp-pass' : 'rsp-warn';
+    return `<span class="run-status-pill ${cls}">● ${latestRun.passed}/${latestRun.total} passed</span>`;
+  }
+  function formatRunDate(latestRun) {
+    if (!latestRun) return '—';
+    if (latestRun.status === 'running') return 'In progress';
+    if (!latestRun.completedAt) return '—';
+    const d = new Date(latestRun.completedAt);
+    const now = new Date();
+    const yest = new Date(now); yest.setDate(now.getDate() - 1);
+    const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    if (d.toDateString() === now.toDateString()) return `Today, ${time}`;
+    if (d.toDateString() === yest.toDateString()) return `Yesterday, ${time}`;
+    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function runMenuHtml(suite) {
+    const cov = suite.coverage;
+    const canManual = cov.manual > 0 || cov.both > 0;
+    const canAuto = cov.automated > 0 || cov.both > 0;
+    const canBoth = canManual && canAuto;
+    const item = (label, type, enabled) => `<div class="user-menu-item ${enabled ? '' : 'disabled'}" onclick="${enabled ? `closeAllRowActionsMenus();startSuiteRun(${suite.id}, '${type}')` : ''}">${label}</div>`;
+    return `
+      <div class="row-actions-wrap">
+        <button class="run-dropdown-btn" onclick="toggleRowActionsMenu(event, 'run-${suite.id}')">Run ▾</button>
+        <div class="row-actions-menu" id="row-actions-menu-run-${suite.id}">
+          ${item('Run Manually', 'manual', canManual)}
+          ${item('Run Automated', 'automated', canAuto)}
+          ${item('Run Both', 'both', canBoth)}
+        </div>
+      </div>`;
+  }
+
+  function renderSuiteRows(suites) {
+    const tbody = document.getElementById('test-suites-tbody');
+    if (!tbody) return;
+    if (!suites.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">No test suites yet. Create one, or select test cases on the Test Cases page and use "Add to Suite".</td></tr>`;
       return;
     }
     tbody.innerHTML = suites.map(s => `
       <tr>
-        <td style="font-weight:500"><a href="#" onclick="openViewSuiteModal(${s.id});return false" style="color:#1565c0;text-decoration:none">${s.name}</a></td>
-        <td>${s.tcIds.length}</td>
-        <td style="color:#aaa;font-size:11px;white-space:nowrap">${s.created}</td>
-        <td>${rowActionsMenu('suite-' + s.id, [
-          { label: '🗑️ Delete', danger: true, onclick: `deleteTestSuite(${s.id})` },
-        ])}</td>
+        <td>
+          <a href="#" onclick="openViewSuiteModal(${s.id});return false" style="color:#1a1a2e;text-decoration:none;font-weight:600">${s.name}</a>
+          ${s.module ? `<div style="margin-top:4px"><span class="app-tag">${s.module}</span></div>` : ''}
+        </td>
+        <td><strong>${s.testCaseCount}</strong><div style="color:#999;font-size:11px">test cases</div></td>
+        <td>${coverageBarHtml(s.coverage)}</td>
+        <td>${lastRunPill(s.latestRun)}</td>
+        <td style="color:#777;font-size:12px;white-space:nowrap">${formatRunDate(s.latestRun)}</td>
+        <td>
+          <div style="display:flex;gap:8px;align-items:center">
+            ${runMenuHtml(s)}
+            ${rowActionsMenu('suite-' + s.id, [
+              { label: '📋 Add Test Cases', onclick: `openAddTcToSuiteModalForSuite(${s.id})` },
+              { label: '✏️ Rename', onclick: `openViewSuiteModal(${s.id})` },
+              { label: '🗑️ Delete', danger: true, onclick: `deleteTestSuite(${s.id})` },
+            ])}
+          </div>
+        </td>
       </tr>`).join('');
   }
-  function openViewSuiteModal(suiteId) {
-    const suite = loadTestSuites().find(s => s.id === suiteId);
-    if (!suite) return;
-    document.getElementById('view-suite-title').textContent = suite.name;
-    const allTcs = loadGenericTestCases();
-    const list = document.getElementById('view-suite-tc-list');
-    if (!suite.tcIds.length) {
-      list.innerHTML = `<div style="color:#aaa;padding:12px 0">No test cases in this suite yet.</div>`;
-    } else {
-      list.innerHTML = suite.tcIds.map(tcId => {
-        const tc = allTcs.find(t => t.id === tcId);
-        const label = tc ? `<span class="tc-pill">${tc.id}</span> ${tc.title}` : `<span class="tc-pill">${tcId}</span> <span style="color:#aaa">(deleted)</span>`;
-        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f5">
-          <span style="font-size:13px">${label}</span>
-          <button onclick="removeTcFromSuite(${suiteId}, '${tcId}')" class="btn-v3-secondary" style="padding:2px 8px;font-size:11px;color:#c62828;border-color:#f5c6c6">Remove</button>
-        </div>`;
-      }).join('');
-    }
+
+  async function openViewSuiteModal(suiteId) {
+    currentViewSuiteId = suiteId;
+    try {
+      const { suite } = await api('/test-suites/' + suiteId);
+      currentViewSuiteDetail = suite;
+      renderViewSuiteModal(suite);
+      const { runs } = await api('/test-suites/' + suiteId + '/runs');
+      renderViewSuiteRunHistory(runs);
+    } catch (e) { alert(e.message); return; }
     document.getElementById('view-suite-modal').style.display = 'flex';
   }
   function closeViewSuiteModal() {
     document.getElementById('view-suite-modal').style.display = 'none';
+    currentViewSuiteId = null;
+    currentViewSuiteDetail = null;
   }
-  function removeTcFromSuite(suiteId, tcId) {
-    const suites = loadTestSuites();
-    const suite = suites.find(s => s.id === suiteId);
-    if (!suite) return;
-    suite.tcIds = suite.tcIds.filter(id => id !== tcId);
-    saveTestSuites(suites);
-    renderTestSuitesPage();
-    openViewSuiteModal(suiteId);
+
+  function renderViewSuiteModal(suite) {
+    document.getElementById('view-suite-name').value = suite.name;
+    document.getElementById('view-suite-module').value = suite.module || '';
+    document.getElementById('view-suite-environment').value = suite.environment || '';
+    document.getElementById('view-suite-description').value = suite.description || '';
+    const cov = suite.coverage;
+    document.getElementById('view-suite-run-manual').disabled = !(cov.manual > 0 || cov.both > 0);
+    document.getElementById('view-suite-run-auto').disabled = !(cov.automated > 0 || cov.both > 0);
+    document.getElementById('view-suite-run-both').disabled = !((cov.manual > 0 || cov.both > 0) && (cov.automated > 0 || cov.both > 0));
+
+    const allTcs = loadAllTestCasesForSuites();
+    const list = document.getElementById('view-suite-tc-list');
+    if (!suite.testCases.length) {
+      list.innerHTML = `<div style="color:#aaa;padding:12px 0">No test cases in this suite yet.</div>`;
+      return;
+    }
+    list.innerHTML = suite.testCases.map(entry => {
+      const tc = allTcs.find(t => t.id === entry.testCaseId);
+      const label = tc ? `<span class="tc-pill">${tc.id}</span> ${tc.title}` : `<span class="tc-pill">${entry.testCaseId}</span> <span style="color:#aaa">(deleted)</span>`;
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f5;gap:10px">
+        <span style="font-size:13px;flex:1">${label}</span>
+        <span class="exec-type-badge etb-${entry.executionType}">${entry.executionType}</span>
+        <select onchange="changeSuiteTcExecType(${suite.id}, '${entry.testCaseId}', this.value)" class="tc-input" style="width:auto;padding:4px 8px;font-size:11px">
+          <option value="manual" ${entry.executionType === 'manual' ? 'selected' : ''}>Manual</option>
+          <option value="automated" ${entry.executionType === 'automated' ? 'selected' : ''}>Automated</option>
+          <option value="both" ${entry.executionType === 'both' ? 'selected' : ''}>Both</option>
+        </select>
+        <button onclick="removeTcFromSuite(${suite.id}, '${entry.testCaseId}')" class="btn-v3-secondary" style="padding:2px 8px;font-size:11px;color:#c62828;border-color:#f5c6c6">Remove</button>
+      </div>`;
+    }).join('');
   }
+
+  function renderViewSuiteRunHistory(runs) {
+    const wrap = document.getElementById('view-suite-run-history');
+    if (!wrap) return;
+    if (!runs.length) {
+      wrap.innerHTML = `<div style="color:#aaa;padding:8px 0;font-size:13px">No runs yet.</div>`;
+      return;
+    }
+    wrap.innerHTML = runs.map(r => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f5">
+        <span style="font-size:12.5px;color:#555">${r.runType[0].toUpperCase()}${r.runType.slice(1)} · ${formatRunDate(r)}</span>
+        ${lastRunPill(r)}
+      </div>`).join('');
+  }
+
+  async function saveSuiteDetails() {
+    if (!currentViewSuiteId) return;
+    try {
+      await api('/test-suites/' + currentViewSuiteId, { method: 'PATCH', body: JSON.stringify({
+        name: document.getElementById('view-suite-name').value.trim(),
+        module: document.getElementById('view-suite-module').value.trim(),
+        environment: document.getElementById('view-suite-environment').value.trim(),
+        description: document.getElementById('view-suite-description').value.trim(),
+      }) });
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
+  }
+
+  async function removeTcFromSuite(suiteId, tcId) {
+    try {
+      await api(`/test-suites/${suiteId}/test-cases/${encodeURIComponent(tcId)}`, { method: 'DELETE' });
+      await openViewSuiteModal(suiteId);
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
+  }
+  async function changeSuiteTcExecType(suiteId, tcId, executionType) {
+    try {
+      await api(`/test-suites/${suiteId}/test-cases/${encodeURIComponent(tcId)}`, {
+        method: 'PATCH', body: JSON.stringify({ executionType }),
+      });
+      await openViewSuiteModal(suiteId);
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
+  }
+
+  // The manual lane reads each test case's current status straight from the
+  // Test Cases page — there's no separate execution checklist UI yet, so a
+  // "run" is a snapshot of whatever testers have already marked. Automated
+  // has no real runner behind it (see triggerAutomationRun stub server-side)
+  // so it always reports not_run until that's wired up.
+  async function startSuiteRun(suiteId, runType) {
+    if (!suiteId) return;
+    try {
+      const { run } = await api(`/test-suites/${suiteId}/runs`, { method: 'POST', body: JSON.stringify({ runType }) });
+      const allTcs = loadAllTestCasesForSuites();
+      const results = run.results.map(r => {
+        if (r.executionType === 'automated') return { testCaseId: r.testCaseId, status: 'not_run' };
+        const tc = allTcs.find(t => t.id === r.testCaseId);
+        return { testCaseId: r.testCaseId, status: mapTcStatusToResult(tc && tc.status) };
+      });
+      await api(`/test-suites/${suiteId}/runs/${run.id}/results`, { method: 'POST', body: JSON.stringify({ results }) });
+      await api(`/test-suites/${suiteId}/runs/${run.id}/complete`, { method: 'POST' });
+      if (currentViewSuiteId === suiteId) await openViewSuiteModal(suiteId);
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
+  }
+  function mapTcStatusToResult(status) {
+    if (status === 'PASS') return 'pass';
+    if (status === 'FAIL') return 'fail';
+    if (status === 'HOLD') return 'blocked';
+    if (status === 'DUPLICATE') return 'skipped';
+    return 'not_run';
+  }
+
   function openAddToSuiteModal() {
     if (!selectedGenericTcIds.size) return;
-    const suites = loadTestSuites();
     const select = document.getElementById('add-to-suite-select');
-    if (!suites.length) {
+    if (!allTestSuites.length) {
       select.innerHTML = `<option value="">No suites yet — create one first</option>`;
     } else {
-      select.innerHTML = suites.map(s => `<option value="${s.id}">${s.name} (${s.tcIds.length})</option>`).join('');
+      select.innerHTML = allTestSuites.map(s => `<option value="${s.id}">${s.name} (${s.testCaseCount})</option>`).join('');
     }
     document.getElementById('add-to-suite-modal').style.display = 'flex';
   }
   function closeAddToSuiteModal() {
     document.getElementById('add-to-suite-modal').style.display = 'none';
   }
-  function confirmAddToSuite() {
+  async function confirmAddToSuite() {
     const suiteId = Number(document.getElementById('add-to-suite-select').value);
     if (!suiteId) { alert('Create a test suite first.'); return; }
-    const suites = loadTestSuites();
-    const suite = suites.find(s => s.id === suiteId);
-    if (!suite) return;
-    const merged = new Set(suite.tcIds);
-    selectedGenericTcIds.forEach(id => merged.add(id));
-    suite.tcIds = Array.from(merged);
-    saveTestSuites(suites);
-    closeAddToSuiteModal();
-    renderTestSuitesPage();
+    const executionType = document.getElementById('add-to-suite-exectype').value;
+    try {
+      await api(`/test-suites/${suiteId}/test-cases`, { method: 'POST', body: JSON.stringify({
+        testCases: Array.from(selectedGenericTcIds).map(testCaseId => ({ testCaseId, executionType })),
+      }) });
+      closeAddToSuiteModal();
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
+  }
+
+  function openAddTcToSuiteModal() {
+    if (!currentViewSuiteId) return;
+    addTcPickerSelected.clear();
+    document.getElementById('add-tc-to-suite-search').value = '';
+    document.getElementById('add-tc-to-suite-subtitle').textContent = currentViewSuiteDetail ? `Adding to "${currentViewSuiteDetail.name}"` : '';
+    renderAddTcToSuitePicker();
+    document.getElementById('add-tc-to-suite-modal').style.display = 'flex';
+  }
+  // Entry point from the Test Suites list row's "⋯" menu — lets you pick test
+  // cases for a suite directly, without opening the full suite detail modal.
+  async function openAddTcToSuiteModalForSuite(suiteId) {
+    try {
+      const { suite } = await api('/test-suites/' + suiteId);
+      currentViewSuiteId = suiteId;
+      currentViewSuiteDetail = suite;
+    } catch (e) { alert(e.message); return; }
+    openAddTcToSuiteModal();
+  }
+  function closeAddTcToSuiteModal() {
+    document.getElementById('add-tc-to-suite-modal').style.display = 'none';
+  }
+  function renderAddTcToSuitePicker() {
+    const already = new Set((currentViewSuiteDetail ? currentViewSuiteDetail.testCases : []).map(tc => tc.testCaseId));
+    const allTcs = loadAllTestCasesForSuites();
+    const query = document.getElementById('add-tc-to-suite-search').value.trim().toLowerCase();
+    const matchesQuery = allTcs.filter(tc => !query || tc.id.toLowerCase().includes(query) || tc.title.toLowerCase().includes(query));
+    const candidates = matchesQuery.filter(tc => !already.has(tc.id));
+    const list = document.getElementById('add-tc-to-suite-list');
+    if (!candidates.length) {
+      // Distinguish "nothing exists yet" from "it exists but is already in
+      // this suite" from "your search just didn't match anything" — all
+      // three render as an empty candidate list otherwise, which reads as a
+      // bug rather than an accurate (if unhelpful-looking) state.
+      let msg = 'No matching test cases.';
+      if (!allTcs.length) msg = 'No test cases exist yet — create one on Test Cases, Manual Testing, or Automation first.';
+      else if (matchesQuery.length) msg = query ? 'That matches a test case, but it\'s already in this suite.' : 'All existing test cases are already in this suite.';
+      list.innerHTML = `<div style="color:#aaa;padding:12px;font-size:13px">${msg}</div>`;
+      return;
+    }
+    list.innerHTML = candidates.map(tc => `
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer">
+        <input type="checkbox" ${addTcPickerSelected.has(tc.id) ? 'checked' : ''} onchange="toggleAddTcPicker('${tc.id}', this.checked)"/>
+        <span class="tc-pill">${tc.id}</span><span style="font-size:13px;flex:1">${tc.title}</span>
+        ${tcSourceBadge(tc.source)}
+      </label>`).join('');
+  }
+  function toggleAddTcPicker(id, checked) {
+    if (checked) addTcPickerSelected.add(id); else addTcPickerSelected.delete(id);
+  }
+  async function confirmAddTcToSuite() {
+    if (!currentViewSuiteId || !addTcPickerSelected.size) { closeAddTcToSuiteModal(); return; }
+    const executionType = document.getElementById('add-tc-to-suite-exectype').value;
+    try {
+      await api(`/test-suites/${currentViewSuiteId}/test-cases`, { method: 'POST', body: JSON.stringify({
+        testCases: Array.from(addTcPickerSelected).map(testCaseId => ({ testCaseId, executionType })),
+      }) });
+      closeAddTcToSuiteModal();
+      await openViewSuiteModal(currentViewSuiteId);
+      renderTestSuitesPage();
+    } catch (e) { alert(e.message); }
   }
 
   // ── Create Test Case modal: step 1 (pick a type) → step 2 (fill details) ──
