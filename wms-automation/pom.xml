@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>xyz.stackbox</groupId>
+    <artifactId>REPLACE_WITH_ARTIFACT_ID</artifactId>
+    <version>1.0.0</version>
+
+    <name>REPLACE_WITH_PROJECT_NAME</name>
+    <description>
+        StackBox WMS Web/Mobile/API test automation, scaffolded to match the same
+        conventions as platform-regression-suite.
+    </description>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <selenium.version>4.23.0</selenium.version>
+        <testng.version>7.8.0</testng.version>
+        <suite.name>main.xml</suite.name>
+        <testng.parallel>none</testng.parallel>
+        <testng.threadCount>1</testng.threadCount>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>9.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>5.5.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.clerezza.ext</groupId>
+            <artifactId>org.json.simple</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.25.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.24.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.24.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--
+        ReportPortal integration (optional, not wired by default in this bootstrap):
+        platform-regression-suite pushes results to ReportPortal via com.epam.reportportal:agent-java-testng
+        + a framework.listeners.ReportPortalListener registered in
+        src/main/resources/META-INF/services/org.testng.ITestNGListener, and it requires every
+        @Test method to carry a com.epam.reportportal.annotations.attribute.@Attributes block
+        (enforced by an assert in DriverInit.onTestStart). Add these back only if this new repo
+        also reports to the same ReportPortal instance — see conventions.md "ReportPortal (optional)".
+        -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>
+                            ${project.basedir}/test-suites/${suite.name}
+                        </suiteXmlFile>
+                    </suiteXmlFiles>
+                    <reportsDirectory>test-output</reportsDirectory>
+                    <parallel>${testng.parallel}</parallel>
+                    <threadCount>${testng.threadCount}</threadCount>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-env</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <fail>true</fail>
+                            <rules>
+                                <requireProperty>
+                                    <property>env</property>
+                                    <message>The -Denv parameter is required. Example: mvn clean install -Denv=stg
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env</property>
+                                    <regex>^(stg|uat)$</regex>
+                                    <regexMessage>Invalid env value: '${env}'. Allowed values are: stg, uat.
+                                    </regexMessage>
+                                </requireProperty>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>sequential</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <testng.parallel>none</testng.parallel>
+                <testng.threadCount>1</testng.threadCount>
+            </properties>
+        </profile>
+        <profile>
+            <id>parallel</id>
+            <activation>
+                <property>
+                    <name>parallel</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <testng.parallel>methods</testng.parallel>
+                <testng.threadCount>${threads}</testng.threadCount>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
