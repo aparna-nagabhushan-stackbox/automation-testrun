@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Login TC001 Only" thread-count="1">
+
+    <listeners>
+        <listener class-name="framework.listeners.DriverInit"/>
+        <listener class-name="framework.listeners.RetryTransformer"/>
+        <listener class-name="framework.listeners.ExecutionListener"/>
+    </listeners>
+
+    <test name="TC-001 - To verify login functionality with valid user id and valid pwd">
+        <classes>
+            <class name="tests.LoginTests">
+                <methods>
+                    <include name="TC_001_WMS_WEB_LOGIN"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
