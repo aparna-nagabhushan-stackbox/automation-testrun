@@ -1,0 +1,4 @@
+target/
+logs/
+ExtentReports/
+test-output/

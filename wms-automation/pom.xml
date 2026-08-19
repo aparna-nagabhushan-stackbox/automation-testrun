@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>xyz.stackbox</groupId>
-    <artifactId>REPLACE_WITH_ARTIFACT_ID</artifactId>
+    <artifactId>wms-automation</artifactId>
     <version>1.0.0</version>
 
-    <name>REPLACE_WITH_PROJECT_NAME</name>
+    <name>wms-automation</name>
     <description>
         StackBox WMS Web/Mobile/API test automation, scaffolded to match the same
         conventions as platform-regression-suite.
@@ -147,6 +147,10 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <!-- An old transitive lombok (via extentreports) crashes annotation processing
+                         under JDK 21's module restrictions. Nothing here uses Lombok, so disable
+                         annotation processing outright rather than patching lombok's version. -->
+                    <proc>none</proc>
                 </configuration>
             </plugin>
             <plugin>
